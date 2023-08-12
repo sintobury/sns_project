@@ -1,8 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { handleModal } from '../../redux/reducers/openModal';
 import './Login.css';
+import Signup from '../../components/Signup/Signup';
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const openSignupModal = useSelector((state) => state.openmodal.open);
   const [inputVal, setInputVal] = useState({
     email: '',
     password: '',
@@ -11,6 +15,10 @@ const Login = () => {
     const { name, value } = e.target;
     setInputVal({ ...inputVal, [name]: value });
   };
+  const handleSignupModal = () => {
+    dispatch(handleModal(!openSignupModal));
+  };
+
   return (
     <div className="background">
       <div className="login_container">
@@ -48,13 +56,14 @@ const Login = () => {
             <div className="login_button_container">
               <button id="login_button">로그인</button>
               <button id="social_login_button">구글 로그인</button>
-              <Link to="/signup">
-                <button id="signup_button">회원가입</button>
-              </Link>
+              <button id="signup_button" onClick={handleSignupModal}>
+                회원가입
+              </button>
             </div>
           </div>
         </div>
       </div>
+      {openSignupModal ? <Signup /> : null}
     </div>
   );
 };

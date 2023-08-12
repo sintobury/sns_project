@@ -1,0 +1,104 @@
+.modal_background {
+    position: fixed;
+    z-index: 99;
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 100vw;
+    height: 100vh;
+}
+.signup_modal_container {
+    position: fixed;
+    z-index: 100;
+    top: 15vh;
+    left: 15vw;
+    width: 70vw;
+    height: 70vh;
+    border-radius: 10px;
+    padding: 2vw;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: end;
+    gap: 3vh;
+}
+
+.exit {
+    width: 5vw;
+    height: 5vh;
+    border: none;
+    background-color: rgba(0,0,0, 0.5);
+    color: black;
+    font-size: large;
+}
+.exit:hover {
+    opacity: 0.7;
+}
+
+.signup_body_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5vw;
+    width: 60vw;
+    padding: 5vw;
+    border-radius: 10px;
+    background-color: rgb(118, 152, 66);
+}
+
+.signup_input_label {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2vh;
+}
+
+.signupdata_label {
+    height: 25px;
+}
+
+.signup_input_container {
+    flex: 3 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.signup_input {
+    height: 25px;
+    padding: 0;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#sex {
+    height: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 5vw;
+}
+
+#birth {
+    height: 25px;
+    border: none;
+    border-radius: 5px;
+}
+
+.signup_button {
+    background-color: rgb(118, 152, 66);
+}
+
+.modal_title {
+    width: 70vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alert {
+    color: rgb(113, 0, 0);
+}
