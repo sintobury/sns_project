@@ -6,9 +6,7 @@ const Homeicon = () => {
     <div>
       <Link to="/main" className="logo_container">
         <img id="logo" alt="logo"></img>
-        <label htmlFor="logo">
-          <h1>SNS_Project</h1>
-        </label>
+        <label htmlFor="logo">SNS_Project</label>
       </Link>
     </div>
   );

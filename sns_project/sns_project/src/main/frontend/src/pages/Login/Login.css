@@ -72,22 +72,13 @@
     gap: 1vw;
 }
 
-button {
-    border-radius: 10px;
-    width: 10vw;
-    height: 5vh;
-    font-size: 13px;
-    border: 1px solid #c2c7d0;
-    cursor: pointer;
-    transition: .3s;
-}
-button:hover {
-    opacity: .7;
-}
-
 #login_button {
     background-color: #1f9a50;
     color: white;
+}
+
+#login_button:hover {
+    opacity: .7;
 }
 
 #social_login_button {
@@ -95,7 +86,15 @@ button:hover {
     color: white;
 }
 
+#social_login_button:hover {
+    opacity: .7;
+}
+
 #signup_button {
     background-color: #0077b5;
     color: white;
+}
+
+#signup_button:hover {
+    opacity: .7;
 }

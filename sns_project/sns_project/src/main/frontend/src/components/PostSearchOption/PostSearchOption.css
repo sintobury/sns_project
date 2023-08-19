@@ -9,8 +9,18 @@
     border-radius: 5px;
 }
 
+.selected:hover {
+    background-color: #8e929a;
+    border: 1px solid #8e929a;
+}
+
 .postsearch_option {
     border-radius: 0px;
+}
+
+.postsearch_option:hover {
+    background-color: #8e929a;
+    border: 1px solid #8e929a;
 }
 
 .postsearch_option:last-child {

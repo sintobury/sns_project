@@ -1,12 +1,19 @@
 .header_container {
     position: fixed;
     top: 0;
-    height: 100px;
+    height: 60px;
     width: 100vw;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     gap: 20px;
     background-color: rgb(162, 207, 255);
+}
+
+.optional_button_container {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
 }

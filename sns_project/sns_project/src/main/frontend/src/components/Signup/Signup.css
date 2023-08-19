@@ -30,7 +30,9 @@
     color: black;
     font-size: large;
 }
+
 .exit:hover {
+    background-color: rgba(0,0,0, 0.5);
     opacity: 0.7;
 }
 
@@ -89,6 +91,11 @@
 
 .signup_button {
     background-color: rgb(118, 152, 66);
+}
+
+.signup_button:hover {
+    background-color: rgb(118, 152, 66);
+    opacity: .7;
 }
 
 .modal_title {

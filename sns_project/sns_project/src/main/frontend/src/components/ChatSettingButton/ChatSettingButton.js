@@ -6,7 +6,12 @@ const ChatSettingButton = () => {
   const [title, setTitle] = useState('');
   return (
     <div className="set_chat_container">
-      <button onClick={() => setOpenSetting(!openSetting)}>채팅방 추가</button>
+      <button
+        onClick={() => setOpenSetting(!openSetting)}
+        className="add_chat_button"
+      >
+        채팅방 추가
+      </button>
       {openSetting ? (
         <div className="options_container">
           <div className="chatroom_name">

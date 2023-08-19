@@ -5,12 +5,17 @@
 
 .options_container {
     position: fixed;
-    top: 70px;
-    right: 15px;
+    top: 50px;
+    right: 10px;
     background-color: rgb(201, 201, 201);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
+}
+
+.add_chat_button:hover {
+    background-color: #8e929a;
+    border: 1px solid #8e929a;
 }
 
 .chatroom_name {

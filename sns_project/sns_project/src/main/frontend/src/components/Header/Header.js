@@ -8,9 +8,13 @@ const Header = () => {
   return (
     <header className="header_container">
       <Homeicon />
-      <PostSearch />
-      <ChatSettingButton />
-      <Alert />
+      <div className="search_part">
+        <PostSearch />
+      </div>
+      <div className="optional_button_container">
+        <ChatSettingButton />
+        <Alert />
+      </div>
     </header>
   );
 };

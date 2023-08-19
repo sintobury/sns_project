@@ -9,7 +9,6 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<Login />}></Route>
-          <Route path="/signup"></Route>
           <Route path="/main" element={<Main />}></Route>
           <Route path="/propile"></Route>
         </Routes>
