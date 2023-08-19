@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { handleModal } from '../../redux/reducers/openModal';
 import './Signup.css';
+import axios from 'axios';
 
 const Signup = () => {
   const signupdata = [
@@ -16,16 +17,24 @@ const Signup = () => {
     newPassword: '',
     confirmPassword: '',
     birth: '',
-    sex: '',
+    gender: '',
   });
+  const [isValid, setisValid] = useState(false);
   const dispatch = useDispatch();
-  const openSignupModal = useSelector((state) => state.openmodal.open);
+  const openSignupModal = useSelector((state) => state.modalSlice.open);
   const handleInput = (e) => {
     const { name, value } = e.target;
     setInputVal({ ...inputVal, [name]: value });
-    console.log(inputVal);
   };
-  let isSet, isSame;
+  let isSet, isSame, isEmailSet, isValidEmail;
+  let regex = new RegExp('^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$');
+  if (inputVal.email) {
+    isEmailSet = true;
+    isValidEmail = false;
+  }
+  if (regex.test(inputVal.email)) {
+    isValidEmail = true;
+  }
   if (inputVal.newPassword && inputVal.confirmPassword) {
     isSet = true;
     isSame = false;
@@ -33,6 +42,33 @@ const Signup = () => {
   if (inputVal.confirmPassword === inputVal.newPassword) {
     isSame = true;
   }
+  const handleSignup = () => {
+    if (isEmailSet && !isValidEmail) {
+      alert('유효하지 않은 이메일 형식입니다.');
+    } else if (isValid) {
+      axios
+        .post('url', inputVal)
+        .then((res) => {
+          console.log(res.data.message);
+          alert('회원가입 되었습니다.');
+          dispatch(handleModal(!openSignupModal));
+        })
+        .catch((error) => {
+          console.error('Error : ', error.response.status);
+        });
+    } else if (!isValid) {
+      alert('정보를 모두 입력해주세요.');
+    }
+  };
+  useEffect(() => {
+    for (let key in inputVal) {
+      if (inputVal[key] === '') {
+        setisValid(false);
+        return;
+      }
+    }
+    setisValid(true);
+  }, [inputVal]);
   return (
     <div
       className="modal_background"
@@ -71,7 +107,7 @@ const Signup = () => {
             <label htmlFor="birth" className="signupdata_label">
               생년월일
             </label>
-            <label htmlFor="sex" className="signupdata_label">
+            <label htmlFor="gender" className="signupdata_label">
               성별
             </label>
           </div>
@@ -96,11 +132,11 @@ const Signup = () => {
               name="birth"
               onChange={handleInput}
             ></input>
-            <div id="sex">
+            <div id="gender">
               <div>
                 <input
                   type="radio"
-                  name="sex"
+                  name="gender"
                   value="male"
                   id="male"
                   onChange={handleInput}
@@ -110,7 +146,7 @@ const Signup = () => {
               <div>
                 <input
                   type="radio"
-                  name="sex"
+                  name="gender"
                   value="famale"
                   id="female"
                   onChange={handleInput}
@@ -121,7 +157,9 @@ const Signup = () => {
           </div>
         </div>
         <div>
-          <button className="signup_button">회원가입</button>
+          <button className="signup_button" onClick={handleSignup}>
+            회원가입
+          </button>
         </div>
       </div>
     </div>

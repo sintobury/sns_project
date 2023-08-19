@@ -1,12 +1,12 @@
 // src/main/frontend/src/setProxy.js
 
-const { createProxyMiddleware } = require("http-proxy-middleware");
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function (app) {
   app.use(
-    "/api",
+    '/api',
     createProxyMiddleware({
-      target: "http://localhost:8080",
+      target: 'http://localhost:8080',
       changeOrigin: true,
     }),
   );

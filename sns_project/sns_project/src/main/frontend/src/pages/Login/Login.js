@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { handleModal } from '../../redux/reducers/openModal';
+import { login } from '../../redux/reducers/loginSlice';
 import './Login.css';
+import { useNavigate } from 'react-router-dom';
 import Signup from '../../components/Signup/Signup';
+import axios from 'axios';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const openSignupModal = useSelector((state) => state.openmodal.open);
+  const navigate = useNavigate();
+  const openSignupModal = useSelector((state) => state.modalSlice.open);
   const [inputVal, setInputVal] = useState({
     email: '',
     password: '',
@@ -17,6 +21,25 @@ const Login = () => {
   };
   const handleSignupModal = () => {
     dispatch(handleModal(!openSignupModal));
+  };
+  const handleLogin = () => {
+    axios
+      .post('url', inputVal)
+      .then((res) => {
+        console.log('메시지: ' + res.data.message);
+        const username = res.data.username;
+        const accessToken = res.headers.get('Authorization');
+        const refreshToken = res.headers.get('Refresh');
+        dispatch(login({ username, accessToken, refreshToken }));
+        alert('로그인 되었습니다.');
+        navigate('/main');
+      })
+      .catch((error) => {
+        console.error('Error : ', error.response.status);
+        if (error.response.status === 401) {
+          alert('회원가입이 필요합니다.');
+        }
+      });
   };
 
   return (
@@ -54,7 +77,9 @@ const Login = () => {
               ></input>
             </div>
             <div className="login_button_container">
-              <button id="login_button">로그인</button>
+              <button id="login_button" onClick={handleLogin}>
+                로그인
+              </button>
               <button id="social_login_button">구글 로그인</button>
               <button id="signup_button" onClick={handleSignupModal}>
                 회원가입
