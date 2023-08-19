@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './PostSearchOption.css';
 
 const PostSearchOption = () => {
   const [option, setOption] = useState('글제목');
@@ -13,12 +14,24 @@ const PostSearchOption = () => {
     setOpenDropdown(false);
   };
   return (
-    <div>
-      <button onClick={() => setOpenDropdown(!openDropdown)}>{option}</button>
+    <div
+      className="postsearch_options_container"
+      onBlur={() => setOpenDropdown(false)}
+    >
+      <button
+        onClick={() => setOpenDropdown(!openDropdown)}
+        className="selected"
+      >
+        {option}
+      </button>
       {openDropdown ? (
-        <div>
+        <div className="postsearch_options_dropdown">
           {PostSearchOptions.map((el) => (
-            <button key={el.value} onClick={(e) => handleOption(e)}>
+            <button
+              key={el.value}
+              onMouseDown={(e) => handleOption(e)}
+              className="postsearch_option"
+            >
               {el.name}
             </button>
           ))}

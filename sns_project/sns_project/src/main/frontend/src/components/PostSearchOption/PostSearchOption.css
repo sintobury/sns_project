@@ -1,0 +1,19 @@
+.postsearch_options_dropdown {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.selected {
+    border-radius: 5px;
+}
+
+.postsearch_option {
+    border-radius: 0px;
+}
+
+.postsearch_option:last-child {
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}

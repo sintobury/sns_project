@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import PostSearchOption from '../PostSearchOption/PostSearchOption';
+import './PostSearch.css';
 
 const PostSearch = () => {
   const [searchword, setSearchword] = useState('');
 
   return (
-    <div>
+    <div className="postsearch_container">
       <PostSearchOption />
       <input
         className="Post_Search"
