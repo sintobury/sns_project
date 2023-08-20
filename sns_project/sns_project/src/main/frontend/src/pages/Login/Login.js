@@ -24,7 +24,7 @@ const Login = () => {
   };
   const handleLogin = () => {
     axios
-      .post('url', inputVal)
+      .post('url/login', inputVal)
       .then((res) => {
         console.log('메시지: ' + res.data.message);
         const username = res.data.username;
