@@ -1,3 +1,12 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
 spring:
   datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -13,8 +22,24 @@ spring:
       hibernate:
         #        show_sql: true
         format_sql: true
-        default_batch_fetch_size: 100
+  redis:
+    host: localhost
+    port: 6379
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 11681411196-481oj0bto50aerlt7ar5j42log08eplh.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: http://localhost:8080/login/oauth2/code/google
+            scope:
+              - profile
+              - email
 
+jwt:
+  accessSecret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
+  refreshSecret: Vlw1k3n2bt9V7zq5F2XjMnWzblYcfP1njsa3Jas1HaSDXkHa
 
 logging.level:
   org.hibernate.SQL: debug
