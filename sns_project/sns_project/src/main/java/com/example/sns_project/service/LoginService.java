@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class LoginService {
@@ -21,12 +23,12 @@ public class LoginService {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisRepository redisRepository;
     public ResponseDto login(LoginDto loginDto){
-        Member searchResult = memberRepository.findByUsername(loginDto.getUsername());
+        List<Member> searchResult = memberRepository.findByUsername(loginDto.getUsername());
         if(searchResult == null){
             return new ResponseDto(HttpStatus.BAD_REQUEST.value(), "해당되는 아이디가 없습니다.", null);
-        }else if( bCryptPasswordEncoder.matches(loginDto.getPassword(), searchResult.getPassword())){
-            String accessToken = jwtTokenProvider.generateAccessToken(searchResult);
-            String refreshToken = jwtTokenProvider.generateRefreshToken(searchResult);
+        }else if( bCryptPasswordEncoder.matches(loginDto.getPassword(), searchResult.get(0).getPassword())){
+            String accessToken = jwtTokenProvider.generateAccessToken(searchResult.get(0));
+            String refreshToken = jwtTokenProvider.generateRefreshToken(searchResult.get(0));
             redisRepository.saveRefreshToken(refreshToken);
             return new ResponseDto(HttpStatus.OK.value(), "정상 로그인되었습니다.", new TokenDto(accessToken, refreshToken));
         }else{

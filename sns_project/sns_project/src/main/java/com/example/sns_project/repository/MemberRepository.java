@@ -5,6 +5,8 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class MemberRepository {
@@ -17,8 +19,8 @@ public class MemberRepository {
             em.merge(member);
         }
     }
-    public Member findByUsername(String username){
-        Member searchResult = (Member) em.createQuery("select m from Member m where m.username = username", Member.class).getSingleResult();
-        return searchResult;
+    public List<Member> findByUsername(String username){
+        List<Member> resultList = em.createQuery("select m from Member m where m.username = username", Member.class).getResultList();
+        return resultList;
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,16 +23,19 @@ public class JoinService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     public ResponseDto join(JoinDto joinDto){
-        Member searchResult = memberRepository.findByUsername(joinDto.getUsername());
-        if(!joinDto.getPassword().equals(joinDto.getPasswordAgain())){
-            return new ResponseDto(HttpStatus.BAD_REQUEST.value(), "비밀번호가 일치하지 않습니다", null);
-        }
-        else if(searchResult != null){
-            return new ResponseDto(HttpStatus.BAD_REQUEST.value(), "중복된 아이디가 존재합니다", null);
+        Member member = new Member(joinDto.getUsername(), bCryptPasswordEncoder.encode(joinDto.getPassword()), joinDto.getName(), joinDto.getEmail(), LocalDateTime.now(), "origin", joinDto.getGender(), MemberRole.ROLE_USER);
+        memberRepository.save(member);
+        return new ResponseDto(HttpStatus.OK.value(), "회원가입에 성공하였습니다.", joinDto);
+    }
+    public ResponseDto validateUsername(JoinDto joinDto){
+        List<Member> searchResult = memberRepository.findByUsername(joinDto.getUsername());
+
+        if(searchResult.size() != 0){
+            log.info("중복된 아이디가 있습니다.");
+            return new ResponseDto(HttpStatus.BAD_REQUEST.value(), "중복된 아이디가 있습니다.", null);
         }else{
-            Member member = new Member(joinDto.getUsername(), bCryptPasswordEncoder.encode(joinDto.getPassword()), joinDto.getName(), joinDto.getEmail(), LocalDateTime.now(), "origin", joinDto.getGender(), MemberRole.ROLE_USER);
-            memberRepository.save(member);
-            return new ResponseDto(HttpStatus.OK.value(), "회원가입에 성공하였습니다.", joinDto);
+            log.info("사용가능한 아아디 입니다.");
+            return new ResponseDto(HttpStatus.OK.value(), "해당 아이디는 사용가능 합니다.", null);
         }
     }
 }

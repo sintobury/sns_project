@@ -31,8 +31,6 @@ public class Member {
 
     private String provider;
 
-
-    @Enumerated(EnumType.STRING)
     private String gender;
 
     @Enumerated(EnumType.STRING)

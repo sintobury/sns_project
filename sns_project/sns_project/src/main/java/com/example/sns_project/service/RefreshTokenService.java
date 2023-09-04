@@ -25,7 +25,7 @@ public class RefreshTokenService {
             try{
                 jwtTokenProvider.validateRefreshToken(refreshDto.getRefreshToken());
                 String username = jwtTokenProvider.findUsernameByRefresh(refreshDto.getRefreshToken());
-                String accessToken = jwtTokenProvider.generateAccessToken(memberRepository.findByUsername(username));
+                String accessToken = jwtTokenProvider.generateAccessToken(memberRepository.findByUsername(username).get(0));
                 return new ResponseDto(HttpStatus.OK.value(), "토큰이 리프레시되었습니다.", new TokenDto(accessToken, refreshDto.getRefreshToken()));
             }catch (JwtException e){
                 return new ResponseDto(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null);

@@ -9,8 +9,9 @@ import org.hibernate.mapping.Join;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Slf4j
 public class JoinController {
@@ -20,5 +21,12 @@ public class JoinController {
         log.info("회원가입 핸들러 접근");
         ResponseDto result = joinService.join(joinDto);
         return result;
+    }
+    @PostMapping("/validate/username")
+    public ResponseDto validateUsername(@RequestBody JoinDto joinDto){
+        log.info("아이디 인증 핸들러 접근");
+        ResponseDto result = joinService.validateUsername(joinDto);
+        return result;
+
     }
 }

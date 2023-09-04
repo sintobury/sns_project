@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -37,8 +38,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Map<String, Object> attributes = oAuth2User.getAttributes();
         Member member = userMapper.userMapping(attributes);
         log.info("Principal OAuth2User : {}", oAuth2User);
-        Member searchResult = memberRepository.findByUsername(member.getUsername());
-        if(searchResult == null){
+        List<Member> searchResult = memberRepository.findByUsername(member.getUsername());
+        if(searchResult.size() == 0){
             memberRepository.save(member);
         }
         String accessToken = jwtTokenProvider.generateAccessToken(member);
