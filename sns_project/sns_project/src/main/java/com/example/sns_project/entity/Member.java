@@ -1,11 +1,13 @@
 package com.example.sns_project.entity;
 
+import com.example.sns_project.dto.MemberDto;
 import com.example.sns_project.enums.Gender;
 import com.example.sns_project.enums.MemberRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +36,8 @@ public class Member {
 
     private String gender;
 
+    private LocalDateTime birth;
+
     @Enumerated(EnumType.STRING)
     private MemberRole role;
 
@@ -50,9 +55,8 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Board> boardList = new ArrayList<>();
 
-
     @Builder
-    public Member(String username, String password, String name, String email, LocalDateTime createAt, String provider, String gender, MemberRole role) {
+    public Member(String username, String password, String name, String email, LocalDateTime createAt, String provider, String gender, LocalDateTime birth, MemberRole role) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -60,10 +64,15 @@ public class Member {
         this.createAt = createAt;
         this.provider = provider;
         this.gender = gender;
+        this.birth = birth;
         this.role = role;
     }
 
+
     public Member() {
 
+    }
+    public MemberDto convertDto(){
+        return new MemberDto(this.getUsername(), this.getName(), this.getEmail(), this.getCreateAt(), this.getProvider(), this.getGender(), this.getBirth());
     }
 }

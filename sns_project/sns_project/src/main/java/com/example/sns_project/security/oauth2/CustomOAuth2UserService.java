@@ -1,5 +1,8 @@
 package com.example.sns_project.security.oauth2;
 
+import com.example.sns_project.entity.Member;
+import com.example.sns_project.security.auth.CustomDetails;
+import com.example.sns_project.util.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -28,6 +31,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         log.info("userNameAttributeName = {}", userNameAttributeName);
         OAuth2Attribute oAuth2Attribute = OAuth2Attribute.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
         Map<String, Object> attributeMap = oAuth2Attribute.convertToMap();
-        return new DefaultOAuth2User( Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")), attributeMap, "key");
+        Member member = new UserMapper().userMapping(attributeMap);
+        return new CustomDetails(member, attributeMap);
     }
 }

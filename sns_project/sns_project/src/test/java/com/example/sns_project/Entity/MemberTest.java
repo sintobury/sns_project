@@ -1,9 +1,12 @@
 package com.example.sns_project.Entity;
 
+import com.example.sns_project.dto.MemberDto;
 import com.example.sns_project.entity.Member;
 import com.example.sns_project.enums.Gender;
 import com.example.sns_project.enums.MemberRole;
 import com.example.sns_project.repository.MemberRepository;
+import com.example.sns_project.service.MemberService;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,12 +19,28 @@ import java.time.LocalDateTime;
 public class MemberTest {
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private EntityManager em;
 
     @Test
     void MemberTest(){
-        Member member = new Member("wldnjs3690","1234","정지원","1234@gmail.com", LocalDateTime.now(),"origin","MALE", MemberRole.ROLE_USER);
+        Member member = new Member("wldnjs3690","1234","정지원","1234@gmail.com", LocalDateTime.now(),"origin","MALE",LocalDateTime.now(), MemberRole.ROLE_USER);
         memberRepository.save(member);
 
+    }
+    @Test
+    void MemberUpdateTest(){
+        Member member = new Member("wldnjs3690","1234","정지원","1234@gmail.com", LocalDateTime.now(),"origin","MALE",LocalDateTime.now(), MemberRole.ROLE_USER);
+        memberRepository.save(member);
+        em.flush();
+        em.clear();
+        MemberDto memberDto = new MemberDto("wldnjs3690","수정","수정",LocalDateTime.now(), "origin","MALE",LocalDateTime.now());
+        memberService.memberUpdate(memberDto);
+        Member member1 = memberRepository.findByUsername(memberDto.getUsername()).get(0);
+        System.out.println(member1.getName() + " " + member1.getEmail() + " " + member1.getGender());
+        ;
 
     }
 }

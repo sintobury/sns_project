@@ -23,7 +23,7 @@ public class JoinService {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     public ResponseDto join(JoinDto joinDto){
-        Member member = new Member(joinDto.getUsername(), bCryptPasswordEncoder.encode(joinDto.getPassword()), joinDto.getName(), joinDto.getEmail(), LocalDateTime.now(), "origin", joinDto.getGender(), MemberRole.ROLE_USER);
+        Member member = new Member(joinDto.getUsername(), bCryptPasswordEncoder.encode(joinDto.getPassword()), joinDto.getName(), joinDto.getEmail(), LocalDateTime.now(), "origin", joinDto.getGender(), joinDto.getBirth(),MemberRole.ROLE_USER);
         memberRepository.save(member);
         return new ResponseDto(HttpStatus.OK.value(), "회원가입에 성공하였습니다.", joinDto);
     }

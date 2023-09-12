@@ -1,5 +1,6 @@
 package com.example.sns_project.repository;
 
+import com.example.sns_project.dto.MemberDto;
 import com.example.sns_project.entity.Member;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,15 @@ public class MemberRepository {
         }
     }
     public List<Member> findByUsername(String username){
-        List<Member> resultList = em.createQuery("select m from Member m where m.username = username", Member.class).getResultList();
+        List<Member> resultList = em.createQuery("select m from Member m where m.username = :username", Member.class)
+                .setParameter("username", username).getResultList();
         return resultList;
     }
+    public List<Member> findById(Long memberId){
+        return em.createQuery("select m from Member m where m.id = :memberId", Member.class)
+                .setParameter("memberId", memberId).getResultList();
+
+    }
+
+
 }

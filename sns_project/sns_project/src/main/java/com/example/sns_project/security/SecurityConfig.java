@@ -50,9 +50,7 @@ public class SecurityConfig {
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(
                         request -> request
-                                .requestMatchers("/api/v1/user/**").hasAnyRole("USER", "MANAGER", "ADMIN")
-                                .requestMatchers("/api/v1/manager/**").hasAnyRole("MANAGER", "ADMIN")
-                                .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN")
+                                .requestMatchers("/info").hasAnyRole("ADMIN","USER")
                                 .anyRequest().permitAll()
                 )
                 .exceptionHandling(exception -> exception

@@ -24,7 +24,7 @@ public class LoginService {
     private final RedisRepository redisRepository;
     public ResponseDto login(LoginDto loginDto){
         List<Member> searchResult = memberRepository.findByUsername(loginDto.getUsername());
-        if(searchResult == null){
+        if(searchResult.size() == 0){
             return new ResponseDto(HttpStatus.BAD_REQUEST.value(), "해당되는 아이디가 없습니다.", null);
         }else if( bCryptPasswordEncoder.matches(loginDto.getPassword(), searchResult.get(0).getPassword())){
             String accessToken = jwtTokenProvider.generateAccessToken(searchResult.get(0));

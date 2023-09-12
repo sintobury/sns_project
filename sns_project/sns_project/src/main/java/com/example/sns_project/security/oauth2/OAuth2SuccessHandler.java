@@ -4,6 +4,7 @@ import com.example.sns_project.dto.ResponseDto;
 import com.example.sns_project.dto.TokenDto;
 import com.example.sns_project.entity.Member;
 import com.example.sns_project.repository.MemberRepository;
+import com.example.sns_project.security.auth.CustomDetails;
 import com.example.sns_project.security.auth.Jwt.JwtTokenProvider;
 import com.example.sns_project.util.UserMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,8 +35,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
 
     @Override
+    @Transactional
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+        CustomDetails oAuth2User = (CustomDetails) authentication.getPrincipal();
         Map<String, Object> attributes = oAuth2User.getAttributes();
         Member member = userMapper.userMapping(attributes);
         log.info("Principal OAuth2User : {}", oAuth2User);

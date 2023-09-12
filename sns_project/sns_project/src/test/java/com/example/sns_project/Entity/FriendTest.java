@@ -29,8 +29,8 @@ public class FriendTest {
 
     @Test
     void FriendTest(){
-        Member member = new Member("wldnjs3690","1234","정지원","1234@gmail.com", LocalDateTime.now(),"origin","MALE", MemberRole.ROLE_USER);
-        Member member2 = new Member("wldnjs77","1234","정지원","1234@gmail.com", LocalDateTime.now(),"origin","MALE", MemberRole.ROLE_USER);
+        Member member = new Member("wldnjs3690","1234","정지원","1234@gmail.com", LocalDateTime.now(),"origin","MALE",LocalDateTime.now(), MemberRole.ROLE_USER);
+        Member member2 = new Member("wldnjs77","1234","정지원","1234@gmail.com", LocalDateTime.now(),"origin","MALE",LocalDateTime.now(), MemberRole.ROLE_USER);
         memberRepository.save(member);
         memberRepository.save(member2);
         Friend friend = new Friend(member, member2, FriendEnum.WAIT);
@@ -39,9 +39,9 @@ public class FriendTest {
 
     @Test
     void FriendGetTest(){
-        Member member = new Member("wldnjs3690","1234","정지원","1234@gmail.com", LocalDateTime.now(),"origin","MALE", MemberRole.ROLE_USER);
-        Member member2 = new Member("wldnjs77","1234","정지원","1234@gmail.com", LocalDateTime.now(),"origin","MALE", MemberRole.ROLE_USER);
-        Member member3 = new Member("wldnjs","1234","정지원","1234@gmail.com", LocalDateTime.now(),"origin","MALE", MemberRole.ROLE_USER);
+        Member member = new Member("wldnjs3690","1234","정지원","1234@gmail.com", LocalDateTime.now(),"origin","MALE",LocalDateTime.now(), MemberRole.ROLE_USER);
+        Member member2 = new Member("wldnjs77","1234","정지원","1234@gmail.com", LocalDateTime.now(),"origin","MALE",LocalDateTime.now(), MemberRole.ROLE_USER);
+        Member member3 = new Member("wldnjs","1234","정지원","1234@gmail.com", LocalDateTime.now(),"origin","MALE",LocalDateTime.now(), MemberRole.ROLE_USER);
         memberRepository.save(member);
         memberRepository.save(member2);
         memberRepository.save(member3);
@@ -51,7 +51,10 @@ public class FriendTest {
         friendRepository.save(friend1);
         em.flush();
         em.clear();
-        List<Friend> friendList = friendRepository.findRequestFriendList("1");
+        List<Friend> friendList = friendRepository.findRequestFriendList(1L);
         System.out.println(friendList.get(0).getFriendRequest().getUsername());
+        for (Friend friend2 : friendList) {
+            System.out.println(friend2.getFriendRequest().getUsername());
+        }
     }
 }
