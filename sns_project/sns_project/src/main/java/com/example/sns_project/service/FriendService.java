@@ -1,8 +1,7 @@
 package com.example.sns_project.service;
 
-import com.example.sns_project.dto.FriendAddDto;
+import com.example.sns_project.dto.FriendDataDto;
 import com.example.sns_project.dto.FriendDto;
-import com.example.sns_project.dto.MemberDto;
 import com.example.sns_project.dto.ResponseDto;
 import com.example.sns_project.entity.Friend;
 import com.example.sns_project.entity.Member;
@@ -13,11 +12,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 @Slf4j
 public class FriendService {
@@ -27,11 +28,13 @@ public class FriendService {
     /**
      * 친구 추가
      */
-    public ResponseDto save(FriendAddDto friendAddDto){
-        Long memberId = friendAddDto.getMemberId();
-        Long friendId = friendAddDto.getFriendId();
-        Member member = memberRepository.findById(memberId).get(0);
-        Member friend = memberRepository.findById(friendId).get(0);
+    public ResponseDto save(FriendDataDto friendAddDto){
+        Member member = memberRepository.findById(friendAddDto.getRequestId());
+        Member friend = memberRepository.findById(friendAddDto.getRequestedId());
+        if(member == null || friend == null){
+            return new ResponseDto(HttpStatus.BAD_REQUEST.value(), "조회할 수 없는 유저를 친구추가 하셨습니다.", null);
+
+        }
         List<Friend> friendRequest = friendRepository.findFriend(member, friend);
         List<Friend> friendRequested = friendRepository.findFriend(friend, member);
         List<Friend> joinedList = new ArrayList<>();
@@ -95,17 +98,46 @@ public class FriendService {
     /**
      * 내가 특정 친구에게 요청했는지 체크하기위한 함수
      */
-    public ResponseDto checkFriendRequest(FriendAddDto friendAddDto){
-        Member member = memberRepository.findById(friendAddDto.getMemberId()).get(0);
-        Member friend = memberRepository.findById(friendAddDto.getFriendId()).get(0);
+    public ResponseDto checkFriendRequest(FriendDataDto friendDataDto){
+        Member member = memberRepository.findById(friendDataDto.getRequestId());
+        Member friend = memberRepository.findById(friendDataDto.getRequestedId());
+        if(member == null || friend == null){
+            return new ResponseDto(HttpStatus.BAD_REQUEST.value(), "조회할 수 없는 유저를 체크하셨습니다.", null);
+        }
         List<Friend> request = friendRepository.findFriend(member, friend);
         List<Friend> requested = friendRepository.findFriend(friend, member);
         if(request.size() != 0){
-            return new ResponseDto(HttpStatus.OK.value(), "친구 요청 수락 대기중입니다.", friendAddDto);
+            if(request.get(0).getState() == FriendEnum.WAIT){
+                friendDataDto.setState("REQUEST_WAIT");
+                return new ResponseDto(HttpStatus.OK.value(), "친구 요청 수락 대기중입니다.", friendDataDto);
+            }else{
+                friendDataDto.setState("COMPLETE");
+                return new ResponseDto(HttpStatus.OK.value(), "이미 친구 상태 입니다.", friendDataDto);
+            }
+
         }else if (requested.size() != 0){
-            return new ResponseDto(HttpStatus.OK.value(), "친구 요청을 받은 상태입니다.", friendAddDto);
+            if(requested.get(0).getState() == FriendEnum.WAIT){
+                friendDataDto.setState("REQUESTED_WAIT");
+                return new ResponseDto(HttpStatus.OK.value(), "친구 요청을 받은 상태입니다.", friendDataDto);
+            }else{
+                friendDataDto.setState("COMPLETE");
+                return new ResponseDto(HttpStatus.OK.value(), "이미 친구 상태 입니다.", friendDataDto);
+            }
         }else{
-            return new ResponseDto(HttpStatus.OK.value(), "친구 요청이 가능한 상태입니다", friendAddDto);
+            friendDataDto.setState("NONE");
+            return new ResponseDto(HttpStatus.OK.value(), "친구 요청이 가능한 상태입니다", friendDataDto);
+        }
+    }
+
+    public ResponseDto acceptFriendRequest(Long friendId){
+        Friend friend = friendRepository.findFriendById(friendId);
+        if(friend == null){
+            return new ResponseDto(HttpStatus.BAD_REQUEST.value(), "검색된 friend가 없어서 수락이 불가능합니다.", null);
+        }else{
+            log.info("친구 수락 함수 진입");
+            friend.setState(FriendEnum.COMPLETE);
+            friendRepository.save(friend);
+            return new ResponseDto(HttpStatus.OK.value(), "성공적으로 친구요청을 수락하였습니다.", friendId);
         }
     }
 }

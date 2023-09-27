@@ -5,13 +5,13 @@ import lombok.Data;
 
 @Data
 public class FriendDto {
-    private Long Id;
+    private Long id;
     private MemberDto member;
     private Boolean request;
     private FriendEnum state;
 
     public FriendDto(Long id, MemberDto member, Boolean request, FriendEnum state) {
-        Id = id;
+        this.id = id;
         this.member = member;
         this.request = request;
         this.state = state;

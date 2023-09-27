@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.mapping.Join;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ public class JoinController {
         ResponseDto result = joinService.join(joinDto);
         return result;
     }
-    @PostMapping("/validate/username")
+    @GetMapping("/check/username")
     public ResponseDto validateUsername(@RequestBody JoinDto joinDto){
         log.info("아이디 인증 핸들러 접근");
         ResponseDto result = joinService.validateUsername(joinDto);

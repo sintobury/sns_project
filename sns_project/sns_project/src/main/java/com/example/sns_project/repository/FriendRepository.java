@@ -21,6 +21,9 @@ public class FriendRepository {
             em.merge(friend);
         }
     }
+    public Friend findFriendById(Long friendId){
+        return em.find(Friend.class, friendId);
+    }
     public List<Friend> findFriend(Member member, Member friend){
         return em.createQuery("select f from Friend f " +
                 "where f.friendRequest = :member and f.friendRequested = :friend ", Friend.class)

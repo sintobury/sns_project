@@ -40,7 +40,7 @@ public class MemberTest {
         memberService.memberUpdate(memberDto);
         Member member1 = memberRepository.findByUsername(memberDto.getUsername()).get(0);
         System.out.println(member1.getName() + " " + member1.getEmail() + " " + member1.getGender());
-        ;
+
 
     }
 }

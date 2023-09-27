@@ -24,6 +24,11 @@ import java.util.StringTokenizer;
 public class MemberService {
     private final MemberRepository memberRepository;
 
+    public Member findByUsername(String username){
+        Member member = memberRepository.findByUsername(username).get(0);
+        return member;
+    }
+
     public ResponseDto memberInfo(String username){
         log.info("MemberService memberInfo 접근");
         Member member = memberRepository.findByUsername(username).get(0);
@@ -40,7 +45,8 @@ public class MemberService {
             member.setName(memberDto.getName());
             member.setBirth(memberDto.getBirth());
             member.setEmail(memberDto.getEmail());
-            memberDto.setGender(memberDto.getGender());
+            member.setGender(memberDto.getGender());
+            memberRepository.save(member);
             return new ResponseDto(HttpStatus.OK.value(), "변경사항이 정상적으로 저장되었습니다.", memberDto);
         }
     }

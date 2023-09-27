@@ -12,10 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -27,6 +24,10 @@ public class MemberController {
     @GetMapping("/info")
     public ResponseDto memberInfo(@AuthenticationPrincipal CustomDetails customDetails){
         return memberService.memberInfo(customDetails.getUsername());
+    }
+    @GetMapping("/info/{username}")
+    public ResponseDto memberIdInfo(@RequestParam("username") String username){
+        return memberService.memberInfo(username);
     }
 
 }
