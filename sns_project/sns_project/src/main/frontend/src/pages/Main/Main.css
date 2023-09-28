@@ -2,19 +2,23 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     min-height: 100vh;
 }
 .main_container {
+    width: 100%;
     display: flex;
     flex-direction: row;
-    align-items: stretch;
-    width: 100vw;
-    flex: 1 1 auto;
+    justify-content: center;
+    align-items: flex-start;
+    flex: 1 0 auto;
+    gap: 5rem;
 }
 
 .main_content {
+    width: 46rem;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: stretch;
-    flex: 1 1 auto;
 }

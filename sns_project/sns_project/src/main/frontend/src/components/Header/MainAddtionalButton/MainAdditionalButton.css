@@ -1,0 +1,18 @@
+.additional_menu {
+    width: 5rem;
+    height: 1.875rem;
+}
+.additional_button {
+    width: 5rem;
+    height: 1.875rem;
+}
+.hamburgur_menu {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width: 5rem;
+}
+.menu {
+    width: 5rem;
+    height: 1.875rem;
+}

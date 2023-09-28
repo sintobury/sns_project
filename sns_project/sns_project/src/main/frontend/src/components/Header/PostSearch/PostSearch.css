@@ -1,0 +1,20 @@
+.postsearch_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    align-items: center;
+    gap: 10px;
+}
+
+.Post_Search {
+    border: none;
+    border-radius: 5px;
+    width: 15rem;
+    height: 1.875rem;
+    background-color: #e0e0e0;
+}
+
+.search_button {
+    width: 70px;
+    height: 1.875rem;
+}

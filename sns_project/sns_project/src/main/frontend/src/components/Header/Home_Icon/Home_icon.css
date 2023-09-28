@@ -1,0 +1,23 @@
+a {
+    color: black;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.header_logo {
+    margin: 0;
+    font-size: 1.5rem;
+    padding: .5rem .75rem;
+    width: 10rem;
+    text-align: center;
+}
+
+.homeicon {
+    width: 300px;
+}

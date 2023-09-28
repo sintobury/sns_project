@@ -1,0 +1,31 @@
+.set_chat_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.options_container {
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    background-color: rgb(201, 201, 201);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+.add_chat_button {
+    width: 5.3125rem;
+    height: 1.875rem;
+}
+
+.add_chat_button:hover {
+    background-color: #8e929a;
+    border: 1px solid #8e929a;
+}
+
+.chatroom_name {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
