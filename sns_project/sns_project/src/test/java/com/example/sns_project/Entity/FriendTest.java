@@ -51,7 +51,7 @@ public class FriendTest {
         friendRepository.save(friend1);
         em.flush();
         em.clear();
-        List<Friend> friendList = friendRepository.findRequestFriendList(1L);
+        List<Friend> friendList = friendRepository.findRequestFriendList(member.getId());
         System.out.println(friendList.get(0).getFriendRequest().getUsername());
         for (Friend friend2 : friendList) {
             System.out.println(friend2.getFriendRequest().getUsername());
