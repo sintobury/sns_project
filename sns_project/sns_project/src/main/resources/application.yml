@@ -23,7 +23,7 @@ spring:
         #        show_sql: true
         format_sql: true
   redis:
-    host: localhost
+    host: 13.124.212.3
     port: 6379
   security:
     oauth2:
