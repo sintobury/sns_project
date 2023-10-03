@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
-const onRequest = (config) => {
+const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
   if (!config.headers) {
     return config;
   }
@@ -8,20 +8,20 @@ const onRequest = (config) => {
   return config;
 };
 
-const onErrorRequest = (err) => {
+const onErrorRequest = (err: AxiosError | Error) => {
   return Promise.reject(err);
 };
 
-const onResponse = (res) => {
+const onResponse = (res: AxiosResponse) => {
   return res;
 };
 
-const onErrorResponse = async (err) => {
-  const _err = err;
+const onErrorResponse = async (err: AxiosError | Error): Promise<AxiosError> => {
+  const _err = err as unknown as AxiosError;
   const { response } = _err;
   const originalConfig = _err?.config;
 
-  if (response && (response.status === 401 || response?.status === 500)) {
+  if (response && response.status === 401) {
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/refresh`, {
         headers: {
@@ -32,10 +32,12 @@ const onErrorResponse = async (err) => {
         localStorage.setItem("accessToken", res.headers["authorization"]);
       }
     } catch (error) {
-      if (error.response?.status === 500) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("Id");
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 500) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          localStorage.removeItem("Id");
+        }
       }
     }
     const newAccessToken = localStorage.getItem("accessToken");
