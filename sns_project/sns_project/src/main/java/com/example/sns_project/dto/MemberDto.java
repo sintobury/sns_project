@@ -22,7 +22,7 @@ public class MemberDto {
 
     private String gender;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime birth;
 
     public MemberDto(Long id, String username, String name, String email, LocalDateTime createAt, String provider, String gender, LocalDateTime birth) {
