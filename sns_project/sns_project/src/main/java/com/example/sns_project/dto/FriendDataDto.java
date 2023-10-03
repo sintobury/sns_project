@@ -3,7 +3,7 @@ package com.example.sns_project.dto;
 import lombok.Data;
 
 @Data
-public class FriendDataDto {
+    public class FriendDataDto {
     private Long requestId;
     private Long requestedId;
     private String state;

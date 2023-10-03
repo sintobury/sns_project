@@ -2,6 +2,7 @@ package com.example.sns_project.controller;
 
 import com.example.sns_project.dto.JoinDto;
 import com.example.sns_project.dto.LoginDto;
+import com.example.sns_project.dto.MemberDto;
 import com.example.sns_project.dto.ResponseDto;
 import com.example.sns_project.entity.Member;
 import com.example.sns_project.security.auth.CustomDetails;
@@ -21,13 +22,17 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping("/info")
+    @GetMapping("/member/info")
     public ResponseDto memberInfo(@AuthenticationPrincipal CustomDetails customDetails){
         return memberService.memberInfo(customDetails.getUsername());
     }
-    @GetMapping("/info/{username}")
-    public ResponseDto memberIdInfo(@RequestParam("username") String username){
+    @GetMapping("/member/info/{username}")
+    public ResponseDto memberIdInfo(@PathVariable String username){
         return memberService.memberInfo(username);
+    }
+    @PostMapping("/member/update")
+    public ResponseDto memberUpdate(@RequestBody MemberDto memberDto){
+        return memberService.memberUpdate(memberDto);
     }
 
 }

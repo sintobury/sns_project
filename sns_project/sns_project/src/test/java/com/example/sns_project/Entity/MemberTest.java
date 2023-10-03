@@ -36,7 +36,7 @@ public class MemberTest {
         memberRepository.save(member);
         em.flush();
         em.clear();
-        MemberDto memberDto = new MemberDto("wldnjs3690","수정","수정",LocalDateTime.now(), "origin","MALE",LocalDateTime.now());
+        MemberDto memberDto = new MemberDto(1L,"wldnjs3690","수정","수정",LocalDateTime.now(), "origin","MALE",LocalDateTime.now());
         memberService.memberUpdate(memberDto);
         Member member1 = memberRepository.findByUsername(memberDto.getUsername()).get(0);
         System.out.println(member1.getName() + " " + member1.getEmail() + " " + member1.getGender());

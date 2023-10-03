@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 public class JoinDto {
     private String username;
     private String password;
-    private String passwordAgain;
     private String name;
     private String gender;
     private String email;

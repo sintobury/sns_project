@@ -43,14 +43,15 @@ public class SecurityConfig {
         log.info("시큐리티 필터 동작확인");
         http
                 .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
-                .addFilter(corsFilter) // @CrossOrigin(인증X), 시큐리티 필터에 등록 인증(O)
+
                 .sessionManagement(sessionManage -> sessionManage.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // 세션을 이용해서 stateful처럼 보이게 사용할 수 있는데 이 방식을 사용하지않음
                 .formLogin(form -> form.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(
                         request -> request
-                                .requestMatchers("/info").hasAnyRole("ADMIN","USER")
+                                .requestMatchers("/member/*").hasAnyRole("ADMIN","USER")
+                                .requestMatchers("/friend/*").hasAnyRole("ADMIN","USER")
                                 .anyRequest().permitAll()
                 )
                 .exceptionHandling(exception -> exception
@@ -60,6 +61,7 @@ public class SecurityConfig {
                         .successHandler(oAuth2SuccessHandler)
                         .userInfoEndpoint(user -> user
                                 .userService(oAuth2UserService)))
+                .addFilterBefore(corsFilter, JwtExceptionFilter.class)
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class);
         return http.build();
