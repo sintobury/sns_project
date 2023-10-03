@@ -24,8 +24,6 @@ import org.springframework.web.filter.CorsFilter;
 @Slf4j
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final CorsFilter corsFilter;
-
     private final CustomEntryPoint customEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
     private final JwtTokenProvider jwtTokenProvider;
@@ -61,9 +59,7 @@ public class SecurityConfig {
                         .userInfoEndpoint(user -> user
                                 .userService(oAuth2UserService)))
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class)
-                .addFilterBefore(corsFilter, JwtExceptionFilter.class)
-        ;
+                .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class);
         return http.build();
 
     }
