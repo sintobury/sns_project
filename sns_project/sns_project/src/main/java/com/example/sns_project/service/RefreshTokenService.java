@@ -21,7 +21,7 @@ public class RefreshTokenService {
     private final MemberRepository memberRepository;
 
     public ResponseDto refreshToken(RefreshDto refreshDto){
-        if(redisRepository.checkRefreshToken(refreshDto.getRefreshToken())){
+        if(redisRepository.existsByRefreshToken(refreshDto.getRefreshToken())){
             try{
                 jwtTokenProvider.validateRefreshToken(refreshDto.getRefreshToken());
                 String username = jwtTokenProvider.findUsernameByRefresh(refreshDto.getRefreshToken());
