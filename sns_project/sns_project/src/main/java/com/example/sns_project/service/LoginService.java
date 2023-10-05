@@ -39,6 +39,7 @@ public class LoginService {
             }else{
                 String accessToken = jwtTokenProvider.generateAccessToken(searchResult.get(0));
                 String refreshToken = jwtTokenProvider.generateRefreshToken(searchResult.get(0));
+                log.info("생성된 access : {}  refresh : {}",accessToken, refreshToken);
                 redisRepository.save(LoginInfo.builder().username(loginDto.getUsername()).accessToken(accessToken).refreshToken(refreshToken).build());
                 log.info("정상 로그인 되었습니다.");
                 return new ResponseDto(HttpStatus.OK.value(), "정상 로그인되었습니다.", new TokenDto(accessToken, refreshToken));

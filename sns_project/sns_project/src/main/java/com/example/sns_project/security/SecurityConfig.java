@@ -27,6 +27,7 @@ public class SecurityConfig {
     private final CustomEntryPoint customEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
     private final JwtTokenProvider jwtTokenProvider;
+    private final CorsFilter corsFilter;
     private final JwtExceptionFilter jwtExceptionFilter;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
     private final CustomOAuth2UserService oAuth2UserService;
@@ -59,7 +60,8 @@ public class SecurityConfig {
                         .userInfoEndpoint(user -> user
                                 .userService(oAuth2UserService)))
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class);
+                .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class)
+                .addFilterBefore(corsFilter, JwtExceptionFilter.class);
         return http.build();
 
     }

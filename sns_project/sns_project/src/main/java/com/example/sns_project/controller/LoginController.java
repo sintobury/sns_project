@@ -27,6 +27,7 @@ public class LoginController {
     }
     @PostMapping("/logout")
     public ResponseDto logout(@RequestBody RefreshDto refreshDto){
+        log.info("로그아웃 핸들러 접근");
         ResponseDto result = loginService.logout(refreshDto);
         return result;
     }
