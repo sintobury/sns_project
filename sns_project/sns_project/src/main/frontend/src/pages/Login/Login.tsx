@@ -5,29 +5,31 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import GoogleLoginButton from "../../components/GoogleLoginButton/GoogleLoginButton";
 import { useForm } from "react-hook-form";
+import { RootState } from "../../redux/reducers/rootReducer";
+import { defaultInstance } from "../../interceptors/interceptors";
+import { useEffect } from "react";
 
 interface loginForm {
-  email: string;
+  username: string;
   password: string;
 }
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLogin = useSelector((state) => state.loginSlice.isLogin);
-  if (isLogin) {
-    navigate("/main");
-  }
+  const isLogin = useSelector((state: RootState) => state.loginSlice.isLogin);
   const handleLogin = async (data: loginForm) => {
     try {
-      const res = await axios.post("url/login", data);
+      const res = await defaultInstance.post("/login", data);
       console.log("메시지: " + res.data.message);
+      console.log("result" + res.data.result);
       if (res.status === 200) {
-        const headers = res.headers;
-        const username = res.data.username;
-        const accessToken = headers["Authorization"];
-        const refreshToken = headers["Refresh"];
-        dispatch(login({ username, accessToken, refreshToken }));
+        const username = data.username;
+        const accessToken = res.data.result.accessToken;
+        const refreshToken = res.data.result.refreshToken;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        dispatch(login({ username }));
         alert("로그인 되었습니다.");
         navigate("/main");
       }
@@ -48,6 +50,11 @@ const Login = () => {
     handleSubmit,
   } = useForm<loginForm>();
 
+  useEffect(() => {
+    if (isLogin) {
+      navigate("/main");
+    }
+  });
   return (
     <div className="background_login">
       <div className="login_container">
@@ -56,17 +63,17 @@ const Login = () => {
           <div className="login_explain_container">web설명</div>
           <form className="login_function_container" onSubmit={handleSubmit(handleLogin)}>
             <div className="login_input_container">
-              <label htmlFor="input_email">이메일</label>
+              <label htmlFor="input_username">아이디</label>
               <input
-                type="email"
-                placeholder="email을 입력해주세요"
+                type="text"
+                placeholder="아이디를 입력해주세요"
                 className="input"
-                id="input_email"
-                {...register("email", {
-                  required: "email을 입력해주세요.",
+                id="input_username"
+                {...register("username", {
+                  required: "아이디를 입력해주세요.",
                 })}
               ></input>
-              {errors.email && <div className="errormessage">{errors.email?.message}</div>}
+              {errors.username && <div className="errormessage">{errors.username?.message}</div>}
               <label htmlFor="input_password">비밀번호</label>
               <input
                 type="password"

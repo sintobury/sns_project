@@ -9,8 +9,9 @@ const PostSearchOption = () => {
     { name: "작성자", value: "author" },
     { name: "태그", value: "tag" },
   ];
-  const handleOption = (e) => {
-    setOption(e.target.innerText);
+  const handleOption = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const target = e.target as HTMLButtonElement;
+    setOption(target.value);
     setOpenDropdown(false);
   };
   return (
@@ -25,6 +26,7 @@ const PostSearchOption = () => {
               key={el.value}
               onMouseDown={(e) => handleOption(e)}
               className="postsearch_option"
+              value={el.name}
             >
               {el.name}
             </button>

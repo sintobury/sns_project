@@ -3,8 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isLogin: false,
   username: "",
-  accessToken: "",
-  refreshToken: "",
 };
 
 const loginSlice = createSlice({
@@ -12,17 +10,13 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     login(state, action) {
-      const { username, accessToken, refreshToken } = action.payload;
+      const { username } = action.payload;
       state.isLogin = true;
       state.username = username;
-      state.accessToken = accessToken;
-      state.refreshToken = refreshToken;
     },
     logout(state) {
       state.isLogin = false;
       state.username = "";
-      state.accessToken = "";
-      state.refreshToken = "";
     },
   },
 });

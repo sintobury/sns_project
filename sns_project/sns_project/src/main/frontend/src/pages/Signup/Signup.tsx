@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./Signup.css";
-import axios from "axios";
 import { useForm } from "react-hook-form";
+import { defaultInstance } from "../../interceptors/interceptors";
+import Button from "../../components/Common/Button/Button";
 interface signupField {
   name: string;
   username: string;
@@ -19,14 +20,21 @@ const Signup = () => {
     formState: { errors, isSubmitting },
     handleSubmit,
     getValues,
-    setError,
   } = useForm<signupField>();
 
   const navigate = useNavigate();
   const [success, setSuccess] = useState(false);
   const handleSignup = async (data: signupField) => {
+    const body = {
+      username: data.username,
+      password: data.password,
+      name: data.name,
+      gender: data.gender,
+      email: data.email,
+      birth: `${data.birth} 00:00:00`,
+    };
     try {
-      const res = await axios.post("url", data);
+      const res = await defaultInstance.post("/join", body);
       if (res.status === 200) {
         alert("회원가입 되었습니다.");
         navigate("/");
@@ -39,7 +47,7 @@ const Signup = () => {
 
   const validateID = async (data: string) => {
     try {
-      const res = await axios.post("url", data);
+      const res = await defaultInstance.get(`/check/username?username=${data}`);
       if (res.status === 200) {
         setSuccess(true);
       }
@@ -48,7 +56,7 @@ const Signup = () => {
       // setError("formError", { message: "중복된 아이디입니다." });
     }
   };
-  // 아이디도 폼에 추가 아이디 중복체크 버튼 필요
+
   return (
     <div className="background_signup">
       <div className="signup_container">
@@ -80,9 +88,12 @@ const Signup = () => {
                 required: "아이디를 작성해주세요.",
               })}
             />
-            <button type="button" onClick={() => validateID(getValues("username"))}>
-              중복확인
-            </button>
+            <Button
+              type="button"
+              onClick={() => validateID(getValues("username"))}
+              text="중복확인"
+              design="black"
+            ></Button>
           </div>
           {errors.username && <div className="errormessage">{errors.username?.message}</div>}
           {success && <div className="successmessage">사용가능한 아이디입니다.</div>}
@@ -164,6 +175,7 @@ const Signup = () => {
             <input
               id="male"
               type="radio"
+              value="MALE"
               className={errors.gender ? "errorInput" : "input"}
               {...register("gender", {
                 required: "성별을 선택해주세요.",
@@ -173,6 +185,7 @@ const Signup = () => {
             <input
               id="female"
               type="radio"
+              value="FEMALE"
               className={errors.gender ? "errorInput" : "input"}
               {...register("gender", {
                 required: "성별을 선택해주세요.",
@@ -181,9 +194,8 @@ const Signup = () => {
           </div>
           {errors.checkpassword && <div className="errormessage">{errors.gender?.message}</div>}
           <div className="signup_button_container">
-            <button className="signup_button" type="submit" disabled={isSubmitting}>
-              회원가입
-            </button>
+            <Button type="button" text="취소" design="green" onClick={() => navigate(-1)} />
+            <Button type="submit" disabled={isSubmitting} text="회원가입" design="black" />
           </div>
         </form>
       </div>

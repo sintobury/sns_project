@@ -7,12 +7,12 @@ const Alert = () => {
       <button className="alram_button" onClick={() => setOpenAlertList(!openAlertList)}>
         알림
       </button>
-      {openAlertList
-        ? {
-            /* 태그된 글이 생성되었을때 알림창 보내기
-    잘몰라서 찾아봐야함 */
-          }
-        : null}
+      {openAlertList ? (
+        <div>
+          {/* 태그된 글이 생성되었을때 알림창 보내기
+    잘몰라서 찾아봐야함 */}
+        </div>
+      ) : null}
     </div>
   );
 };

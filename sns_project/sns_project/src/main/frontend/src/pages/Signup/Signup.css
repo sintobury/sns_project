@@ -77,20 +77,12 @@
     gap: 3rem;
 }
 
-.signup_button {
-    background-color: rgb(118, 152, 66);
-}
-
-.signup_button:hover {
-    background-color: rgb(118, 152, 66);
-    opacity: .7;
-}
-
 .signup_button_container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: flex-end;
     align-items: flex-end;
+    gap: 2rem;
 }
 
 .modal_title {

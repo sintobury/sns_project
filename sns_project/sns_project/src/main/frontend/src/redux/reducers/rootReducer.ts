@@ -6,5 +6,5 @@ const rootReducer = combineReducers({
   modalSlice: openModal,
   loginSlice: loginSlice,
 });
-
+export type RootState = ReturnType<typeof rootReducer>;
 export default rootReducer;

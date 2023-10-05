@@ -33,10 +33,12 @@ const onErrorResponse = async (err: AxiosError | Error): Promise<AxiosError> => 
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        if (error.response?.status === 500) {
+        if (error.response?.status === 401) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           localStorage.removeItem("Id");
+          alert("로그인시간이 만료되었습니다.");
+          window.location.replace("/");
         }
       }
     }
@@ -45,6 +47,12 @@ const onErrorResponse = async (err: AxiosError | Error): Promise<AxiosError> => 
       originalConfig.headers.Authorization = newAccessToken;
       return await axios(originalConfig);
     }
+  } else if (response && response.status === 406) {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("Id");
+    alert("다른곳에서 로그인되었습니다.");
+    window.location.replace("/");
   }
   return Promise.reject(_err);
 };

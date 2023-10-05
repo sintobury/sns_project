@@ -1,0 +1,30 @@
+button {
+    display: flex;
+    gap: 0.25rem;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: 0.3s;
+    padding: 0.5rem 1rem;
+    font-size: .875rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    &.black {
+        background: #212121;
+        color: #fff;   
+    }
+    &.black:hover {
+        background: #c2c2c2;
+        color: #212121;
+    }
+    &.green {
+        background: #70e15e;
+        color: #212121;
+    }
+    &.green:hover {
+        background: #407b36;
+        color: #fff;
+    }
+}

@@ -4,15 +4,13 @@ const GoogleLoginButton = () => {
   return (
     <>
       <GoogleLogin
-        ux_mode="redirect"
+        // ux_mode="redirect"
         onSuccess={(res) => {
           console.log(res);
-          window.location.reload();
+          console.log(res.credential);
         }}
         onError={() => {
-          (err) => {
-            console.log(err);
-          };
+          console.log("로그인실패");
         }}
         type="icon"
       />
