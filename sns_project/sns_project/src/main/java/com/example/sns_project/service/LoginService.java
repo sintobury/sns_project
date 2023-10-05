@@ -51,7 +51,8 @@ public class LoginService {
         }
     }
     public ResponseDto logout(RefreshDto refreshDto){
-        redisRepository.deleteByRefreshToken(refreshDto.getRefreshToken());
+        LoginInfo login = redisRepository.findByRefreshToken(refreshDto.getRefreshToken());
+        redisRepository.deleteById(login.getUsername());
         return new ResponseDto(HttpStatus.OK.value(), "로그아웃 성공",refreshDto);
     }
 }

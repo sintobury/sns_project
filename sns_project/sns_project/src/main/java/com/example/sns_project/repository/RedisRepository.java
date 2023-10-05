@@ -1,6 +1,7 @@
 package com.example.sns_project.repository;
 
 import com.example.sns_project.entity.LoginInfo;
+import com.mysql.cj.log.Log;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
@@ -12,5 +13,7 @@ public interface RedisRepository extends CrudRepository<LoginInfo, String > {
     boolean existsByRefreshToken(String s);
 
     void deleteByRefreshToken(String s);
+
+    LoginInfo findByRefreshToken(String s);
 
 }
