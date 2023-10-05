@@ -47,6 +47,7 @@ public class SecurityConfig {
                 .sessionManagement(sessionManage -> sessionManage.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // 세션을 이용해서 stateful처럼 보이게 사용할 수 있는데 이 방식을 사용하지않음
                 .formLogin(form -> form.disable())
+                .logout(logout -> logout.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .authorizeHttpRequests(
                         request -> request
