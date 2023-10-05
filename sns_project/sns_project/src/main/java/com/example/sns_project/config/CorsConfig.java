@@ -1,4 +1,4 @@
-package com.example.sns_project.security;
+package com.example.sns_project.config;
 
 
 import org.springframework.context.annotation.Bean;
