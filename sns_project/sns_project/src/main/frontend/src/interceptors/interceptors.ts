@@ -4,7 +4,7 @@ const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConf
   if (!config.headers) {
     return config;
   }
-  config.headers.Authorization = localStorage.getItem("accessToken");
+  config.headers.Authorization = `Bearer ${localStorage.getItem("accessToken")}`;
   return config;
 };
 
@@ -44,7 +44,7 @@ const onErrorResponse = async (err: AxiosError | Error): Promise<AxiosError> => 
     }
     const newAccessToken = localStorage.getItem("accessToken");
     if (originalConfig && originalConfig.headers) {
-      originalConfig.headers.Authorization = newAccessToken;
+      originalConfig.headers.Authorization = `Bearer ${newAccessToken}`;
       return await axios(originalConfig);
     }
   } else if (response && response.status === 406) {
