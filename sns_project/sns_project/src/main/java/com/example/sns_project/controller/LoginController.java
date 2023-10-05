@@ -21,6 +21,7 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseDto login(@RequestBody LoginDto loginDto){
         log.info("로그인 핸들러 접근");
+        log.info("로그인 정보 id : {}  password : {}", loginDto.getUsername(), loginDto.getPassword());
         ResponseDto result = loginService.login(loginDto);
         return result;
     }
