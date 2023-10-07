@@ -23,16 +23,16 @@ const MainAdditionalButton = () => {
   }, [MenuRef]);
   return (
     <div className="additional_menu" ref={MenuRef}>
-      <button className="additional_button" onClick={() => setOpenMenu(!openMenu)}>
+      <div className="additional_button" onClick={() => setOpenMenu(!openMenu)}>
         더보기
-      </button>
+      </div>
       {openMenu ? (
         <div className="hamburgur_menu">
-          <button className="menu" onClick={handlePropileButton}>
+          <div className="menu" onClick={handlePropileButton}>
             프로필
-          </button>
+          </div>
           <LogoutButton />
-          <button className="menu">darkmode</button>
+          <div className="menu">darkmode</div>
         </div>
       ) : null}
     </div>

@@ -1,12 +1,12 @@
 .set_chat_container {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .options_container {
-    position: fixed;
-    top: 50px;
-    right: 10px;
+    position: absolute;
+    top: 40px;
     background-color: rgb(201, 201, 201);
     border-radius: 5px;
     display: flex;

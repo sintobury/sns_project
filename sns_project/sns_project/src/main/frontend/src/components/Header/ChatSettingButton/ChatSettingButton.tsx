@@ -1,11 +1,23 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./ChatSettingButton.css";
 
 const ChatSettingButton = () => {
   const [openSetting, setOpenSetting] = useState(false);
   const [title, setTitle] = useState("");
+  const chatMakerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent): void => {
+      if (chatMakerRef.current && !chatMakerRef.current.contains(e.target as Node)) {
+        setOpenSetting(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [chatMakerRef]);
   return (
-    <div className="set_chat_container">
+    <div className="set_chat_container" ref={chatMakerRef}>
       <button onClick={() => setOpenSetting(!openSetting)} className="add_chat_button">
         채팅방 추가
       </button>

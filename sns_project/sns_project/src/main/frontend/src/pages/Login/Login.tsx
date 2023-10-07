@@ -21,8 +21,6 @@ const Login = () => {
   const handleLogin = async (data: loginForm) => {
     try {
       const res = await defaultInstance.post("/login", data);
-      console.log("메시지: " + res.data.message);
-      console.log("result" + res.data.result);
       if (res.status === 200) {
         const username = data.username;
         const accessToken = res.data.result.accessToken;
@@ -54,7 +52,7 @@ const Login = () => {
     if (isLogin) {
       navigate("/main");
     }
-  });
+  }, []);
   return (
     <div className="background_login">
       <div className="login_container">
