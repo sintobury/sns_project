@@ -11,6 +11,7 @@ button {
     font-size: .875rem;
     border: 1px solid transparent;
     cursor: pointer;
+    white-space: nowrap;
     &.black {
         background: #212121;
         color: #fff;   

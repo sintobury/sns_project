@@ -14,10 +14,5 @@ a:hover {
     margin: 0;
     font-size: 1.5rem;
     padding: .5rem .75rem;
-    width: 10rem;
     text-align: center;
-}
-
-.homeicon {
-    width: 300px;
 }

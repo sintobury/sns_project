@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./ChatSettingButton.css";
+import Button from "../../Common/Button/Button";
 
 const ChatSettingButton = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -18,10 +19,8 @@ const ChatSettingButton = () => {
   }, [chatMakerRef]);
   return (
     <div className="set_chat_container" ref={chatMakerRef}>
-      <button onClick={() => setOpenSetting(!openSetting)} className="add_chat_button">
-        채팅방 추가
-      </button>
-      {openSetting ? (
+      <Button onClick={() => setOpenSetting(!openSetting)} text="채팅방 추가" type="button" />
+      {openSetting && (
         <div className="options_container">
           <div className="chatroom_name">
             <textarea
@@ -29,11 +28,11 @@ const ChatSettingButton = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             ></textarea>
-            <button>만들기</button>
+            <Button text="만들기" type="button" design="black" />
           </div>
           <ul>{/* 친구 목록 체크박스 있는 형태로 띄워주기 */}</ul>
         </div>
-      ) : null}
+      )}
     </div>
   );
 };

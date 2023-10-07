@@ -7,19 +7,21 @@ import MainAdditionalButton from "./MainAddtionalButton/MainAdditionalButton";
 
 const Header = () => {
   return (
-    <header className="header_container">
-      <Homeicon />
-      <div className="header_function">
-        <div className="search_part">
-          <PostSearch />
+    <div className="header_wrapper">
+      <header className="header_container">
+        <Homeicon />
+        <div className="header_function">
+          <div className="search_part">
+            <PostSearch />
+          </div>
+          <div className="optional_button_container">
+            <ChatSettingButton />
+            <Alert />
+            <MainAdditionalButton />
+          </div>
         </div>
-        <div className="optional_button_container">
-          <ChatSettingButton />
-          <Alert />
-          <MainAdditionalButton />
-        </div>
-      </div>
-    </header>
+      </header>
+    </div>
   );
 };
 

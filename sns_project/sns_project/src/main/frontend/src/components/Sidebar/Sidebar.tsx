@@ -1,4 +1,8 @@
 import { useState } from "react";
+import Button from "../Common/Button/Button";
+import HomeIcon from "@mui/icons-material/Home";
+import GroupIcon from "@mui/icons-material/Group";
+import StarIcon from "@mui/icons-material/Star";
 import "./Sidebar.css";
 
 const Sidebar = () => {
@@ -6,15 +10,19 @@ const Sidebar = () => {
   return (
     <div className="sidebar_container">
       <div className="sidebar_button_container">
-        <button className="sidebar_button" onClick={() => setMode("home")}>
-          home 아이콘
-        </button>
-        <button className="sidebar_button" onClick={() => setMode("friendList")}>
-          friend list 아이콘
-        </button>
-        <button className="sidebar_button" onClick={() => setMode("bookmarkList")}>
-          bookmark 아이콘
-        </button>
+        <Button icon={<HomeIcon />} text="메인으로" type="button" onClick={() => setMode("home")} />
+        <Button
+          icon={<GroupIcon />}
+          text="친구목록"
+          type="button"
+          onClick={() => setMode("friendList")}
+        />
+        <Button
+          icon={<StarIcon />}
+          text="즐겨찾기"
+          type="button"
+          onClick={() => setMode("bookmarkList")}
+        />
       </div>
       {mode === "friendList" ? <div className="friend_list">{/*친구목록*/}</div> : null}
       {mode === "bookmarkList" ? (

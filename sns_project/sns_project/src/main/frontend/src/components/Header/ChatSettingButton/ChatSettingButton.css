@@ -12,15 +12,6 @@
     display: flex;
     flex-direction: column;
 }
-.add_chat_button {
-    width: 5.3125rem;
-    height: 1.875rem;
-}
-
-.add_chat_button:hover {
-    background-color: #8e929a;
-    border: 1px solid #8e929a;
-}
 
 .chatroom_name {
     padding: 10px;

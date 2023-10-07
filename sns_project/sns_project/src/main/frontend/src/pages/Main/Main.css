@@ -6,11 +6,11 @@
     min-height: 100vh;
 }
 .main_container {
+    max-width: 90rem;
     width: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
     flex: 1 0 auto;
     gap: 5rem;
 }
@@ -19,6 +19,6 @@
     width: 46rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: stretch;
 }

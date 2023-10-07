@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PostSearchOption from "./PostSearchOption/PostSearchOption";
 import "./PostSearch.css";
+import Button from "../../Common/Button/Button";
 
 const PostSearch = () => {
   const [searchword, setSearchword] = useState("");
@@ -13,7 +14,7 @@ const PostSearch = () => {
         value={searchword}
         onChange={(e) => setSearchword(e.target.value)}
       ></input>
-      <button className="search_button">검색</button>
+      <Button type="button" text="검색" design="black" />
     </div>
   );
 };
