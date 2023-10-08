@@ -1,12 +1,12 @@
 .main_content_container {
+    max-width: 90rem;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
 }
 
 .profile_container {
-    min-width: 46rem;
     display: flex;
     flex-direction: column;
     justify-content: center;

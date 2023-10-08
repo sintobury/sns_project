@@ -14,13 +14,14 @@
 
 .selected {
     width: 5rem;
-    overflow: hidden;
     background-color: #E0E0E0;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     text-align: center;
     padding: 8px 12px;
+    border: 1px solid #e0e0e0;
     border-bottom: 1px solid #BDBDBD;
+    font-size: .875rem;
     &:last-child {
         border-bottom-left-radius: 6px;
         border-bottom-right-radius: 6px;    
@@ -38,7 +39,9 @@
     background-color: #E0E0E0;
     text-align: center;
     padding: 8px 12px;
+    border: 1px solid #E0E0E0;
     border-bottom: 1px solid #BDBDBD;
+    font-size: .875rem;
     &:last-child {
         border-bottom: none;
     }

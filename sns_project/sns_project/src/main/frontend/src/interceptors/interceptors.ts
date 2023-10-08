@@ -23,17 +23,17 @@ const onErrorResponse = async (err: AxiosError | Error): Promise<AxiosError> => 
 
   if (response && response.status === 401) {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/refresh`, {
-        headers: {
-          Refresh: localStorage.getItem("refreshToken"),
-        },
+      console.log("access expired");
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/refresh`, {
+        refreshToken: localStorage.getItem("refreshToken"),
       });
       if (res.status === 200) {
-        localStorage.setItem("accessToken", res.headers["authorization"]);
+        localStorage.setItem("accessToken", res.data.result.accessToken);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
+          console.log("refresh expired");
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           localStorage.removeItem("Id");
