@@ -8,7 +8,6 @@ interface ButtonProp {
   disabled?: boolean;
   onClick?: () => void;
   onSubmit?: () => void;
-  onKeydown?: () => void;
 }
 
 const Button = ({ ...props }: ButtonProp): JSX.Element => {
