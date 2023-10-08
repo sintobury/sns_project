@@ -5,9 +5,16 @@ import GroupIcon from "@mui/icons-material/Group";
 import StarIcon from "@mui/icons-material/Star";
 import "./Sidebar.css";
 import { yellow } from "@mui/material/colors";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [mode, setMode] = useState("home");
+  const navigate = useNavigate();
+  const navigateMain = () => {
+    setMode("home");
+    navigate("/main");
+  };
+
   return (
     <div className="sidebar_container">
       <div className="sidebar_button_container">
@@ -15,7 +22,7 @@ const Sidebar = () => {
           icon={<HomeIcon sx={{ color: "#70e15e" }} />}
           text="메인으로"
           type="button"
-          onClick={() => setMode("home")}
+          onClick={navigateMain}
         />
         <Button
           icon={<GroupIcon color="primary" />}

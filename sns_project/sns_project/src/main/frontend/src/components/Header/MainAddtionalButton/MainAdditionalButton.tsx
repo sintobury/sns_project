@@ -1,4 +1,3 @@
-import Button from "../../Common/Button/Button";
 import LogoutButton from "../LogoutButton/LogoutButton";
 import "./MainAdditionalButton.css";
 import { useEffect, useRef, useState } from "react";
@@ -25,12 +24,9 @@ const MainAdditionalButton = () => {
   }, [MenuRef]);
   return (
     <div className="additional_menu" ref={MenuRef}>
-      <Button
-        type="button"
-        text=""
-        icon={<MenuIcon sx={{ fontSize: 16 }} />}
-        onClick={() => setOpenMenu(!openMenu)}
-      />
+      <div className="additional_button" onClick={() => setOpenMenu(!openMenu)}>
+        <MenuIcon />
+      </div>
       {openMenu && (
         <div className="hamburgur_menu">
           <div className="menu" onClick={navigateProfileButton}>

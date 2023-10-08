@@ -28,11 +28,12 @@ const ChatSettingButton = () => {
       {openSetting && (
         <div className="options_container">
           <div className="chatroom_name">
-            <textarea
+            <input
+              className="chatroom_title_input"
               placeholder="채팅방 이름"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-            ></textarea>
+            ></input>
             <Button text="만들기" type="button" design="black" />
           </div>
           <ul>{/* 친구 목록 체크박스 있는 형태로 띄워주기 */}</ul>

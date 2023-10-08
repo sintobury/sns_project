@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import "./Postmaker.css";
 import { authInstance } from "../../interceptors/interceptors";
+import Button from "../Common/Button/Button";
 
 interface PostInput {
   title: string;
@@ -22,7 +23,7 @@ const Postmaker = () => {
   return (
     <div className="postmaker_container">
       <div className="postmaker_propile_container">
-        <img src="" alt="propile"></img>
+        <img src="" alt="profileimg"></img>
       </div>
       <form className="postmaker_input_container" onSubmit={handleSubmit(makePost)}>
         <input
@@ -45,16 +46,10 @@ const Postmaker = () => {
         {errors.content && <div className="errormessage">{errors.content?.message}</div>}
       </form>
       <div className="postmaker_button_container">
-        <div className="post_button_container">
-          <button className="post_button" type="submit" disabled={isSubmitting}>
-            작성 하기
-          </button>
-        </div>
-        <div className="content_option_button_container">
-          <button className="content_option_button">미디어 추가</button>
-          <button className="content_option_button">파일 추가</button>
-          <button className="content_option_button">태그 추가</button>
-        </div>
+        <Button text="작성하기" type="submit" disabled={isSubmitting} design="black" />
+        <Button text="미디어 추가" type="button" design="black" />
+        <Button text="파일 추가" type="button" design="black" />
+        <Button text="태그 추가" type="button" design="black" />
       </div>
     </div>
   );

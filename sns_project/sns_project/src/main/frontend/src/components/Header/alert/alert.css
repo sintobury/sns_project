@@ -1,4 +1,4 @@
-.alram_button {
-    width: 64px;
-    height: 1.875rem;
+.alert_button {
+    padding: .5rem .75rem;
+    cursor: pointer;
 }
