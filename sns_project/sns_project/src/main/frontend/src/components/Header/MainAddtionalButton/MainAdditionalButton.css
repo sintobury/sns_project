@@ -10,12 +10,13 @@
 }
 .hamburgur_menu {
     position: absolute;
-    left: -30px;
+    left: -55px;
     top: 40px;
     display: flex;
     flex-direction: column;
     background-color: #e0e0e0;
     border-radius: 6px;
+    overflow: hidden;
 }
 .menu {
     padding: .5rem .75rem;
@@ -24,7 +25,11 @@
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid #bdbdbd;
+    cursor: pointer;
     &:last-child {
         border-bottom: none;
     }
+}
+.menu:hover {
+    background-color: #bdbdbd;
 }

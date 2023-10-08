@@ -15,14 +15,16 @@
 }
 
 .header_function {
+    width: calc(100% - 25rem);
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    gap: 5rem;
+    gap: 20px;
 }
 
 .search_part {
+    width: calc(100% - 12.8125rem);
     display: flex;
     flex-direction: row;
     justify-content: flex-start;

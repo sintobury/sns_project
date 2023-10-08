@@ -52,7 +52,7 @@ const Profile = () => {
   );
   console.log(profileData);
   return (
-    <>
+    <div className="profile_page">
       <Header />
       <div className="main_content_container">
         <Sidebar />
@@ -84,7 +84,7 @@ const Profile = () => {
         )}
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

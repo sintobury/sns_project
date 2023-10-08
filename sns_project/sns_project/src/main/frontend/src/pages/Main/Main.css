@@ -3,10 +3,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-    min-height: 100vh;
 }
 .main_container {
     max-width: 90rem;
+    min-height: calc(100vh - 9.375rem);
     width: 100%;
     margin: 0 auto;
     display: flex;
@@ -15,7 +15,7 @@
 }
 
 .main_content {
-    width: 46rem;
+    width: calc(100% - 25rem);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
