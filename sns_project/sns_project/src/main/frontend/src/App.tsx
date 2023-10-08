@@ -15,6 +15,7 @@ function App() {
         <Route path="/" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/main" element={isLogin ? <Main /> : <Login />}></Route>
+        <Route path="/search" element={isLogin ? <Main /> : <Login />}></Route>
         <Route path="/profile" element={isLogin ? <Profile /> : <Login />}></Route>
       </Routes>
     </BrowserRouter>

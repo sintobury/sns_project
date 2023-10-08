@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./PostSearch.css";
 import Button from "../../Common/Button/Button";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
 
@@ -15,9 +15,11 @@ const PostSearch = () => {
     { name: "태그", value: "tag" },
   ];
   const navigate = useNavigate();
+  const location = useLocation();
   const searchOption = PostSearchOptions.find((el) => el.name === option)?.value;
   const search = () => {
-    navigate(`/main?searchoption=${searchOption}&searchword=${searchword}`);
+    navigate(`/search?searchoption=${searchOption}&searchword=${searchword}`);
+    setSearchword("");
   };
   const enterSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -48,6 +50,9 @@ const PostSearch = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [searchOptionRef]);
+  useEffect(() => {
+    setSearchword("");
+  }, [location]);
 
   return (
     <div className="postsearch_container">
