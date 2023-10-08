@@ -1,12 +1,14 @@
+import Button from "../../Common/Button/Button";
 import LogoutButton from "../LogoutButton/LogoutButton";
 import "./MainAdditionalButton.css";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const MainAdditionalButton = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const navigate = useNavigate();
-  const handlePropileButton = () => {
+  const navigateProfileButton = () => {
     navigate("/profile");
   };
   const MenuRef = useRef<HTMLDivElement>(null);
@@ -23,18 +25,21 @@ const MainAdditionalButton = () => {
   }, [MenuRef]);
   return (
     <div className="additional_menu" ref={MenuRef}>
-      <div className="additional_button" onClick={() => setOpenMenu(!openMenu)}>
-        더보기
-      </div>
-      {openMenu ? (
+      <Button
+        type="button"
+        text=""
+        icon={<MenuIcon sx={{ fontSize: 16 }} />}
+        onClick={() => setOpenMenu(!openMenu)}
+      />
+      {openMenu && (
         <div className="hamburgur_menu">
-          <div className="menu" onClick={handlePropileButton}>
+          <div className="menu" onClick={navigateProfileButton}>
             프로필
           </div>
-          <LogoutButton />
           <div className="menu">darkmode</div>
+          <LogoutButton />
         </div>
-      ) : null}
+      )}
     </div>
   );
 };

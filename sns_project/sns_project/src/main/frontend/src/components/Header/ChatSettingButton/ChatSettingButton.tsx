@@ -19,7 +19,12 @@ const ChatSettingButton = () => {
   }, [chatMakerRef]);
   return (
     <div className="set_chat_container" ref={chatMakerRef}>
-      <Button onClick={() => setOpenSetting(!openSetting)} text="채팅방 추가" type="button" />
+      <Button
+        onClick={() => setOpenSetting(!openSetting)}
+        text="채팅방 추가"
+        type="button"
+        design="black"
+      />
       {openSetting && (
         <div className="options_container">
           <div className="chatroom_name">

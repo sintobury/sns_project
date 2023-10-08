@@ -1,18 +1,23 @@
 .additional_menu {
-    width: 5rem;
-    height: 1.875rem;
+    position: relative;
 }
 .additional_button {
     width: 5rem;
     height: 1.875rem;
 }
 .hamburgur_menu {
-    position: fixed;
+    position: absolute;
     display: flex;
     flex-direction: column;
     width: 5rem;
+    background-color: #e0e0e0;
+    border-radius: 6px;
 }
 .menu {
     width: 5rem;
     height: 1.875rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
