@@ -1,0 +1,18 @@
+.Post_container {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.title_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter_button {
+    position: relative;
+    width: 7.5rem;
+}

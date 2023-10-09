@@ -6,6 +6,10 @@ import { authInstance } from "../../interceptors/interceptors";
 import "./Profile.css";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import Summary from "../../components/ProfileTab/Summary/Summary";
+import MediaList from "../../components/ProfileTab/MediaList/MediaList";
+import Friend from "../../components/ProfileTab/Friend/Friend";
+import ProfilePostList from "../../components/ProfileTab/ProfilePostList/ProfilePostList";
 
 interface ResponseDTO {
   statusCode: string;
@@ -72,12 +76,12 @@ const Profile = () => {
             </div>
             <div className="info_container">
               <div className="left_container">
-                <div>본인소개 요약 컴포넌트로 대체</div>
-                <div>사진 및 동영상 컴포넌트로 대체</div>
-                <div>친구 컴포넌트로 대체</div>
+                <Summary />
+                <MediaList />
+                <Friend />
               </div>
               <div className="right_container">
-                <div>게시글 컴포넌트로 대체</div>
+                <ProfilePostList />
               </div>
             </div>
           </div>

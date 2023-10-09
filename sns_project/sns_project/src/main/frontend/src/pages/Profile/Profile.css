@@ -35,22 +35,27 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    border-bottom: 1px solid #e0e0e0;
-    padding-top: 2rem;
+    border-bottom: 1px solid #212121;
+    padding-top: 4rem;
 }
 
 .profile_tab_container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: .625rem;
 }
 
 .tab_menu {
-    border: 1px solid #e0e0e0;
+    flex: 1 0 auto;
+    text-align: center;
     border-radius: 6px;
-    padding: 1rem;
+    padding: .5rem .75rem;
+    background-color: yellowgreen;
+    &:hover {
+        cursor: pointer;
+        background-color: rgb(109, 148, 31);
+    }
 }
 
 .info_container {
