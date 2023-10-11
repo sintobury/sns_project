@@ -18,8 +18,10 @@ const PostSearch = () => {
   const location = useLocation();
   const searchOption = PostSearchOptions.find((el) => el.name === option)?.value;
   const search = () => {
-    navigate(`/search?searchoption=${searchOption}&searchword=${searchword}`);
-    setSearchword("");
+    if (searchword !== "") {
+      navigate(`/search?searchoption=${searchOption}&searchword=${searchword}`);
+      setSearchword("");
+    }
   };
   const enterSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {

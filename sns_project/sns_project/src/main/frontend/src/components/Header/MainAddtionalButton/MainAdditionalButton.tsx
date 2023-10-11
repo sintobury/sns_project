@@ -1,14 +1,15 @@
-import LogoutButton from "../LogoutButton/LogoutButton";
 import "./MainAdditionalButton.css";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
+import LogoutButton from "../LogoutButton/LogoutButton";
 
 const MainAdditionalButton = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const navigate = useNavigate();
   const navigateProfileButton = () => {
     navigate("/profile");
+    setOpenMenu(false);
   };
   const MenuRef = useRef<HTMLDivElement>(null);
   useEffect(() => {

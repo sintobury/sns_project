@@ -1,8 +1,8 @@
-import { useState } from "react";
-import PostList from "../../PostList/PostList";
 import "./ProfilePostList.css";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import PostList from "../../PostList/PostList";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 const ProfilePostList = () => {
   const [open, setOpen] = useState(false);

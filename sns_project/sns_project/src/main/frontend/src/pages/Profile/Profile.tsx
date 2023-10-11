@@ -1,11 +1,11 @@
-import { useLocation } from "react-router-dom";
+import "./Profile.css";
+import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
+import { authInstance } from "../../interceptors/interceptors";
+import { useQuery } from "@tanstack/react-query";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import { authInstance } from "../../interceptors/interceptors";
-import "./Profile.css";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import Summary from "../../components/ProfileTab/Summary/Summary";
 import MediaList from "../../components/ProfileTab/MediaList/MediaList";
 import Friend from "../../components/ProfileTab/Friend/Friend";
@@ -29,9 +29,17 @@ interface MemberDTO {
 }
 
 const Profile = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const username = searchParams.get("username");
+  const tabmenulist = [
+    { name: "프로필", value: "" },
+    { name: "정보", value: "info" },
+    { name: "친구", value: "friend" },
+    { name: "사진 및 동영상", value: "media" },
+  ];
+  const tabMenu = searchParams.get("tabmenu");
   const getUserInfo = async () => {
     try {
       if (username) {
@@ -47,13 +55,19 @@ const Profile = () => {
       }
     }
   };
-  const { isLoading, data: profileData } = useQuery<ResponseDTO>(
-    ["profileData", { location }],
-    getUserInfo,
-    {
-      staleTime: Infinity,
-    },
-  );
+  const handleProfileTab = (e: React.MouseEvent) => {
+    const target = e.target as HTMLDivElement;
+    const menu = tabmenulist.find((el) => el.name === target.innerText)?.value;
+    if (menu === "") {
+      navigate(`/profile`);
+    } else {
+      navigate(`/profile?tabmenu=${menu}`);
+    }
+  };
+
+  const { isLoading, data: profileData } = useQuery<ResponseDTO>(["profileData"], getUserInfo, {
+    staleTime: Infinity,
+  });
   console.log(profileData);
   return (
     <div className="profile_page">
@@ -68,22 +82,25 @@ const Profile = () => {
                 <label htmlFor="user_profile_img">사용자 이름</label>
               </div>
               <div className="profile_tab_container">
-                <div className="tab_menu">프로필</div>
-                <div className="tab_menu">정보</div>
-                <div className="tab_menu">친구</div>
-                <div className="tab_menu">동영상 및 사진</div>
+                {tabmenulist.map((el) => (
+                  <div className="tab_menu" key={el.value} onClick={handleProfileTab}>
+                    {el.name}
+                  </div>
+                ))}
               </div>
             </div>
-            <div className="info_container">
-              <div className="left_container">
-                <Summary />
-                <MediaList />
-                <Friend />
+            {!tabMenu && (
+              <div className="info_container">
+                <div className="left_container">
+                  <Summary />
+                  <MediaList />
+                  <Friend />
+                </div>
+                <div className="right_container">
+                  <ProfilePostList />
+                </div>
               </div>
-              <div className="right_container">
-                <ProfilePostList />
-              </div>
-            </div>
+            )}
           </div>
         )}
       </div>
