@@ -6,7 +6,7 @@ import rootReducer from "./reducers/rootReducer";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["loginSlice"],
+  whitelist: ["loginSlice", "darkmodeSlice"],
   blacklist: ["modalSlice"],
 };
 

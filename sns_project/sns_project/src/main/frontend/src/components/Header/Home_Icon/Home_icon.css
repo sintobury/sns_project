@@ -18,4 +18,8 @@ a:hover {
     font-size: 1.5rem;
     padding: .5rem .75rem;
     text-align: center;
+    transition: 0.7s;
+    &.darkmode {
+        color: #e0e0e0;
+    }
 }

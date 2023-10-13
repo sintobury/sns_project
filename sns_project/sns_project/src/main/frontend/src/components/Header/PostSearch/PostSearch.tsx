@@ -4,6 +4,8 @@ import Button from "../../Common/Button/Button";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux";
 
 const PostSearch = () => {
   const [searchword, setSearchword] = useState("");
@@ -14,6 +16,7 @@ const PostSearch = () => {
     { name: "작성자", value: "author" },
     { name: "태그", value: "tag" },
   ];
+  const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const navigate = useNavigate();
   const location = useLocation();
   const searchOption = PostSearchOptions.find((el) => el.name === option)?.value;
@@ -58,8 +61,11 @@ const PostSearch = () => {
 
   return (
     <div className="postsearch_container">
-      <div className="postsearch_options_container" ref={searchOptionRef}>
-        <div onClick={closeDropdown} className="selected">
+      <div
+        className={`postsearch_options_container ${isDarkmode && "darkmode"}`}
+        ref={searchOptionRef}
+      >
+        <div onClick={closeDropdown} className={`selected ${isDarkmode && "darkmode"}`}>
           {option}
         </div>
         {openDropdown && (
@@ -68,7 +74,7 @@ const PostSearch = () => {
               <div
                 key={el.value}
                 onMouseDown={(e) => handleOption(e)}
-                className="postsearch_option"
+                className={`postsearch_option ${isDarkmode && "darkmode"}`}
               >
                 {el.name}
               </div>

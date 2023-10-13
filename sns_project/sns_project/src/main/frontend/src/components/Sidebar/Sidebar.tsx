@@ -6,9 +6,12 @@ import StarIcon from "@mui/icons-material/Star";
 import "./Sidebar.css";
 import { yellow } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux";
 
 const Sidebar = () => {
   const [mode, setMode] = useState("home");
+  const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const navigate = useNavigate();
   const navigateMain = () => {
     setMode("home");
@@ -17,7 +20,7 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar_container">
-      <div className="sidebar_button_container">
+      <div className={`sidebar_button_container ${isDarkmode && "darkmode"}`}>
         <Button
           icon={<HomeIcon sx={{ color: "#70e15e" }} />}
           text="메인으로"
@@ -37,9 +40,11 @@ const Sidebar = () => {
           onClick={() => setMode("bookmarkList")}
         />
       </div>
-      {mode === "friendList" ? <div className="friend_list">{/*친구목록*/}</div> : null}
+      {mode === "friendList" ? (
+        <div className={`friend_list ${isDarkmode && "darkmode"}`}>{/*친구목록*/}</div>
+      ) : null}
       {mode === "bookmarkList" ? (
-        <div className="bookmark_list">{/*북마크 채팅방리스트*/}</div>
+        <div className={`bookmark_list ${isDarkmode && "darkmode"}`}>{/*북마크 채팅방리스트*/}</div>
       ) : null}
     </div>
   );

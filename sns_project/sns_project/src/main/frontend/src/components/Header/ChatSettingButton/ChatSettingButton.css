@@ -13,6 +13,10 @@
     border-radius: 5px;
     display: flex;
     flex-direction: column;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #424242;
+    }
 }
 
 .chatroom_name {
@@ -25,4 +29,5 @@
 
 .chatroom_title_input {
     padding: .5rem .75rem;
+    border-radius: 6px;
 }

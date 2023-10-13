@@ -4,10 +4,13 @@ import ChatSettingButton from "./ChatSettingButton/ChatSettingButton";
 import Alert from "./alert/alert";
 import "./Header.css";
 import MainAdditionalButton from "./MainAddtionalButton/MainAdditionalButton";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux";
 
 const Header = () => {
+  const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   return (
-    <div className="header_wrapper">
+    <div className={`header_wrapper ${isDarkmode && "darkmode"}`}>
       <header className="header_container">
         <Homeicon />
         <div className="header_function">

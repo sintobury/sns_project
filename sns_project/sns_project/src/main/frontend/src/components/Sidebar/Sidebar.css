@@ -11,6 +11,10 @@
     flex-direction: column;
     justify-content: flex-start;
     gap: 5px;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+    }
 }
 
 .sidebar_button {
@@ -19,11 +23,17 @@
 }
 
 .friend_list {
-    background-color: rgb(217, 147, 255);
     flex: 1 1 auto;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+    }
 }
 
 .bookmark_list {
-    background-color: rgb(217, 147, 255);
     flex: 1 1 auto;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+    }
 }

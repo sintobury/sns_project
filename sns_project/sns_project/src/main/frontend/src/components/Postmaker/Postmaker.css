@@ -8,6 +8,10 @@
     padding: 10px;
     display: flex;
     justify-content: center;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+    }
 }
 
 .postmaker_input_container {
@@ -17,12 +21,25 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+    }
 }
 
 .title_input {
     padding: .5rem .75rem;
     border: 1px solid #f5f5f5;
     border-radius: 5px;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #515151;
+        border: 1px solid #515151;
+        color: white;
+        &::placeholder {
+            color: white;
+        }
+    }
 }
 
 .content_input {
@@ -30,6 +47,16 @@
     border: 1px solid #f5f5f5;
     border-radius: 5px;
     height: 20vh;
+    transition: 0.7s;
+    resize: none;
+    &.darkmode {
+        background-color: #515151;
+        border: 1px solid #515151;
+        color: white;
+        &::placeholder {
+            color: white;
+        }
+    }
 }
 
 .postmaker_button_container {
@@ -38,4 +65,8 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+    }
 }

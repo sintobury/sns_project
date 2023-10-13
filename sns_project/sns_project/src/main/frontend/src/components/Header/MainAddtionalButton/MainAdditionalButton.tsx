@@ -3,13 +3,22 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutButton from "../LogoutButton/LogoutButton";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux";
+import { toggleDarkmode } from "../../../redux/reducers/darkmode";
+import { grey } from "@mui/material/colors";
 
 const MainAdditionalButton = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const navigate = useNavigate();
-  const navigateProfileButton = () => {
+  const dispatch = useDispatch();
+  const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
+  const navigateProfile = () => {
     navigate("/profile");
     setOpenMenu(false);
+  };
+  const setDarkmode = () => {
+    dispatch(toggleDarkmode());
   };
   const MenuRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -24,16 +33,21 @@ const MainAdditionalButton = () => {
     };
   }, [MenuRef]);
   return (
-    <div className="additional_menu" ref={MenuRef}>
-      <div className="additional_button" onClick={() => setOpenMenu(!openMenu)}>
-        <MenuIcon />
+    <div className={`additional_menu ${isDarkmode && "darkmode"}`} ref={MenuRef}>
+      <div
+        className={`additional_button ${isDarkmode && "darkmode"}`}
+        onClick={() => setOpenMenu(!openMenu)}
+      >
+        {isDarkmode ? <MenuIcon sx={{ color: grey[500] }} /> : <MenuIcon />}
       </div>
       {openMenu && (
-        <div className="hamburgur_menu">
-          <div className="menu" onClick={navigateProfileButton}>
+        <div className={`hamburgur_menu ${isDarkmode && "darkmode"}`}>
+          <div className={`menu ${isDarkmode && "darkmode"}`} onClick={navigateProfile}>
             프로필
           </div>
-          <div className="menu">darkmode</div>
+          <div className={`menu ${isDarkmode && "darkmode"}`} onClick={setDarkmode}>
+            darkmode
+          </div>
           <LogoutButton />
         </div>
       )}

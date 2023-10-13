@@ -17,6 +17,11 @@
     background-color: #e0e0e0;
     border-radius: 6px;
     overflow: hidden;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+        color: white;
+    }
 }
 .menu {
     padding: .5rem .75rem;
@@ -32,4 +37,9 @@
 }
 .menu:hover {
     background-color: #bdbdbd;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #555555;
+        opacity: 0.87;
+    }
 }

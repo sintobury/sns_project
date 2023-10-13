@@ -1,5 +1,10 @@
 .header_wrapper {
     border-bottom: 1px solid #e0e0e0;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+        border-bottom: 1px solid #212121;
+    }
 }
 .header_container {
     position: sticky;

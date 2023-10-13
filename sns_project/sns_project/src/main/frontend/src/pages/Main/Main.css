@@ -3,6 +3,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
+    &.darkmode {
+        background-color: #121212;
+    }
 }
 .main_container {
     max-width: 90rem;

@@ -10,6 +10,8 @@ import Summary from "../../components/ProfileTab/Summary/Summary";
 import MediaList from "../../components/ProfileTab/MediaList/MediaList";
 import Friend from "../../components/ProfileTab/Friend/Friend";
 import ProfilePostList from "../../components/ProfileTab/ProfilePostList/ProfilePostList";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux";
 
 interface ResponseDTO {
   statusCode: string;
@@ -29,6 +31,7 @@ interface MemberDTO {
 }
 
 const Profile = () => {
+  const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -70,20 +73,24 @@ const Profile = () => {
   });
   console.log(profileData);
   return (
-    <div className="profile_page">
+    <div className={`profile_page ${isDarkmode && "darkmode"}`}>
       <Header />
       <div className="main_content_container">
         <Sidebar />
         {isLoading ? null : (
           <div className="profile_container">
-            <div className="profile_summary_container">
-              <div className="profile_img_container">
+            <div className={`profile_summary_container ${isDarkmode && "darkmode"}`}>
+              <div className={`profile_img_container ${isDarkmode && "darkmode"}`}>
                 <img className="profile_img" id="user_profile_img" alt="profile img"></img>
                 <label htmlFor="user_profile_img">사용자 이름</label>
               </div>
               <div className="profile_tab_container">
                 {tabmenulist.map((el) => (
-                  <div className="tab_menu" key={el.value} onClick={handleProfileTab}>
+                  <div
+                    className={`tab_menu ${isDarkmode && "darkmode"}`}
+                    key={el.value}
+                    onClick={handleProfileTab}
+                  >
                     {el.name}
                   </div>
                 ))}

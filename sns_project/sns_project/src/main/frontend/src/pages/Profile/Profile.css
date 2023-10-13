@@ -3,6 +3,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #121212;
+    }
 }
 
 .main_content_container {
@@ -11,6 +15,7 @@
     display: flex;
     flex-direction: row;
     flex: 1 0 auto;
+    padding-top: 10px;
 }
 
 .profile_container {
@@ -28,6 +33,10 @@
     background-color: rgb(37, 162, 37);
     padding: 1rem;
     gap: 1rem;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+    }
 }
 
 .profile_img_container {
@@ -37,6 +46,10 @@
     align-items: center;
     border-bottom: 1px solid #212121;
     padding-top: 4rem;
+    transition: 0.7s;
+    &.darkmode {
+        border-bottom: 1px solid #e0e0e0;
+    }
 }
 
 .profile_tab_container {
@@ -56,6 +69,15 @@
         cursor: pointer;
         background-color: rgb(109, 148, 31);
     }
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #515151;
+        color: white;
+        &:hover {
+            background-color: #c2c2c2;
+            color: #212121;
+        }
+    }
 }
 
 .info_container {
@@ -63,6 +85,7 @@
     flex-direction: row;
     align-items: flex-start;
     gap: .5rem;
+    padding-top: 10px;
 }
 
 .left_container {

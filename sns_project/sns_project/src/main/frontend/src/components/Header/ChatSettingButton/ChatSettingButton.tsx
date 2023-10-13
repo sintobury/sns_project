@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import "./ChatSettingButton.css";
 import Button from "../../Common/Button/Button";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux";
 
 const ChatSettingButton = () => {
   const [openSetting, setOpenSetting] = useState(false);
   const [title, setTitle] = useState("");
+  const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const chatMakerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent): void => {
@@ -26,7 +29,7 @@ const ChatSettingButton = () => {
         design="black"
       />
       {openSetting && (
-        <div className="options_container">
+        <div className={`options_container ${isDarkmode && "darkmode"}`}>
           <div className="chatroom_name">
             <input
               className="chatroom_title_input"
