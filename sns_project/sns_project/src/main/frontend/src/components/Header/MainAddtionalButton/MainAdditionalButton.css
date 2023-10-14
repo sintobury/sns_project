@@ -31,6 +31,7 @@
     align-items: center;
     border-bottom: 1px solid #bdbdbd;
     cursor: pointer;
+    position: relative;
     &:last-child {
         border-bottom: none;
     }
@@ -39,7 +40,29 @@
     background-color: #bdbdbd;
     transition: 0.7s;
     &.darkmode {
-        background-color: #555555;
+        background-color: #515151;
         opacity: 0.87;
+    }
+}
+
+.toggle_container {
+    background-color: #868686;
+    width: 60px;
+    height: 24px;
+    border-radius: 10px;
+    transition: 0.7s;
+}
+
+.toggle_circle {
+    position: absolute;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    left: 16px;
+    background-color: #e0e0e0;
+    transition: 0.7s;
+    &.darkmode{
+        left: 50px;
+        background-color: #515151;
     }
 }
