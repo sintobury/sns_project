@@ -29,6 +29,18 @@ public class MemberRepository {
         return em.find(Member.class, memberId);
 
     }
+    public List<Member> findALLWithOutMe(String username){
+        List<Member> resultList = em.createQuery("select m from Member m where m.username != :username", Member.class)
+                .setParameter("username", username).getResultList();
+        return resultList;
+    }
+    public List<Member> findByNameWithOutMe(String username, String name){
+        List<Member> resultList = em.createQuery("select m from Member m where m.username != :username and m.name = name", Member.class)
+                .setParameter("username", username)
+                .setParameter("name", name)
+                .getResultList();
+        return resultList;
+    }
 
 
 }

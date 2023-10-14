@@ -60,8 +60,14 @@ public class SecurityConfig {
                         .accessDeniedHandler(customAccessDeniedHandler))
                 .oauth2Login(oauth -> oauth
                         .successHandler(oAuth2SuccessHandler)
+
+
                         .userInfoEndpoint(user -> user
-                                .userService(oAuth2UserService)))
+                                .userService(oAuth2UserService))
+                        .authorizationEndpoint(url -> url.baseUri("/oauth2/authorization"))
+                        .redirectionEndpoint(url -> url.baseUri("/oauth2/callback/*"))
+                )
+
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter.class)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));

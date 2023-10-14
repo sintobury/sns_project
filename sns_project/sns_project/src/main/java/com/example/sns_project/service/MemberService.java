@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -27,6 +28,24 @@ public class MemberService {
     public Member findByUsername(String username){
         Member member = memberRepository.findByUsername(username).get(0);
         return member;
+    }
+    public ResponseDto memberList(String username){
+        List<Member> search = memberRepository.findALLWithOutMe(username);
+        List<MemberDto> result = new ArrayList<>();
+        for (Member member : search) {
+            result.add(member.convertDto());
+        }
+        return new ResponseDto(HttpStatus.OK.value(), "전체 유저 리스트 반환", result);
+    }
+
+    public ResponseDto memberListByName(String username, String name){
+        List<Member> search = memberRepository.findByNameWithOutMe(username, name);
+        List<MemberDto> result = new ArrayList<>();
+        for (Member member : search) {
+            result.add(member.convertDto());
+        }
+        return new ResponseDto(HttpStatus.OK.value(), "유저 이름 리스트 반환", result);
+
     }
 
     public ResponseDto memberInfo(String username){

@@ -30,6 +30,16 @@ public class MemberController {
     public ResponseDto memberIdInfo(@PathVariable String username){
         return memberService.memberInfo(username);
     }
+
+    @GetMapping("/member/search")
+    public ResponseDto memberList(@AuthenticationPrincipal CustomDetails customDetails){
+        return memberService.memberList(customDetails.getUsername());
+
+    }
+    @GetMapping("/member/search/{name}")
+    public ResponseDto memberListByName(@AuthenticationPrincipal CustomDetails customDetails, @PathVariable String name){
+        return memberService.memberListByName(customDetails.getUsername(), name);
+    }
     @PostMapping("/member/update")
     public ResponseDto memberUpdate(@RequestBody MemberDto memberDto){
         return memberService.memberUpdate(memberDto);
