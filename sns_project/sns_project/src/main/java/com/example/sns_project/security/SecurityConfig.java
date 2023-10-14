@@ -62,8 +62,6 @@ public class SecurityConfig {
                         .successHandler(oAuth2SuccessHandler)
                         .userInfoEndpoint(user -> user
                                 .userService(oAuth2UserService))
-                        .authorizationEndpoint(url -> url.baseUri("/oauth2/authorization"))
-                        .redirectionEndpoint(url -> url.baseUri("/oauth2/callback/*"))
                 )
 
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
