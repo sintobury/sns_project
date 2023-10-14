@@ -1,10 +1,13 @@
 .postmaker_container {
+    width: 35rem;
     display: flex;
     flex-direction: row;
+    border-radius: 6px;
+    overflow: hidden;
 }
 
 .postmaker_propile_container {
-    background-color: rgb(63, 168, 105);
+    background-color: #81cc76;
     padding: 10px;
     display: flex;
     justify-content: center;
@@ -17,7 +20,7 @@
 .postmaker_input_container {
     width: 25rem;
     padding: 10px;
-    background-color: #e39595;
+    background-color: #81cc76;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -60,7 +63,7 @@
 }
 
 .postmaker_button_container {
-    background-color: rgb(79, 95, 195);
+    background-color: #81cc76;
     padding: 10px;
     display: flex;
     flex-direction: column;

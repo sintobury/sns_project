@@ -40,12 +40,12 @@ const Sidebar = () => {
           onClick={() => setMode("bookmarkList")}
         />
       </div>
-      {mode === "friendList" ? (
-        <div className={`friend_list ${isDarkmode && "darkmode"}`}>{/*친구목록*/}</div>
-      ) : null}
-      {mode === "bookmarkList" ? (
-        <div className={`bookmark_list ${isDarkmode && "darkmode"}`}>{/*북마크 채팅방리스트*/}</div>
-      ) : null}
+      {mode === "friendList" && (
+        <div className={`friend_list ${isDarkmode && "darkmode"}`}>친구목록</div>
+      )}
+      {mode === "bookmarkList" && (
+        <div className={`bookmark_list ${isDarkmode && "darkmode"}`}>북마크 채팅방리스트</div>
+      )}
     </div>
   );
 };

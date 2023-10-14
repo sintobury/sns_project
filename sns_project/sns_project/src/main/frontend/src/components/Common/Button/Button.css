@@ -37,7 +37,7 @@ button {
         color: #212121;
     }
     &.green {
-        background: #70e15e;
+        background-color: #81cc76;
         color: #212121;
         .darkmode {
             background-color: #437f3a;

@@ -8,8 +8,8 @@
     position: absolute;
     top: 40px;
     left: -100px;
-    background-color: yellowgreen;
-    border: 1px solid #212121;
+    background-color: #81cc76;
+    border: 1px solid #588c50;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -30,4 +30,5 @@
 .chatroom_title_input {
     padding: .5rem .75rem;
     border-radius: 6px;
+    border: none;
 }

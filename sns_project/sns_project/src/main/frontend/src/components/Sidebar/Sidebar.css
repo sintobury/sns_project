@@ -6,7 +6,8 @@
 
 .sidebar_button_container {
     padding: 5px;
-    background-color: rgb(217, 147, 255);
+    background-color: #81cc76;
+    border-radius: 6px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -23,17 +24,19 @@
 }
 
 .friend_list {
-    flex: 1 1 auto;
+    flex: 1 0 auto;
     transition: 0.7s;
     &.darkmode {
         background-color: #212121;
+        color: white;
     }
 }
 
 .bookmark_list {
-    flex: 1 1 auto;
+    flex: 1 0 auto;
     transition: 0.7s;
     &.darkmode {
         background-color: #212121;
+        color: white;
     }
 }

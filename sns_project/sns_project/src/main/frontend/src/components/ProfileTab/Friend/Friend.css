@@ -1,9 +1,9 @@
 .friend_container {
+    background-color: #81cc76;
     padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    border: 1px solid #212121;
     border-radius: 6px;
     transition: 0.7s;
     &.darkmode {
