@@ -3,11 +3,12 @@ import { login } from "../../redux/reducers/loginSlice";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import GoogleLoginButton from "../../components/GoogleLoginButton/GoogleLoginButton";
 import { useForm } from "react-hook-form";
 import { RootState } from "../../redux/reducers/rootReducer";
 import { defaultInstance } from "../../interceptors/interceptors";
 import { useEffect } from "react";
+import Button from "../../components/Common/Button/Button";
+import GoogleLoginButton from "../../components/GoogleLoginButton/GoogleLoginButton";
 
 interface loginForm {
   username: string;
@@ -85,13 +86,14 @@ const Login = () => {
               {errors.password && <div className="errormessage">{errors.password?.message}</div>}
             </div>
             <div className="login_button_container">
-              <button type="submit" id="login_button" disabled={isSubmitting}>
-                로그인
-              </button>
+              <Button type="submit" disabled={isSubmitting} text="로그인" design="black" />
               <GoogleLoginButton />
-              <button type="button" id="signup_button" onClick={() => navigate("/signup")}>
-                회원가입
-              </button>
+              <Button
+                type="button"
+                design="green"
+                text="회원가입"
+                onClick={() => navigate("/signup")}
+              />
             </div>
           </form>
         </div>

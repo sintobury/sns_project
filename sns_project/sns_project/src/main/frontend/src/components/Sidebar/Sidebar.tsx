@@ -8,6 +8,26 @@ import { yellow } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
+import { authInstance } from "../../interceptors/interceptors";
+import { useQuery } from "@tanstack/react-query";
+
+interface ResponseDTO {
+  statusCode: string;
+  message: string;
+  result: MemberDTO[];
+}
+
+interface MemberDTO {
+  id: string;
+  username: string;
+  password: string;
+  name: string;
+  email: string;
+  birth: string;
+  createdAt: string;
+  provider: string;
+  imgurl: string;
+}
 
 const Sidebar = () => {
   const [mode, setMode] = useState("home");
@@ -17,7 +37,14 @@ const Sidebar = () => {
     setMode("home");
     navigate("/main");
   };
+  const getFriendList = async () => {
+    const res = await authInstance.get("/friend");
+    return res.data;
+  };
 
+  const friendlistData = useQuery<ResponseDTO>(["friendList"], getFriendList, {
+    staleTime: Infinity,
+  });
   return (
     <div className="sidebar_container">
       <div className={`sidebar_button_container ${isDarkmode && "darkmode"}`}>
@@ -41,10 +68,22 @@ const Sidebar = () => {
         />
       </div>
       {mode === "friendList" && (
-        <div className={`friend_list ${isDarkmode && "darkmode"}`}>친구목록</div>
+        <div className={`friend_list ${isDarkmode && "darkmode"}`}>
+          <p className="component_title">친구목록</p>
+          {friendlistData.isLoading !== true &&
+            friendlistData.data?.result.length !== 0 &&
+            friendlistData.data?.result.map((el: MemberDTO) => (
+              <div className="friend">
+                <img className="profile_img" src={el.imgurl} alt="profile_img" />
+                <p className="friend_Id">{el.username}</p>
+              </div>
+            ))}
+        </div>
       )}
       {mode === "bookmarkList" && (
-        <div className={`bookmark_list ${isDarkmode && "darkmode"}`}>북마크 채팅방리스트</div>
+        <div className={`bookmark_list ${isDarkmode && "darkmode"}`}>
+          <p className="component_title">즐겨찾기</p>
+        </div>
       )}
     </div>
   );
