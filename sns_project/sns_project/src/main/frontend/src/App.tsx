@@ -6,6 +6,7 @@ import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import Profile from "./pages/Profile/Profile";
 import { RootState } from "./redux/reducers/rootReducer";
+import Oauth from "./pages/Oauth/Oauth";
 
 function App() {
   const isLogin = useSelector((state: RootState) => state.loginSlice.isLogin);
@@ -13,6 +14,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />}></Route>
+        <Route path="/oauth" element={<Oauth />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/main" element={isLogin ? <Main /> : <Login />}></Route>
         <Route path="/search" element={isLogin ? <Main /> : <Login />}></Route>
