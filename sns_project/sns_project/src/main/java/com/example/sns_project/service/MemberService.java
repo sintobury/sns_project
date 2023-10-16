@@ -52,6 +52,7 @@ public class MemberService {
         log.info("MemberService memberInfo 접근");
         Member member = memberRepository.findByUsername(username).get(0);
         MemberDto memberDto = member.convertDto();
+        log.info("username : {}  name : {}",memberDto.getUsername(), memberDto.getName());
         return new ResponseDto(HttpStatus.OK.value(), "유저정보를 성공적으로 반환하였습니다.", memberDto);
     }
 
