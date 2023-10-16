@@ -2,8 +2,10 @@ package com.example.sns_project.security.oauth2;
 
 import com.example.sns_project.dto.ResponseDto;
 import com.example.sns_project.dto.TokenDto;
+import com.example.sns_project.entity.LoginInfo;
 import com.example.sns_project.entity.Member;
 import com.example.sns_project.repository.MemberRepository;
+import com.example.sns_project.repository.RedisRepository;
 import com.example.sns_project.security.auth.CustomDetails;
 import com.example.sns_project.security.auth.Jwt.JwtTokenProvider;
 import com.example.sns_project.util.UserMapper;
@@ -32,6 +34,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final JwtTokenProvider jwtTokenProvider;
     private final ObjectMapper objectMapper;
     private final MemberRepository memberRepository;
+    private final RedisRepository redisRepository;
     private final UserMapper userMapper;
 
 
@@ -48,10 +51,17 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         }
         String accessToken = jwtTokenProvider.generateAccessToken(member);
         String refreshToken = jwtTokenProvider.generateRefreshToken(member);
-        ResponseDto result = new ResponseDto(HttpStatus.OK.value(), "정상 로그인되었습니다", new TokenDto(accessToken, refreshToken));
         log.info("엑세스토큰 : {}",accessToken);
         log.info("리프레시토큰 : {}",refreshToken);
-        response.getWriter().write(objectMapper.writeValueAsString(result));
-        response.sendRedirect("http://localhost:3000/oauth?accessToken="+accessToken+"&refreshToken="+refreshToken);
+        if(redisRepository.existsById(member.getUsername())){
+            log.info("oauth 로그인 이미 다른 곳에서 로그인 되있는 상태입니다.");
+            response.sendRedirect("http://localhost:3000/oauth?error=405");
+
+        }else{
+            log.info("oauth 로그인 성공 front-end로 redirect 시킵니다.");
+            redisRepository.save(LoginInfo.builder().username(member.getUsername()).accessToken(accessToken).refreshToken(refreshToken).build());
+            response.sendRedirect("http://localhost:3000/oauth?accessToken="+accessToken+"&refreshToken="+refreshToken);
+        }
+
     }
 }
