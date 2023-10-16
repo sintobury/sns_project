@@ -16,6 +16,7 @@
     transition: 0.7s;
     &.darkmode {
         background-color: #424242;
+        border: 1px solid #212121;
     }
 }
 

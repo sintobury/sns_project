@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import "./ProfilePostList.css";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PostList from "../../PostList/PostList";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
@@ -23,16 +23,33 @@ const ProfilePostList = () => {
   };
   const filterOption = [{ name: "최신순", value: "latest" }];
 
+  const postlistOptionRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent): void => {
+      if (postlistOptionRef.current && !postlistOptionRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [postlistOptionRef]);
+
   return (
     <div className={`Post_container ${isDarkmode && "darkmode"}`}>
       <div className="title_container">
         <p className="component_title">게시글</p>
-        <div className="filter_button" onClick={openFilterOption}>
+        <div className="filter_button" onClick={openFilterOption} ref={postlistOptionRef}>
           <FilterAltIcon />
           <div className="filter_option_container">
             {open &&
               filterOption.map((el) => (
-                <div className="filter_option" key={el.value} onClick={changeOption}>
+                <div
+                  className={`filter_option ${isDarkmode && "darkmode"}`}
+                  key={el.value}
+                  onClick={changeOption}
+                >
                   {el.name}
                 </div>
               ))}

@@ -10,14 +10,6 @@ const LogoutButton = () => {
   const dispatch = useDispatch();
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const handleLogout = async () => {
-    // const googlelogin = false; //구글로그인일 때 판별필요
-    // if (googlelogin) {
-    //   //구글 로그인 일때
-    //   googleLogout();
-    //   dispatch(logout());
-    //   navigate("/");
-    //   return;
-    // }
     const refreshToken = localStorage.getItem("refreshToken");
     const res = await defaultInstance.post("/logout", { refreshToken });
     if (res.status === 200) {
