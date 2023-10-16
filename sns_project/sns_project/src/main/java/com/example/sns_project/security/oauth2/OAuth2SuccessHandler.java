@@ -52,6 +52,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         log.info("엑세스토큰 : {}",accessToken);
         log.info("리프레시토큰 : {}",refreshToken);
         response.getWriter().write(objectMapper.writeValueAsString(result));
-        response.sendRedirect("http:localhost:3000/oauth?accessToken=" + accessToken + "&refreshToken=" + refreshToken);
+        response.sendRedirect("http://localhost:3000/oauth?accessToken="+accessToken+"&refreshToken="+refreshToken);
     }
 }
