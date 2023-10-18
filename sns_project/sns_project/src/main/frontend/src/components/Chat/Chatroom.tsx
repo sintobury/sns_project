@@ -1,9 +1,13 @@
 import "./chatroom.css";
 import Button from "../Common/Button/Button";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux";
 
 const Chatroom = () => {
+  const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
+
   return (
-    <div className="chatroom_container">
+    <div className={`chatroom_container ${isDarkmode && "darkmode"}`}>
       <div className="close_button_container">
         <Button type="button" text="X" design="black" />
       </div>
