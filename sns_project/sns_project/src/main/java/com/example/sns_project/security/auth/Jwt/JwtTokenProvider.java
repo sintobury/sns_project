@@ -41,6 +41,7 @@ public class JwtTokenProvider {
                 .setHeaderParam("alg", "HS256")
                 .setSubject(member.getUsername().toString())
                 .setIssuedAt(now)
+                .claim("name", member.getName())
                 .setExpiration(new Date(now.getTime()+ REFRESH_TOKEN_EXPIRE_TIME))
                 .claim("role", member.getRole().toString())
                 .signWith(SignatureAlgorithm.HS256, refreshSecretKey)
@@ -56,6 +57,7 @@ public class JwtTokenProvider {
                 .setSubject(member.getUsername().toString())
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_TIME))
+                .claim("name", member.getName())
                 .claim("role", member.getRole().toString())
                 .signWith(SignatureAlgorithm.HS256, accessSecretKey)
                 .compact();
@@ -69,6 +71,15 @@ public class JwtTokenProvider {
                 .getBody();
         String username = String.valueOf(claims.getSubject());
         return username;
+    }
+    public String findNameByAccess(String token){
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(accessSecretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        String name = String.valueOf(claims.get("name"));
+        return name;
     }
     public String findUsernameByRefresh(String token){
         Claims claims = Jwts.parserBuilder()

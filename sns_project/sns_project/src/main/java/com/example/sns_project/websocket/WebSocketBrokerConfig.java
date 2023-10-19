@@ -2,6 +2,7 @@ package com.example.sns_project.websocket;
 
 import com.example.sns_project.security.auth.Jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
@@ -23,12 +24,15 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
+@Slf4j
 @EnableWebSocketMessageBroker
 public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
     private final JwtTokenProvider jwtTokenProvider;
+    private final MessageService messageService;
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws/chat").setAllowedOriginPatterns("*");
@@ -50,10 +54,30 @@ public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
                 StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
                 if(StompCommand.CONNECT.equals(accessor.getCommand())){
                     try{
-                        jwtTokenProvider.validateAccessToken(accessor.getFirstNativeHeader("accessToken"));
+                        String accessToken = accessor.getFirstNativeHeader("accessToken");
+                        jwtTokenProvider.validateAccessToken(accessToken);
+                        String username = jwtTokenProvider.findUsernameByAccess(accessToken);
+                        String name = jwtTokenProvider.findUsernameByAccess(accessToken);
+                        String sessionId = accessor.getSessionId();
+                        log.info("접속한 유저 : {}   유저의 세션 값 : {}",username, sessionId);
+                        messageService.save(username, sessionId, name);
                     }catch (Exception ex){
                         throw ex;
                     }
+                }
+                else if(StompCommand.DISCONNECT.equals(accessor.getCommand())){
+                    try{
+                        String accessToken = accessor.getFirstNativeHeader("accessToken");
+                        jwtTokenProvider.validateAccessToken(accessToken);
+                        String username = jwtTokenProvider.findUsernameByAccess(accessToken);
+                        String name = jwtTokenProvider.findUsernameByAccess(accessToken);
+                        String sessionId = accessor.getSessionId();
+                        log.info("로그아웃한 유저 : {}   유저의 세션 값 : {}",username, sessionId);
+                        messageService.logout(username);
+                    }catch (Exception ex){
+                        throw ex;
+                    }
+
                 }
                 return message;
             }

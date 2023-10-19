@@ -6,6 +6,7 @@ import com.example.sns_project.dto.ResponseDto;
 import com.example.sns_project.service.LoginService;
 import com.example.sns_project.service.MemberService;
 import com.example.sns_project.service.RefreshTokenService;
+import com.example.sns_project.websocket.MessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
     private final LoginService loginService;
     private final RefreshTokenService refreshTokenService;
+    private final MessageService messageService;
     @PostMapping("/login")
     public ResponseDto login(@RequestBody LoginDto loginDto){
         log.info("로그인 핸들러 접근");
