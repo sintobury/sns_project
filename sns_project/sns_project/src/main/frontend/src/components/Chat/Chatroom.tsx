@@ -2,6 +2,7 @@ import "./chatroom.css";
 import Button from "../Common/Button/Button";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
+import ChatInput from "./ChatInput/ChatInput";
 
 const Chatroom = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
@@ -16,10 +17,7 @@ const Chatroom = () => {
         <p className="chatroom_title">채팅방 이름</p>
       </div>
       <div className="chat_message_container"></div>
-      <div className="chat_send_container">
-        <input className="chat_input"></input>
-        <Button type="button" text="전송" design="green" />
-      </div>
+      <ChatInput />
     </div>
   );
 };
