@@ -1,3 +1,4 @@
+/*
 package com.example.sns_project.websocket;
 
 import lombok.RequiredArgsConstructor;
@@ -19,3 +20,4 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     }
 }
+*/

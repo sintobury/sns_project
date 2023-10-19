@@ -1,3 +1,4 @@
+/*
 package com.example.sns_project.websocket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,3 +44,4 @@ public class ChatService {
         }
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.example.sns_project.websocket;
 
 import lombok.Data;
@@ -12,3 +13,4 @@ public class ChatMessage {
     private String sender;
     private String message;
 }
+*/

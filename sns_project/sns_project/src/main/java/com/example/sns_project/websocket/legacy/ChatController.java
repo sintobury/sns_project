@@ -1,3 +1,4 @@
+/*
 package com.example.sns_project.websocket;
 
 import lombok.RequiredArgsConstructor;
@@ -20,4 +21,4 @@ public class ChatController {
     public List<ChatRoom> findAllRoom() {
         return chatService.findAllRoom();
     }
-}
+}*/

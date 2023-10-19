@@ -52,9 +52,14 @@ public class LoginService {
     }
     public ResponseDto logout(RefreshDto refreshDto){
         log.info("리프레시 토큰 : {}", refreshDto.getRefreshToken());
-        LoginInfo login = redisRepository.findByRefreshToken(refreshDto.getRefreshToken());
-        log.info("유저 정보 : {}  {}",login.getUsername(), login.getRefreshToken());
-        redisRepository.deleteById(login.getUsername());
-        return new ResponseDto(HttpStatus.OK.value(), "로그아웃 성공",refreshDto);
+        try{
+            LoginInfo login = redisRepository.findByRefreshToken(refreshDto.getRefreshToken());
+            log.info("유저 정보 : {}  {}",login.getUsername(), login.getRefreshToken());
+            redisRepository.deleteById(login.getUsername());
+            return new ResponseDto(HttpStatus.OK.value(), "로그아웃 성공",refreshDto);
+        }catch (Exception ex){
+            return new ResponseDto(HttpStatus.BAD_REQUEST.value(), "로그인 정보가 만료되었습니다.", "");
+        }
+
     }
 }

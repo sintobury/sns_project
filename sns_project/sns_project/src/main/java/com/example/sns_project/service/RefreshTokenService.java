@@ -34,7 +34,4 @@ public class RefreshTokenService {
             return new ResponseDto(HttpStatus.BAD_REQUEST.value(), "로그인 정보가 없습니다. 다시 로그인해주세요.", null);
         }
     }
-
-
-
 }

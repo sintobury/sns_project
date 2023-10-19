@@ -1,3 +1,4 @@
+/*
 package com.example.sns_project.websocket;
 
 import lombok.Builder;
@@ -31,3 +32,4 @@ public class ChatRoom {
                 chatService.sendMessage(session, message));
     }
 }
+*/

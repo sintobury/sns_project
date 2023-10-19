@@ -1,3 +1,4 @@
+/*
 package com.example.sns_project.websocket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,3 +36,4 @@ public class WebSocketHandler extends TextWebSocketHandler {
         chatRoom.handlerActions(session, chatMessage, chatService);
     }
 }
+*/
