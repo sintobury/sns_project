@@ -1,6 +1,7 @@
 package com.example.sns_project.websocket;
 
 import com.example.sns_project.security.auth.Jwt.JwtTokenProvider;
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -54,18 +55,36 @@ public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
                 StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
                 if(StompCommand.CONNECT.equals(accessor.getCommand())){
                     try{
-                        String accessToken = accessor.getFirstNativeHeader("accessToken");
+                        /**
+                         * 메인 코드
+                         */
+                 /*       String accessToken = accessor.getFirstNativeHeader("accessToken");
                         jwtTokenProvider.validateAccessToken(accessToken);
+                        Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
+                        accessor.setUser(authentication);
                         String username = jwtTokenProvider.findUsernameByAccess(accessToken);
                         String name = jwtTokenProvider.findUsernameByAccess(accessToken);
                         String sessionId = accessor.getSessionId();
                         log.info("접속한 유저 : {}   유저의 세션 값 : {}",username, sessionId);
-                        messageService.save(username, sessionId, name);
-                    }catch (Exception ex){
+                        messageService.save(username, sessionId, name);*/
+
+
+                        /**
+                         * 테스트 코드
+                         */
+                        String username = accessor.getFirstNativeHeader("username");
+                        String sessionId = accessor.getSessionId();
+                        List<GrantedAuthority> authorities = new ArrayList<>();
+                        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+                        Authentication auth = new UsernamePasswordAuthenticationToken(username, username, authorities);
+                        SecurityContextHolder.getContext().setAuthentication(auth);
+                        accessor.setUser(auth);
+                        log.info("접속한 유저 : {}   유저의 세션 값 : {}   auth : {}",username, sessionId, auth);
+                    }catch (JwtException ex){
                         throw ex;
                     }
                 }
-                else if(StompCommand.DISCONNECT.equals(accessor.getCommand())){
+                if(StompCommand.DISCONNECT.equals(accessor.getCommand())){
                     try{
                         String accessToken = accessor.getFirstNativeHeader("accessToken");
                         jwtTokenProvider.validateAccessToken(accessToken);
@@ -73,14 +92,24 @@ public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
                         String name = jwtTokenProvider.findUsernameByAccess(accessToken);
                         String sessionId = accessor.getSessionId();
                         log.info("로그아웃한 유저 : {}   유저의 세션 값 : {}",username, sessionId);
-                        messageService.logout(username);
-                    }catch (Exception ex){
+
+                    }catch (JwtException ex){
                         throw ex;
                     }
-
                 }
                 return message;
             }
+
         });
+        registration.interceptors(new ChannelInterceptor() {
+            @Override
+            public void afterReceiveCompletion(Message<?> message, MessageChannel channel, Exception ex) {
+                StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+                String sender = accessor.getFirstNativeHeader("sender");
+                log.info("로그 : {}",sender);
+            }
+        });
+
     }
+
 }
