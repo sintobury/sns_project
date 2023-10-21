@@ -12,17 +12,21 @@
 .main_content_container {
     max-width: 90rem;
     min-height: calc(100vh - 9.375rem);
+    width: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: row;
     flex: 1 0 auto;
-    padding-top: 10px;
+    padding: 10px 0;
 }
 
 .profile_container {
     width: calc(100% - 25rem);
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: stretch;
+    border-radius: 6px;
 }
 
 .profile_summary_container {

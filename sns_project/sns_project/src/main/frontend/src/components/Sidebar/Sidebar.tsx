@@ -5,7 +5,6 @@ import GroupIcon from "@mui/icons-material/Group";
 import StarIcon from "@mui/icons-material/Star";
 import "./Sidebar.css";
 import { yellow } from "@mui/material/colors";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import { authInstance } from "../../interceptors/interceptors";
@@ -30,29 +29,46 @@ interface MemberDTO {
 }
 
 const Sidebar = () => {
-  const [mode, setMode] = useState("home");
+  const [mode, setMode] = useState("addFriend");
+  const [searchKeyword, setSearchKeyword] = useState("");
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
-  const navigate = useNavigate();
-  const navigateMain = () => {
-    setMode("home");
-    navigate("/main");
+
+  const moveAdd = () => {
+    if (mode !== "addFriend") {
+      setMode("addFriend");
+      setSearchKeyword("");
+    }
   };
   const getFriendList = async () => {
     const res = await authInstance.get("/friend");
+    return res.data;
+  };
+  const getSearchFriendList = async () => {
+    if (searchKeyword === "") {
+      const res = await authInstance.get(`/member/search`);
+      return res.data;
+    }
+
+    const res = await authInstance.get(`/member/search/${searchKeyword}`);
     return res.data;
   };
 
   const friendlistData = useQuery<ResponseDTO>(["friendList"], getFriendList, {
     staleTime: Infinity,
   });
+
+  const friendSearchData = useQuery<ResponseDTO>(["searchFriendList"], getSearchFriendList, {
+    staleTime: Infinity,
+  });
+  console.log({ 1: friendSearchData.data, 2: friendlistData.data });
   return (
     <div className="sidebar_container">
       <div className={`sidebar_button_container ${isDarkmode && "darkmode"}`}>
         <Button
           icon={<HomeIcon sx={{ color: "#70e15e" }} />}
-          text="메인으로"
+          text="친구추가"
           type="button"
-          onClick={navigateMain}
+          onClick={moveAdd}
         />
         <Button
           icon={<GroupIcon color="primary" />}
@@ -67,17 +83,50 @@ const Sidebar = () => {
           onClick={() => setMode("bookmarkList")}
         />
       </div>
+      {mode === "addFriend" && (
+        <div className={`add_friend_container ${isDarkmode && "darkmode"}`}>
+          <p className="component_title">친구 추가</p>
+          <div className="add_friend_search_container">
+            <input
+              className="add_friend_input"
+              placeholder="이름"
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+            />
+            <Button
+              type="button"
+              text="검색"
+              design="black"
+              onClick={() => friendSearchData.refetch()}
+            />
+          </div>
+          {friendSearchData.isLoading ? null : (
+            <div className="user_container">
+              {friendSearchData.data?.result.map((el: MemberDTO) => (
+                <div className={`friend ${isDarkmode && "darkmode"}`}>
+                  <img className="profile_img" src={el.imgurl} alt="profile_img" />
+                  <p className="friend_name">{el.name}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
       {mode === "friendList" && (
         <div className={`friend_list ${isDarkmode && "darkmode"}`}>
           <p className="component_title">친구목록</p>
-          {friendlistData.isLoading !== true &&
-            friendlistData.data?.result.length !== 0 &&
-            friendlistData.data?.result.map((el: MemberDTO) => (
-              <div className="friend">
-                <img className="profile_img" src={el.imgurl} alt="profile_img" />
-                <p className="friend_Id">{el.username}</p>
-              </div>
-            ))}
+          {friendlistData.isLoading ? null : (
+            <div className="friendlist_container">
+              {friendlistData.data?.result.length === 0
+                ? null
+                : friendlistData.data?.result.map((el: MemberDTO) => (
+                    <div className="friend">
+                      <img className="profile_img" src={el.imgurl} alt="profile_img" />
+                      <p className="friend_Id">{el.username}</p>
+                    </div>
+                  ))}
+            </div>
+          )}
         </div>
       )}
       {mode === "bookmarkList" && (

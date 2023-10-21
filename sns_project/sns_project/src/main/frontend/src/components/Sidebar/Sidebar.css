@@ -24,6 +24,37 @@
     height: 50px;
 }
 
+.add_friend_container {
+    padding: 5px;
+    flex: 1 0 auto;
+    transition: 0.7s;
+    background-color: #81cc76;
+    margin: 0 5px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    &.darkmode {
+        background-color: #212121;
+        color: white;
+    }
+}
+
+.add_friend_search_container {
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.add_friend_input {
+    flex: 1 0 auto;
+    padding: .5rem .75rem;
+    border:none;
+    border-radius: 6px;
+}
+
 .friend_list {
     padding: 5px;
     flex: 1 0 auto;
@@ -47,5 +78,35 @@
     &.darkmode {
         background-color: #212121;
         color: white;
+    }
+}
+
+.user_container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.friend {
+    padding: .5rem .75rem;
+    background-color:#66ac5c;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #515151;
+        color: white;
+        &:hover {
+            background-color: #c2c2c2;
+            color: #212121;
+        }
+    }
+    &:hover {
+        background-color: #498440;
     }
 }

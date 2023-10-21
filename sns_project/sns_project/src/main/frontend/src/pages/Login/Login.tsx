@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "../../redux/reducers/loginSlice";
+import { login, logout } from "../../redux/reducers/loginSlice";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -36,9 +36,6 @@ const Login = () => {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
           alert("회원가입이 필요합니다.");
-          // setError("formError", {
-          //   message: "등록된 회원이 아닙니다.",
-          // });
         }
       }
     }
@@ -50,6 +47,9 @@ const Login = () => {
   } = useForm<loginForm>();
 
   useEffect(() => {
+    if (!localStorage.getItem("accessToken")) {
+      dispatch(logout());
+    }
     if (isLogin) {
       navigate("/main");
     }

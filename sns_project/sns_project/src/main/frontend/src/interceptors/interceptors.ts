@@ -21,6 +21,7 @@ const onResponse = async (res: AxiosResponse) => {
       });
       if (res.status === 200) {
         localStorage.setItem("accessToken", res.data.result.accessToken);
+        console.log("access refreshed");
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
