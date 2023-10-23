@@ -58,7 +58,7 @@ public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
                         /**
                          * 메인 코드
                          */
-                 /*       String accessToken = accessor.getFirstNativeHeader("accessToken");
+                        String accessToken = accessor.getFirstNativeHeader("accessToken");
                         jwtTokenProvider.validateAccessToken(accessToken);
                         Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
                         accessor.setUser(authentication);
@@ -66,20 +66,19 @@ public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
                         String name = jwtTokenProvider.findUsernameByAccess(accessToken);
                         String sessionId = accessor.getSessionId();
                         log.info("접속한 유저 : {}   유저의 세션 값 : {}",username, sessionId);
-                        messageService.save(username, sessionId, name);*/
 
 
                         /**
                          * 테스트 코드
                          */
-                        String username = accessor.getFirstNativeHeader("username");
+                   /*     String username = accessor.getFirstNativeHeader("username");
                         String sessionId = accessor.getSessionId();
                         List<GrantedAuthority> authorities = new ArrayList<>();
                         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
                         Authentication auth = new UsernamePasswordAuthenticationToken(username, username, authorities);
                         SecurityContextHolder.getContext().setAuthentication(auth);
                         accessor.setUser(auth);
-                        log.info("접속한 유저 : {}   유저의 세션 값 : {}   auth : {}",username, sessionId, auth);
+                        log.info("접속한 유저 : {}   유저의 세션 값 : {}   auth : {}",username, sessionId, auth);*/
                     }catch (JwtException ex){
                         throw ex;
                     }
@@ -101,15 +100,6 @@ public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
             }
 
         });
-        registration.interceptors(new ChannelInterceptor() {
-            @Override
-            public void afterReceiveCompletion(Message<?> message, MessageChannel channel, Exception ex) {
-                StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
-                String sender = accessor.getFirstNativeHeader("sender");
-                log.info("로그 : {}",sender);
-            }
-        });
-
     }
 
 }
