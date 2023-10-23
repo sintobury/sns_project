@@ -33,7 +33,7 @@ const Sidebar = () => {
   const [mode, setMode] = useState("addFriend");
   const [searchKeyword, setSearchKeyword] = useState("");
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
-  const loginusername = useSelector((state: RootState) => state.loginSlice.username);
+  const loginuserId = useSelector((state: RootState) => state.loginSlice.id);
   const navigate = useNavigate();
   const moveAdd = () => {
     if (mode !== "addFriend") {
@@ -56,11 +56,14 @@ const Sidebar = () => {
     return res.data;
   };
 
-  const reqFriend = async (username: string) => {
+  const reqFriend = async (id: string) => {
     const res = await authInstance.post(`/friend`, {
-      requestId: loginusername,
-      requestedId: username,
+      requestId: loginuserId,
+      requestedId: id,
     });
+    if (res.data.statusCode === 400) {
+      alert("이미 요청한 사람입니다.");
+    }
     console.log(res.data);
   };
 
@@ -132,7 +135,7 @@ const Sidebar = () => {
                       type="button"
                       text="+"
                       design="black"
-                      onClick={() => reqFriend(el.username)}
+                      onClick={() => reqFriend(el.id)}
                     />
                     <Button type="button" text="X" design="black" />
                   </div>

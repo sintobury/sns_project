@@ -32,7 +32,7 @@ const Oauth = () => {
   const getUserInfo = async () => {
     const res = await authInstance.get(`/member/info`);
     const response: ResponseDTO = res.data;
-    dispatch(login({ username: response.result.username }));
+    dispatch(login({ username: response.result.username, id: response.result.id }));
     navigate("/main");
   };
   useEffect(() => {

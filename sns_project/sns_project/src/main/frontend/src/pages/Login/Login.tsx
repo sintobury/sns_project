@@ -24,11 +24,13 @@ const Login = () => {
       const res = await defaultInstance.post("/login", data);
       if (res.status === 200) {
         const username = data.username;
+        // 로그인 시에 고유 id를 받아 저장
+        const id = res.data.result.usertableId;
         const accessToken = res.data.result.accessToken;
         const refreshToken = res.data.result.refreshToken;
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
-        dispatch(login({ username }));
+        dispatch(login({ username, id }));
         alert("로그인 되었습니다.");
         navigate("/main");
       }

@@ -16,6 +16,7 @@ const onResponse = async (res: AxiosResponse) => {
   const originalConfig = res.config;
   if (res.data.statusCode === 401) {
     try {
+      console.log("try");
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/refresh`, {
         refreshToken: localStorage.getItem("refreshToken"),
       });
