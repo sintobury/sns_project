@@ -14,7 +14,7 @@ import org.springframework.data.redis.core.index.Indexed;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@RedisHash(value = "loginInfo", timeToLive = 60 * 60 * 24 * 14 * 1000L)
+@RedisHash(value = "loginInfo")
 public class LoginInfo {
     @Id
     private String username;

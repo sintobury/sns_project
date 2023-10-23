@@ -3,6 +3,7 @@ package com.example.sns_project.service;
 import com.example.sns_project.dto.RefreshDto;
 import com.example.sns_project.dto.ResponseDto;
 import com.example.sns_project.dto.TokenDto;
+import com.example.sns_project.entity.LoginInfo;
 import com.example.sns_project.repository.MemberRepository;
 import com.example.sns_project.repository.RedisRepository;
 import com.example.sns_project.security.auth.Jwt.JwtTokenProvider;
@@ -28,6 +29,8 @@ public class RefreshTokenService {
                 String accessToken = jwtTokenProvider.generateAccessToken(memberRepository.findByUsername(username).get(0));
                 return new ResponseDto(HttpStatus.OK.value(), "토큰이 리프레시되었습니다.", new TokenDto(accessToken, refreshDto.getRefreshToken()));
             }catch (JwtException e){
+                LoginInfo loginInfo = redisRepository.findByRefreshToken(refreshDto.getRefreshToken());
+                redisRepository.deleteById(loginInfo.getUsername());
                 return new ResponseDto(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null);
             }
         }else{
