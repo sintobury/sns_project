@@ -29,10 +29,15 @@ public class JwtTokenProvider {
     @Value("${jwt.refreshSecret}")
     private String refreshSecretKey;
     // 엑세스토큰 만료시간
-    private final Long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;
+    private final Long ACCESS_TOKEN_EXPIRE_TIME = 10 * 60 * 1000L;
     // 리프레시 토큰 만료시간
-    private final Long REFRESH_TOKEN_EXPIRE_TIME = 60 * 60 * 24 * 14 * 1000L;
+    private final Long REFRESH_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;
 
+    /**
+     *
+     * 엑세스 토큰 : 30 * 60 * 1000L 30분
+     * 리프레시 토큰 : 60 * 60 * 24 * 14 * 1000L 14일
+     */
     public String generateRefreshToken(Member member){
         Date now = new Date();
         log.info("time : {}",now);
