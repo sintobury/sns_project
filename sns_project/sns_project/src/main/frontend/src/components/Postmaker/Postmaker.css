@@ -9,8 +9,6 @@
 .postmaker_propile_container {
     background-color: #81cc76;
     padding: 10px;
-    display: flex;
-    justify-content: center;
     transition: 0.7s;
     &.darkmode {
         background-color: #212121;

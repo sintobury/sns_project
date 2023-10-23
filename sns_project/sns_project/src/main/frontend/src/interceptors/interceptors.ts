@@ -23,14 +23,17 @@ const onResponse = async (res: AxiosResponse) => {
         localStorage.setItem("accessToken", res.data.result.accessToken);
         console.log("access refreshed");
       }
+      if (res.data.statusCode === 400) {
+        console.log("refresh expired");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        alert("로그인시간이 만료되었습니다.");
+        window.location.replace("/");
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          console.log("refresh expired");
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          alert("로그인시간이 만료되었습니다.");
-          window.location.replace("/");
+          console.log(`error: ${error}`);
         }
       }
     }

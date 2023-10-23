@@ -81,8 +81,8 @@ const Profile = () => {
           <div className="profile_container">
             <div className={`profile_summary_container ${isDarkmode && "darkmode"}`}>
               <div className={`profile_img_container ${isDarkmode && "darkmode"}`}>
-                <img className="profile_img" id="user_profile_img" alt="profile img"></img>
-                <label htmlFor="user_profile_img">{}</label>
+                <img className="profile_img" id="user_profile_img" alt="user_img"></img>
+                <label htmlFor="user_profile_img">{profileData?.result.name}</label>
               </div>
               <div className="profile_tab_container">
                 {tabmenulist.map((el) => (

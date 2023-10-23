@@ -16,6 +16,7 @@
     flex-direction: column;
     background-color: #e0e0e0;
     border-radius: 6px;
+    border: 1px solid #bdbdbd;
     overflow: hidden;
     transition: 0.7s;
     &.darkmode {
@@ -26,7 +27,7 @@
 .menu {
     padding: .5rem .75rem;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid #bdbdbd;
@@ -38,11 +39,14 @@
 }
 .menu:hover {
     background-color: #bdbdbd;
-    transition: 0.7s;
     &.darkmode {
         background-color: #515151;
         opacity: 0.87;
     }
+}
+
+.menu_title {
+    margin: 0;
 }
 
 .toggle_container {
@@ -51,6 +55,7 @@
     height: 24px;
     border-radius: 10px;
     transition: 0.7s;
+    position: relative;
 }
 
 .toggle_circle {
@@ -58,11 +63,12 @@
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    left: 16px;
+    top: 2px;
+    left: 2px;
     background-color: #e0e0e0;
     transition: 0.7s;
     &.darkmode{
-        left: 50px;
+        left: 38px;
         background-color: #515151;
     }
 }

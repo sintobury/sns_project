@@ -46,8 +46,10 @@ const MainAdditionalButton = () => {
             프로필
           </div>
           <div className={`menu ${isDarkmode && "darkmode"}`} onClick={setDarkmode}>
-            <div className={`toggle_container ${isDarkmode && "darkmode"}`}></div>
-            <div className={`toggle_circle ${isDarkmode && "darkmode"}`}></div>
+            <p className="menu_title">다크모드</p>
+            <div className={`toggle_container ${isDarkmode && "darkmode"}`}>
+              <div className={`toggle_circle ${isDarkmode && "darkmode"}`}></div>
+            </div>
           </div>
           <LogoutButton />
         </div>

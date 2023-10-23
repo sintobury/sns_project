@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import { authInstance } from "../../interceptors/interceptors";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 interface ResponseDTO {
   statusCode: string;
@@ -32,25 +33,39 @@ const Sidebar = () => {
   const [mode, setMode] = useState("addFriend");
   const [searchKeyword, setSearchKeyword] = useState("");
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
-
+  const loginusername = useSelector((state: RootState) => state.loginSlice.username);
+  const navigate = useNavigate();
   const moveAdd = () => {
     if (mode !== "addFriend") {
       setMode("addFriend");
       setSearchKeyword("");
     }
   };
+
   const getFriendList = async () => {
     const res = await authInstance.get("/friend");
     return res.data;
   };
+
   const getSearchFriendList = async () => {
     if (searchKeyword === "") {
       const res = await authInstance.get(`/member/search`);
       return res.data;
     }
-
     const res = await authInstance.get(`/member/search/${searchKeyword}`);
     return res.data;
+  };
+
+  const reqFriend = async (username: string) => {
+    const res = await authInstance.post(`/friend`, {
+      requestId: loginusername,
+      requestedId: username,
+    });
+    console.log(res.data);
+  };
+
+  const navigateProfile = (username: string) => {
+    navigate(`/profile?username=${username}`);
   };
 
   const friendlistData = useQuery<ResponseDTO>(["friendList"], getFriendList, {
@@ -103,9 +118,24 @@ const Sidebar = () => {
           {friendSearchData.isLoading ? null : (
             <div className="user_container">
               {friendSearchData.data?.result.map((el: MemberDTO) => (
-                <div className={`friend ${isDarkmode && "darkmode"}`}>
-                  <img className="profile_img" src={el.imgurl} alt="profile_img" />
-                  <p className="friend_name">{el.name}</p>
+                <div
+                  className={`user ${isDarkmode && "darkmode"}`}
+                  key={el.username}
+                  onClick={() => navigateProfile(el.username)}
+                >
+                  <div className="user_info_container">
+                    <img className="profile_img" src={el.imgurl} alt="user_img" />
+                    <p className="user_name">{el.name}</p>
+                  </div>
+                  <div className="user_button_container">
+                    <Button
+                      type="button"
+                      text="+"
+                      design="black"
+                      onClick={() => reqFriend(el.username)}
+                    />
+                    <Button type="button" text="X" design="black" />
+                  </div>
                 </div>
               ))}
             </div>
