@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Button from "../Common/Button/Button";
 import HomeIcon from "@mui/icons-material/Home";
 import GroupIcon from "@mui/icons-material/Group";
 import StarIcon from "@mui/icons-material/Star";
+import MenuIcon from "@mui/icons-material/Menu";
 import "./Sidebar.css";
 import { yellow } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import { authInstance } from "../../interceptors/interceptors";
@@ -32,6 +34,7 @@ interface MemberDTO {
 const Sidebar = () => {
   const [mode, setMode] = useState("addFriend");
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [openidx, setOpenidx] = useState([false]);
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginuserId = useSelector((state: RootState) => state.loginSlice.id);
   const navigate = useNavigate();
@@ -79,6 +82,27 @@ const Sidebar = () => {
     staleTime: Infinity,
   });
   console.log({ 1: friendSearchData.data, 2: friendlistData.data });
+
+  const openMenu = (idx: number) => {
+    const newArr = new Array(friendSearchData.data?.result.length).fill(false);
+    newArr[idx] = true;
+    setOpenidx(newArr);
+  };
+
+  const MenuRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent): void => {
+      if (MenuRef.current && !MenuRef.current.contains(e.target as Node)) {
+        const newArr = new Array(friendSearchData.data?.result.length).fill(false);
+        setOpenidx(newArr);
+        console.log("close");
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [MenuRef, friendSearchData]);
   return (
     <div className="sidebar_container">
       <div className={`sidebar_button_container ${isDarkmode && "darkmode"}`}>
@@ -119,25 +143,30 @@ const Sidebar = () => {
             />
           </div>
           {friendSearchData.isLoading ? null : (
-            <div className="user_container">
-              {friendSearchData.data?.result.map((el: MemberDTO) => (
-                <div
-                  className={`user ${isDarkmode && "darkmode"}`}
-                  key={el.username}
-                  onClick={() => navigateProfile(el.username)}
-                >
+            <div className="user_container" ref={MenuRef}>
+              {friendSearchData.data?.result.map((el: MemberDTO, idx) => (
+                <div className={`user ${isDarkmode && "darkmode"}`} key={el.username}>
                   <div className="user_info_container">
                     <img className="profile_img" src={el.imgurl} alt="user_img" />
                     <p className="user_name">{el.name}</p>
                   </div>
-                  <div className="user_button_container">
-                    <Button
-                      type="button"
-                      text="+"
-                      design="black"
-                      onClick={() => reqFriend(el.id)}
-                    />
-                    <Button type="button" text="X" design="black" />
+                  <div className="user_button_container" onClick={() => openMenu(idx)}>
+                    {isDarkmode ? <MenuIcon sx={{ color: grey[500] }} /> : <MenuIcon />}
+                    {openidx[idx] && (
+                      <div
+                        className={`user_interaction_button_container ${isDarkmode && "darkmode"}`}
+                      >
+                        <div
+                          className="user_interaction_button"
+                          onClick={() => navigateProfile(el.username)}
+                        >
+                          프로필
+                        </div>
+                        <div className="user_interaction_button" onClick={() => reqFriend(el.id)}>
+                          친구요청
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

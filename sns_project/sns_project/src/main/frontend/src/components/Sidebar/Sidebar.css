@@ -120,10 +120,38 @@
 
 .user_button_container {
     width: 6.0625rem;
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+.user_interaction_button_container {
+    position: absolute;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    top: 24px;
+    width: 5rem;
+    background-color: #e0e0e0;
+    border-radius: 6px;
+    border: 1px solid #bdbdbd;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+        color: white;
+    }
+}
+
+.user_interaction_button {
+    padding: .5rem .75rem;
+    border-bottom: 1px solid #bdbdbd;
+    cursor: pointer;
+    &:last-child {
+        border-bottom: none;
+    }
 }
 
 .friend {
