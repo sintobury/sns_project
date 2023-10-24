@@ -97,12 +97,12 @@
     align-items: center;
     gap: 10px;
     cursor: pointer;
-    transition: 0.7s;
     &.darkmode {
-        background-color: #e0e0e0;
-        color: #212121;
+        background-color: #515151;
+        color: white;
         &:hover {
-            background-color: #b6b6b6;
+            background-color: #8c8c8c;
+            color: #212121;
         }
     }
     &:hover {
@@ -138,7 +138,6 @@
     background-color: #e0e0e0;
     border-radius: 6px;
     border: 1px solid #bdbdbd;
-    transition: 0.7s;
     &.darkmode {
         background-color: #212121;
         color: white;
