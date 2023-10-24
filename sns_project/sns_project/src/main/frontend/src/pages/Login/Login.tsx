@@ -9,6 +9,7 @@ import { defaultInstance } from "../../interceptors/interceptors";
 import { useEffect } from "react";
 import Button from "../../components/Common/Button/Button";
 import GoogleLoginButton from "../../components/GoogleLoginButton/GoogleLoginButton";
+import { useWebsocket } from "../../hook/useWebsocket";
 
 interface loginForm {
   username: string;
@@ -19,6 +20,18 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogin = useSelector((state: RootState) => state.loginSlice.isLogin);
+
+  const connectLoginSocket = () => {
+    useWebsocket();
+    // const socket = new WebSocket(`${process.env.REACT_APP_WEB_SOCKET_URL}/ws/chat`);
+    // const stompClient = webstomp.over(socket);
+    // const headers = stompClient.connect(headers, () => {
+    //   stompClient.subscribe(`${process.env.REACT_APP_WEB_SOCKET_URL}/user/topic/data`, () => {
+    //     console.log("websocket connected");
+    //   });
+    // });
+  };
+
   const handleLogin = async (data: loginForm) => {
     try {
       const res = await defaultInstance.post("/login", data);
@@ -31,6 +44,7 @@ const Login = () => {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
         dispatch(login({ username, id }));
+        connectLoginSocket();
         alert("로그인 되었습니다.");
         navigate("/main");
       }

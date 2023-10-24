@@ -1,18 +1,33 @@
 import "./ChatInput.css";
 import { ChangeEvent, useState } from "react";
 import Button from "../../Common/Button/Button";
+import { useWebsocket } from "../../../hook/useWebsocket";
+import { useGetLoginUserinfo } from "../../../hook/useGetLoginUserinfo";
 
-const ChatInput = () => {
-  const [message, setMessage] = useState<string>();
+interface childProps {
+  roomId: string;
+}
+
+const ChatInput = ({ roomId }: childProps) => {
+  const [message, setMessage] = useState<string>("");
+  const userinfo = useGetLoginUserinfo();
+  const client = useWebsocket();
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
   };
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (message?.trim() === "") {
       return;
     }
+    const socketMessage = {
+      sender: userinfo.username,
+      senderName: userinfo.name,
+      roomID: roomId,
+      message: message,
+    };
     // 실재 채팅 전송 함수 실행
+    client.send(`/app/message/sendToRoom/send`, JSON.stringify(socketMessage), {});
     setMessage("");
   };
 
