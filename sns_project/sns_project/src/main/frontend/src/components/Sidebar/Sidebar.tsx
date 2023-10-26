@@ -55,19 +55,19 @@ const Sidebar = () => {
       <div className={`sidebar_button_container ${isDarkmode && "darkmode"}`}>
         <Button
           icon={<HomeIcon sx={{ color: "#70e15e" }} />}
-          text="친구추가"
+          text="친구 추가"
           type="button"
           onClick={moveAdd}
         />
         <Button
-          icon={<GroupIcon color="primary" />}
+          icon={<GroupIcon sx={{ color: "#52a445" }} />}
           text="친구 요청 목록"
           type="button"
           onClick={() => setMode("requestedFriend")}
         />
         <Button
           icon={<GroupIcon color="primary" />}
-          text="친구목록"
+          text="친구 목록"
           type="button"
           onClick={() => setMode("friendList")}
         />

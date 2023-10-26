@@ -46,9 +46,9 @@
     align-items: center;
     gap: 10px;
     cursor: pointer;
+    transition: 0.7s;
     &.darkmode {
         background-color: #515151;
-        color: white;
         &:hover {
             background-color: #8c8c8c;
             color: #212121;
@@ -63,16 +63,16 @@
     flex: 1 0 auto;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 10px;
 }
 
 .user_button_container {
-    width: 6.0625rem;
     position: relative;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content:center;
     align-items: center;
 }
 .user_interaction_button_container {
