@@ -14,12 +14,14 @@
     margin: 0 auto;
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
     flex: 1 0 auto;
     padding: 10px 0;
 }
 
 .main_content {
-    width: calc(100% - 25rem);
+    width: calc(100% - 26.875rem);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

@@ -11,7 +11,7 @@ interface childProps {
 const ChatInput = ({ roomId }: childProps) => {
   const [message, setMessage] = useState<string>("");
   const userinfo = useGetLoginUserinfo();
-  const client = useWebsocket();
+  const { client } = useWebsocket();
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
   };
@@ -27,7 +27,9 @@ const ChatInput = ({ roomId }: childProps) => {
       message: message,
     };
     // 실재 채팅 전송 함수 실행
-    client.send(`/app/message/sendToRoom/send`, JSON.stringify(socketMessage), {});
+    if (client) {
+      client.send(`/app/message/sendToRoom/send`, JSON.stringify(socketMessage), {});
+    }
     setMessage("");
   };
 

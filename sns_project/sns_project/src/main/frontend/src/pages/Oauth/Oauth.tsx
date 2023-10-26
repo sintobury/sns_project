@@ -29,6 +29,8 @@ const Oauth = () => {
   const error = Number(searchParams.get("error")) as number;
   const accessToken = searchParams.get("accessToken") as string;
   const refreshToken = searchParams.get("refreshToken") as string;
+  localStorage.setItem("accessToken", accessToken);
+  localStorage.setItem("refreshToken", refreshToken);
   const getUserInfo = async () => {
     const res = await authInstance.get(`/member/info`);
     const response: ResponseDTO = res.data;
@@ -41,8 +43,6 @@ const Oauth = () => {
       navigate("/");
     }
     if (accessToken && refreshToken) {
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
       getUserInfo();
     }
   }, []);

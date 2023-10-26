@@ -5,9 +5,15 @@ import Postmaker from "../../components/Postmaker/Postmaker";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import "./Main.css";
 import { RootState } from "../../redux";
+import { useWebsocket } from "../../hook/useWebsocket";
+import { useEffect } from "react";
 
 const Main = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
+  const { connectWebsocket } = useWebsocket();
+  useEffect(() => {
+    connectWebsocket();
+  }, []);
   return (
     <div className={`main_page ${isDarkmode && "darkmode"}`}>
       <Header />

@@ -9,7 +9,6 @@ import { defaultInstance } from "../../interceptors/interceptors";
 import { useEffect } from "react";
 import Button from "../../components/Common/Button/Button";
 import GoogleLoginButton from "../../components/GoogleLoginButton/GoogleLoginButton";
-import { useWebsocket } from "../../hook/useWebsocket";
 
 interface loginForm {
   username: string;
@@ -20,22 +19,21 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogin = useSelector((state: RootState) => state.loginSlice.isLogin);
-
-  const connectLoginSocket = () => {
-    useWebsocket();
-    // const socket = new WebSocket(`${process.env.REACT_APP_WEB_SOCKET_URL}/ws/chat`);
-    // const stompClient = webstomp.over(socket);
-    // const headers = stompClient.connect(headers, () => {
-    //   stompClient.subscribe(`${process.env.REACT_APP_WEB_SOCKET_URL}/user/topic/data`, () => {
-    //     console.log("websocket connected");
-    //   });
-    // });
-  };
+  // const connectLoginSocket = () => {
+  //   useWebsocket();
+  // const socket = new WebSocket(`${process.env.REACT_APP_WEB_SOCKET_URL}/ws/chat`);
+  // const stompClient = webstomp.over(socket);
+  // const headers = stompClient.connect(headers, () => {
+  //   stompClient.subscribe(`${process.env.REACT_APP_WEB_SOCKET_URL}/user/topic/data`, () => {
+  //     console.log("websocket connected");
+  //   });
+  // });
+  // };
 
   const handleLogin = async (data: loginForm) => {
     try {
       const res = await defaultInstance.post("/login", data);
-      if (res.status === 200) {
+      if (res.data.statusCode === 200) {
         const username = data.username;
         // 로그인 시에 고유 id를 받아 저장
         const id = res.data.result.usertableId;
@@ -43,10 +41,11 @@ const Login = () => {
         const refreshToken = res.data.result.refreshToken;
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
+        alert(res.data.message);
         dispatch(login({ username, id }));
-        connectLoginSocket();
-        alert("로그인 되었습니다.");
         navigate("/main");
+      } else if (res.data.statusCode === 400) {
+        alert(res.data.message);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -66,10 +65,7 @@ const Login = () => {
     if (!localStorage.getItem("accessToken")) {
       dispatch(logout());
     }
-    if (isLogin) {
-      navigate("/main");
-    }
-  }, []);
+  }, [isLogin]);
   return (
     <div className="background_login">
       <div className="login_container">
