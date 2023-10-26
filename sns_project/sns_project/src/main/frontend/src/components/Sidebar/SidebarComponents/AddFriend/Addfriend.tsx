@@ -43,9 +43,13 @@ const Addfriend = () => {
     return res.data;
   };
 
-  const friendSearchData = useQuery<ResponseDTO>(["searchFriendList"], getSearchFriendList, {
-    staleTime: Infinity,
-  });
+  const friendSearchData = useQuery<ResponseDTO>(
+    ["searchFriendList", loginuserId],
+    getSearchFriendList,
+    {
+      staleTime: Infinity,
+    },
+  );
 
   const reqFriend = async (id: string) => {
     const res = await authInstance.post(`/friend`, {

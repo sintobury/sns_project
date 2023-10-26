@@ -8,7 +8,15 @@ import Button from "../../../Common/Button/Button";
 interface ResponseDTO {
   statusCode: string;
   message: string;
-  result: MemberDTO[];
+  result: FriendDTO[];
+}
+
+interface FriendDTO {
+  id: string;
+  member: MemberDTO;
+  request: boolean;
+  state: string;
+  list: MemberDTO[];
 }
 
 interface MemberDTO {
@@ -24,29 +32,35 @@ interface MemberDTO {
 }
 const RequestedFriend = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
+  const loginUserId = useSelector((state: RootState) => state.loginSlice.id);
   const getRequestedFriend = async () => {
     const res = await authInstance.get(`/friend/requested`);
     return res.data;
   };
 
-  const requestedFriendData = useQuery<ResponseDTO>(["requestedFriendList"], getRequestedFriend, {
-    staleTime: Infinity,
-  });
+  const requestedFriendData = useQuery<ResponseDTO>(
+    ["requestedFriendList", loginUserId],
+    getRequestedFriend,
+    {
+      staleTime: Infinity,
+    },
+  );
   console.log(requestedFriendData.data);
   return (
     <div className={`requested_friend_container ${isDarkmode && "darkmode"}`}>
       <p className="component_title">친구 요청 목록</p>
       {requestedFriendData.isLoading ? null : (
         <div className="user_container">
-          {requestedFriendData.data?.result.map((el) => (
-            <div className={`user ${isDarkmode && "darkmode"}`} key={el.username}>
-              <div className="user_info_container">
-                <img className="profile_img" src={el.imgurl} alt="user_img" />
-                <p className="user_name">{el.name}</p>
+          {requestedFriendData.data &&
+            requestedFriendData.data.result.map((el: FriendDTO) => (
+              <div className={`user ${isDarkmode && "darkmode"}`} key={el.member.username}>
+                <div className="user_info_container">
+                  <img className="profile_img" src={el.member.imgurl} alt="user_img" />
+                  <p className="user_name">{el.member.name}</p>
+                </div>
+                <Button text="수락" type="button" design="black" />
               </div>
-              <Button text="수락" type="button" design="black" />
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </div>
