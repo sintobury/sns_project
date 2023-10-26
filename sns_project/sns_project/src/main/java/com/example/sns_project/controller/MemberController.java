@@ -28,6 +28,7 @@ public class MemberController {
     }
     @GetMapping("/member/info/{username}")
     public ResponseDto memberIdInfo(@PathVariable String username){
+        log.info("/member/info/{username} 진입");
         return memberService.memberInfo(username);
     }
 

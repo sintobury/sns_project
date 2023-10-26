@@ -35,7 +35,7 @@ public class MemberRepository {
         return resultList;
     }
     public List<Member> findByNameWithOutMe(String username, String name){
-        List<Member> resultList = em.createQuery("select m from Member m where m.username != :username and m.name = name", Member.class)
+        List<Member> resultList = em.createQuery("select m from Member m where m.username != :username and m.name = :name", Member.class)
                 .setParameter("username", username)
                 .setParameter("name", name)
                 .getResultList();
