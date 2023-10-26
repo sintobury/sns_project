@@ -49,6 +49,9 @@ public class FriendRepository {
                 "join fetch f.friendRequest r " +
                 "where f.friendRequested.id = :member_id and f.state = :state", Friend.class).setParameter("state", FriendEnum.WAIT).setParameter("member_id",memberId).getResultList();
     }
+    public void deleteFriendById(Friend friend){
+        em.remove(friend);
+    }
 
 
 

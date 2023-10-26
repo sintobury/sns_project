@@ -140,4 +140,13 @@ public class FriendService {
             return new ResponseDto(HttpStatus.OK.value(), "성공적으로 친구요청을 수락하였습니다.", friendId);
         }
     }
+    public ResponseDto deleteFriend(FriendDto friendDto){
+        try{
+            Friend friend = friendRepository.findFriendById(friendDto.getId());
+            friendRepository.deleteFriendById(friend);
+            return new ResponseDto(HttpStatus.OK.value(), "성공적으로 친구를 삭제했습니다.", friendDto);
+        }catch (Exception e){
+            return new ResponseDto(HttpStatus.BAD_REQUEST.value(), e.getMessage(), friendDto);
+        }
+    }
 }

@@ -11,10 +11,7 @@ import com.example.sns_project.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -50,5 +47,9 @@ public class FriendController {
     @PostMapping("/friend/accept")
     public ResponseDto acceptFriend(@AuthenticationPrincipal CustomDetails customDetails, @RequestBody FriendDto friendDto){
         return friendService.acceptFriendRequest(friendDto.getId());
+    }
+    @DeleteMapping("/friend")
+    public ResponseDto deleteFriend(@RequestBody FriendDto friendDto){
+        return friendService.deleteFriend(friendDto);
     }
 }
