@@ -6,6 +6,7 @@ import com.example.sns_project.dto.MemberDto;
 import com.example.sns_project.dto.ResponseDto;
 import com.example.sns_project.entity.Member;
 import com.example.sns_project.security.auth.CustomDetails;
+import com.example.sns_project.service.FileService;
 import com.example.sns_project.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
+    private final FileService fileService;
 
     @GetMapping("/member/info")
     public ResponseDto memberInfo(@AuthenticationPrincipal CustomDetails customDetails){
@@ -46,5 +49,8 @@ public class MemberController {
         return memberService.memberUpdate(memberDto);
     }
     @PostMapping("/member/profile")
-    public ResponseDto memberProfileUploads()
+    public ResponseDto memberProfileUploads(@AuthenticationPrincipal CustomDetails customDetails, @RequestParam MultipartFile file){
+        fileService.saveProfile(customDetails.getUsername(), file);
+
+    }
 }

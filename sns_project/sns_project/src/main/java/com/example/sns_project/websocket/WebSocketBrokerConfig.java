@@ -88,7 +88,6 @@ public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
                         String accessToken = accessor.getFirstNativeHeader("accessToken");
                         jwtTokenProvider.validateAccessToken(accessToken);
                         String username = jwtTokenProvider.findUsernameByAccess(accessToken);
-                        String name = jwtTokenProvider.findUsernameByAccess(accessToken);
                         String sessionId = accessor.getSessionId();
                         log.info("로그아웃한 유저 : {}   유저의 세션 값 : {}",username, sessionId);
 
