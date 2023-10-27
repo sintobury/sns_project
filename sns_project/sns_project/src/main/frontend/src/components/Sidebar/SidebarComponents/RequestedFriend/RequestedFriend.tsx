@@ -40,7 +40,7 @@ const RequestedFriend = () => {
   };
 
   const acceptFriendRequest = async (friendData: FriendDTO) => {
-    const res = await authInstance.post(`/friend/accept`, friendData);
+    const res = await authInstance.post(`/friend/accept`, { id: friendData.id });
     if (res.data.statusCode === 200) {
       alert(res.data.message);
       requestedFriendData.refetch();
@@ -60,6 +60,11 @@ const RequestedFriend = () => {
       <p className="component_title">친구 요청 목록</p>
       {requestedFriendData.isLoading ? null : (
         <div className="user_container">
+          {requestedFriendData.data && requestedFriendData.data.result.length === 0 && (
+            <div>
+              <p className="empty_message">받은 친구 요청이 없습니다.</p>
+            </div>
+          )}
           {requestedFriendData.data &&
             requestedFriendData.data.result.map((el: FriendDTO) => (
               <div className={`user ${isDarkmode && "darkmode"}`} key={el.member.username}>

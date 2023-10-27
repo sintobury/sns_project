@@ -4,9 +4,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import ChatInput from "./ChatInput/ChatInput";
 
-const Chatroom = () => {
+interface room {
+  username: string[];
+  roomID: string;
+  roomName: string;
+}
+
+const Chatroom = (roomData: room) => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
-  const roomId = "채팅방이름";
+  const roomId = roomData.roomID;
+  const roomName = roomData.roomName;
   return (
     <div className={`chatroom_container ${isDarkmode && "darkmode"}`}>
       <div className="close_button_container">
@@ -14,7 +21,7 @@ const Chatroom = () => {
       </div>
       <div className="chatroom_settings">
         <img alt="chatroom_representive_img"></img>
-        <p className="chatroom_title">채팅방 이름</p>
+        <p className="chatroom_title">{roomName}</p>
       </div>
       <div className="chat_message_container"></div>
       <ChatInput roomId={roomId} />

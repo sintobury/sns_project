@@ -117,6 +117,11 @@ const Addfriend = () => {
       </div>
       {friendSearchData.isLoading ? null : (
         <div className="user_container" ref={MenuRef}>
+          {friendSearchData.data?.result.length === 0 && (
+            <div>
+              <p className="empty_message">해당되는 사용자가 없습니다.</p>
+            </div>
+          )}
           {friendSearchData.data?.result.map((el: MemberDTO, idx) => (
             <div className={`user ${isDarkmode && "darkmode"}`} key={el.username}>
               <div className="user_info_container">

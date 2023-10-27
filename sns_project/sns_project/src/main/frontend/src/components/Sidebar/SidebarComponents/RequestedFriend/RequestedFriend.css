@@ -12,3 +12,7 @@
         color: white;
     }
 }
+
+.empty_message {
+    padding: 8px 12px;
+}

@@ -34,6 +34,12 @@ interface MemberDTO {
   imgurl: string;
 }
 
+// interface room {
+//   username: string[];
+//   roomID: string;
+//   roomName: string;
+// }
+
 const FriendList = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginuserId = useSelector((state: RootState) => state.loginSlice.id);
