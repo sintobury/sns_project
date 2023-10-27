@@ -29,6 +29,9 @@ public class FriendService {
      * 친구 추가
      */
     public ResponseDto save(FriendDataDto friendAddDto){
+        if(friendAddDto.getRequestId().equals(friendAddDto.getRequestedId())){
+            return new ResponseDto(HttpStatus.BAD_REQUEST.value(), "본인에게는 친구요청이 불가능합니다." , null);
+        }
         Member member = memberRepository.findById(friendAddDto.getRequestId());
         Member friend = memberRepository.findById(friendAddDto.getRequestedId());
         if(member == null || friend == null){
