@@ -45,7 +45,7 @@ public class FriendController {
         return friendService.checkFriendRequest(new FriendDataDto(member.getId(), friendDataDto.getRequestedId(), null));
     }
     @PostMapping("/friend/accept")
-    public ResponseDto acceptFriend(@AuthenticationPrincipal CustomDetails customDetails, @RequestBody FriendDto friendDto){
+    public ResponseDto acceptFriend(@RequestBody FriendDto friendDto){
         return friendService.acceptFriendRequest(friendDto.getId());
     }
     @DeleteMapping("/friend")

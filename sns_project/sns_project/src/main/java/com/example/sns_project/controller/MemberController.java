@@ -45,5 +45,6 @@ public class MemberController {
     public ResponseDto memberUpdate(@RequestBody MemberDto memberDto){
         return memberService.memberUpdate(memberDto);
     }
-
+    @PostMapping("/member/profile")
+    public ResponseDto memberProfileUploads()
 }
