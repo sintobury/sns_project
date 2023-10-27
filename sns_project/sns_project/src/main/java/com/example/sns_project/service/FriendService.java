@@ -61,11 +61,11 @@ public class FriendService {
         List<Friend> requestFriendList = friendRepository.findRequestFriendList(memberId);
         List<FriendDto> joinedList = new ArrayList<>();
         for (Friend friend : requestFriendList) {
-            FriendDto friendDto = new FriendDto(friend.getId(), friend.getFriendRequest().convertDto(),true, friend.getState());
+            FriendDto friendDto = new FriendDto(friend.getId(), friend.getFriendRequested().convertDto(),true, friend.getState());
             joinedList.add(friendDto);
         }
         for (Friend friend : requestedFriendList) {
-            FriendDto friendDto = new FriendDto(friend.getId(), friend.getFriendRequested().convertDto(),false, friend.getState());
+            FriendDto friendDto = new FriendDto(friend.getId(), friend.getFriendRequest().convertDto(),false, friend.getState());
             joinedList.add(friendDto);
         }
         return new ResponseDto(HttpStatus.OK.value(), "친구리스트를 성공적으로 조회했습니다.", joinedList);
