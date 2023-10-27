@@ -17,6 +17,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 
 @RestController
 @Slf4j
@@ -49,8 +51,7 @@ public class MemberController {
         return memberService.memberUpdate(memberDto);
     }
     @PostMapping("/member/profile")
-    public ResponseDto memberProfileUploads(@AuthenticationPrincipal CustomDetails customDetails, @RequestParam MultipartFile file){
-        fileService.saveProfile(customDetails.getUsername(), file);
-
+    public ResponseDto memberProfileUploads(@AuthenticationPrincipal CustomDetails customDetails, @RequestParam MultipartFile file) throws IOException {
+        return fileService.saveProfile(customDetails.getUsername(), file);
     }
 }

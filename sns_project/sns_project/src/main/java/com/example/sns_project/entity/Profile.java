@@ -2,8 +2,12 @@ package com.example.sns_project.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Profile {
     @Id
     @Column(name = "profile_id")
@@ -22,5 +26,13 @@ public class Profile {
 
     private String type;
 
-    private String size;
+    private Long size;
+
+    public Profile(Member member, String path, String name, String type, Long size) {
+        this.member = member;
+        this.path = path;
+        this.name = name;
+        this.type = type;
+        this.size = size;
+    }
 }
