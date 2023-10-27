@@ -31,6 +31,7 @@
 }
 
 .user_container {
+    padding: 8px 0;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -45,10 +46,9 @@
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    cursor: pointer;
     transition: 0.7s;
     &.darkmode {
-        background-color: #515151;
+        background-color: #717171;
         &:hover {
             background-color: #8c8c8c;
             color: #212121;
@@ -69,6 +69,7 @@
 }
 
 .user_button_container {
+    cursor: pointer;
     position: relative;
     display: flex;
     flex-direction: row;

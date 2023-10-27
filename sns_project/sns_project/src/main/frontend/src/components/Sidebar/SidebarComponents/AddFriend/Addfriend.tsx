@@ -43,6 +43,13 @@ const Addfriend = () => {
     return res.data;
   };
 
+  const pressEnterSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      friendSearchData.refetch();
+      setSearchKeyword("");
+    }
+  };
+
   const friendSearchData = useQuery<ResponseDTO>(
     ["searchFriendList", loginuserId],
     getSearchFriendList,
@@ -99,6 +106,7 @@ const Addfriend = () => {
           placeholder="이름"
           value={searchKeyword}
           onChange={(e) => setSearchKeyword(e.target.value)}
+          onKeyDown={pressEnterSearch}
         />
         <Button
           type="button"

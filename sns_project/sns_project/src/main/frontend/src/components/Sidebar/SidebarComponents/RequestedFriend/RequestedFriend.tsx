@@ -30,12 +30,21 @@ interface MemberDTO {
   provider: string;
   imgurl: string;
 }
+
 const RequestedFriend = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginUserId = useSelector((state: RootState) => state.loginSlice.id);
   const getRequestedFriend = async () => {
     const res = await authInstance.get(`/friend/requested`);
     return res.data;
+  };
+
+  const acceptFriendRequest = async (friendData: FriendDTO) => {
+    const res = await authInstance.post(`/friend/accept`, friendData);
+    if (res.data.statusCode === 200) {
+      alert(res.data.message);
+      requestedFriendData.refetch();
+    }
   };
 
   const requestedFriendData = useQuery<ResponseDTO>(
@@ -58,7 +67,12 @@ const RequestedFriend = () => {
                   <img className="profile_img" src={el.member.imgurl} alt="user_img" />
                   <p className="user_name">{el.member.name}</p>
                 </div>
-                <Button text="수락" type="button" design="black" />
+                <Button
+                  text="수락"
+                  type="button"
+                  design="black"
+                  onClick={() => acceptFriendRequest(el)}
+                />
               </div>
             ))}
         </div>

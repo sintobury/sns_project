@@ -7,48 +7,21 @@ import "./Sidebar.css";
 import { yellow } from "@mui/material/colors";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
-import { authInstance } from "../../interceptors/interceptors";
-import { useQuery } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import Addfriend from "./SidebarComponents/AddFriend/Addfriend";
 import RequestedFriend from "./SidebarComponents/RequestedFriend/RequestedFriend";
-
-interface ResponseDTO {
-  statusCode: string;
-  message: string;
-  result: MemberDTO[];
-}
-
-interface MemberDTO {
-  id: string;
-  username: string;
-  password: string;
-  name: string;
-  email: string;
-  birth: string;
-  createdAt: string;
-  provider: string;
-  imgurl: string;
-}
+import FriendList from "./SidebarComponents/FriendList/FriendList";
 
 const Sidebar = () => {
   const [mode, setMode] = useState("addFriend");
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
+  const queryClient = useQueryClient();
   const moveAdd = () => {
     if (mode !== "addFriend") {
+      queryClient.invalidateQueries(["searchFriendList"]);
       setMode("addFriend");
     }
   };
-
-  const getFriendList = async () => {
-    const res = await authInstance.get("/friend");
-    return res.data;
-  };
-
-  const friendlistData = useQuery<ResponseDTO>(["friendList"], getFriendList, {
-    staleTime: Infinity,
-  });
-
-  console.log({ 2: friendlistData.data });
 
   return (
     <div className="sidebar_container">
@@ -80,23 +53,7 @@ const Sidebar = () => {
       </div>
       {mode === "addFriend" && <Addfriend />}
       {mode === "requestedFriend" && <RequestedFriend />}
-      {mode === "friendList" && (
-        <div className={`friend_list ${isDarkmode && "darkmode"}`}>
-          <p className="component_title">친구목록</p>
-          {friendlistData.isLoading ? null : (
-            <div className="friendlist_container">
-              {friendlistData.data?.result.length === 0
-                ? null
-                : friendlistData.data?.result.map((el: MemberDTO) => (
-                    <div className="friend">
-                      <img className="profile_img" src={el.imgurl} alt="profile_img" />
-                      <p className="friend_Id">{el.username}</p>
-                    </div>
-                  ))}
-            </div>
-          )}
-        </div>
-      )}
+      {mode === "friendList" && <FriendList />}
       {mode === "bookmarkList" && (
         <div className={`bookmark_list ${isDarkmode && "darkmode"}`}>
           <p className="component_title">즐겨찾기</p>

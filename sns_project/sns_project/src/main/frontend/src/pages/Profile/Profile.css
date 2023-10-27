@@ -23,7 +23,6 @@
 }
 
 .profile_container {
-    width: calc(100% - 25rem);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

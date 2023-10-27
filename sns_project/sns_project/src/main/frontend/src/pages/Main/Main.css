@@ -21,7 +21,6 @@
 }
 
 .main_content {
-    width: calc(100% - 26.875rem);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
