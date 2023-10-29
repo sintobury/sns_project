@@ -38,15 +38,17 @@ button {
     &.green {
         background-color: #81cc76;
         color: #212121;
-        .darkmode {
-            background-color: #437f3a;
+        &.darkmode {
+            background-color: #515151;
+            color: #fff;
         }
     }
     &.green:hover {
         background: #407b36;
         color: #fff;
-        .darkmode {
-            background-color: #1f3e1a;
+        &.darkmode {
+            background: #c2c2c2;
+            color: #212121;
         }
     }
 }

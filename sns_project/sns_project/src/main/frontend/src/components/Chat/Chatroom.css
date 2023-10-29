@@ -8,8 +8,8 @@
     background-color: #81cc76;
     color: #212121;
     border-radius: 6px;
-    .darkmode {
-        background-color: #515151;
+    &.darkmode {
+        background-color: #313131;
         color: white;
     };
 }
@@ -21,6 +21,11 @@
     align-items: center;
     background-color: #66ac5c;
     border-radius: 6px;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #515151;
+        color: white;
+    };
 }
 
 .chatroom_title {

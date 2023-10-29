@@ -9,6 +9,11 @@
     background-color: #66ac5c;
     padding: 0 .5rem;
     border-radius: 6px;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #515151;
+        color: white;
+    }
 }
 
 .chatting {
@@ -31,4 +36,9 @@
     padding: .5rem .75rem;
     background-color: white;
     border-radius: 6px;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #e0e0e0;
+        color: #212121;
+    }
 }

@@ -12,7 +12,7 @@ const Chatroom = () => {
   }
   return (
     <div className={`chatroom_container ${isDarkmode && "darkmode"}`}>
-      <div className="chatroom_settings">
+      <div className={`chatroom_settings ${isDarkmode && "darkmode"}`}>
         <img alt="chatroom_representive_img"></img>
         <p className="chatroom_title">{roomName}</p>
       </div>

@@ -22,6 +22,7 @@ interface chatting {
 }
 
 const Chattings = ({ roomId }: childProps) => {
+  const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginUser = useSelector((state: RootState) => state.loginSlice.username);
   const chattingRef = useRef<HTMLDivElement | null>(null);
 
@@ -34,13 +35,13 @@ const Chattings = ({ roomId }: childProps) => {
     chattingRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chattingData]);
   return (
-    <div className="chatting_container">
+    <div className={`chatting_container ${isDarkmode && "darkmode"}`}>
       {chattingData.data?.result
         ?.filter((el) => el.roomId === roomId)
         .map((el, idx) => (
           <div className={`chatting ${el.sender === loginUser ? "login_user" : "other"}`} key={idx}>
             <p className="name">{el.senderName}</p>
-            <p className="message">{el.message}</p>
+            <p className={`message ${isDarkmode && "darkmode"}`}>{el.message}</p>
           </div>
         ))}
       <div ref={chattingRef}></div>

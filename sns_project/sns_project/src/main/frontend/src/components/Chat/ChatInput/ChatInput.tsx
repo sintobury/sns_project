@@ -4,12 +4,15 @@ import Button from "../../Common/Button/Button";
 import { useGetLoginUserinfo } from "../../../hook/useGetLoginUserinfo";
 import { useQueryClient } from "@tanstack/react-query";
 import { useWebsocket } from "../../../hook/useWebsocket";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux";
 
 interface childProps {
   roomId: string;
 }
 
 const ChatInput = ({ roomId }: childProps) => {
+  const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const [message, setMessage] = useState<string>("");
   const queryClient = useQueryClient();
   const { client, isConnected } = useWebsocket();
@@ -43,9 +46,9 @@ const ChatInput = ({ roomId }: childProps) => {
     }
   };
   return (
-    <div className="chat_input_container">
+    <div className={`chat_input_container ${isDarkmode && "darkmode"}`}>
       <input
-        className="chat_input"
+        className={`chat_input ${isDarkmode && "darkmode"}`}
         type="text"
         placeholder="메세지를 입력해주세요."
         value={message}
