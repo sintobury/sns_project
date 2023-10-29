@@ -1,8 +1,9 @@
 import "./ChatInput.css";
 import { ChangeEvent, useState } from "react";
 import Button from "../../Common/Button/Button";
-import { useWebsocket } from "../../../hook/useWebsocket";
 import { useGetLoginUserinfo } from "../../../hook/useGetLoginUserinfo";
+import { useQueryClient } from "@tanstack/react-query";
+import { useWebsocket } from "../../../hook/useWebsocket";
 
 interface childProps {
   roomId: string;
@@ -10,8 +11,10 @@ interface childProps {
 
 const ChatInput = ({ roomId }: childProps) => {
   const [message, setMessage] = useState<string>("");
+  const queryClient = useQueryClient();
+  const { client, isConnected } = useWebsocket();
   const { username, name } = useGetLoginUserinfo();
-  const { stompClient } = useWebsocket();
+
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
   };
@@ -27,15 +30,15 @@ const ChatInput = ({ roomId }: childProps) => {
       message: message,
     };
     // 실재 채팅 전송 함수 실행
-    if (stompClient) {
-      stompClient.send(`/app/message/sendToRoom/send`, JSON.stringify(socketMessage), {});
-      console.log("실행됨");
+    if (client && isConnected) {
+      client.send(`/app/message/sendToRoom/send`, JSON.stringify(socketMessage), {});
+      queryClient.refetchQueries(["chattings"]);
     }
     setMessage("");
   };
 
   const sendMessageByEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && e.nativeEvent.isComposing === false) {
       sendMessage();
     }
   };

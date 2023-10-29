@@ -3,6 +3,8 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
+    height: 25.3125rem;
+    overflow-y: scroll;
 }
 
 .chatting {

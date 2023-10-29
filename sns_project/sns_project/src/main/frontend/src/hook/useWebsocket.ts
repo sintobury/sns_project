@@ -11,7 +11,7 @@ interface messages {
 export const useWebsocket = () => {
   const [client, setClient] = useState<webstomp.Client | null>(null);
   const [messages, setMessages] = useState<messages | null>(null);
-  const [messageList, setMessageList] = useState<messages[]>([]);
+  const [isConnected, setIsConnected] = useState(false);
 
   const webSocketUrl = process.env.REACT_APP_WEB_SOCKET_URL;
   const socket = new WebSocket(`${webSocketUrl}/ws/chat`);
@@ -21,10 +21,10 @@ export const useWebsocket = () => {
   };
   const connectWebsocket = () => {
     stompClient.connect(headers, () => {
+      setIsConnected(true);
       console.log("websocket connected");
       stompClient.subscribe(`/user/topic/data`, (message) => {
         setMessages(JSON.parse(message.body));
-        setMessageList([...messageList, JSON.parse(message.body)]);
       });
     });
     setClient(stompClient);
@@ -33,11 +33,12 @@ export const useWebsocket = () => {
   const disconnect = () => {
     stompClient.disconnect(() => {
       console.log("websocket disconnected");
+      setIsConnected(false);
     });
   };
   useEffect(() => {
     connectWebsocket();
   }, []);
 
-  return { stompClient, client, connectWebsocket, disconnect, messages, messageList };
+  return { stompClient, client, connectWebsocket, disconnect, messages, isConnected };
 };
