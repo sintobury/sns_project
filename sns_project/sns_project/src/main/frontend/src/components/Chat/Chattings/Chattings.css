@@ -3,18 +3,32 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    height: 25.3125rem;
+    gap: 1rem;
+    height: 23rem;
     overflow-y: scroll;
+    background-color: #66ac5c;
+    padding: 0 .5rem;
+    border-radius: 6px;
 }
 
 .chatting {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 4px;
+    &.login_user {
+        align-items: flex-end;
+    }
+}
+
+.name {
+    margin: 0;
+}
+
+.message {
+    margin: 0;
     padding: .5rem .75rem;
-}
-
-.login_user_message {
-    text-align: right;
-}
-
-.other_message {
-    text-align: left;
+    background-color: white;
+    border-radius: 6px;
 }

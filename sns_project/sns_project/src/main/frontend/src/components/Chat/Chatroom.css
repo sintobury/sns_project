@@ -19,10 +19,13 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    background-color: #66ac5c;
+    border-radius: 6px;
 }
 
 .chatroom_title {
-    font-size: 14px;
+    font-size: 1.5rem;
+    margin: 0;
 }
 
 .chat_message_container {

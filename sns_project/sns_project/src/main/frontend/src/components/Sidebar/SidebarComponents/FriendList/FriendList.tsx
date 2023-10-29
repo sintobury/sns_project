@@ -74,6 +74,8 @@ const FriendList = () => {
     if (res.data.statusCode === 200) {
       console.log(res.data.message);
       dispatch(setRoom(res.data.result));
+      const newArr = new Array(friendlistData.data?.result.length).fill(false);
+      setOpenidx(newArr);
     }
   };
 

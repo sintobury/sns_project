@@ -38,12 +38,9 @@ const Chattings = ({ roomId }: childProps) => {
       {chattingData.data?.result
         ?.filter((el) => el.roomId === roomId)
         .map((el, idx) => (
-          <div className="chatting" key={idx}>
-            {el.sender === loginUser ? (
-              <p className="login_user_message">{el.message}</p>
-            ) : (
-              <p className="other_message">{el.message}</p>
-            )}
+          <div className={`chatting ${el.sender === loginUser ? "login_user" : "other"}`} key={idx}>
+            <p className="name">{el.senderName}</p>
+            <p className="message">{el.message}</p>
           </div>
         ))}
       <div ref={chattingRef}></div>
