@@ -42,6 +42,8 @@ public class MessageController {
         Room room = messageService.findById(roomChat.getRoomId());
         Set<String> users = room.getUsers();
         log.info("destination : {}   message : {}", roomChat.getRoomId(), roomChat.getMessage());
+        room.addLogs(roomChat);
+        messageService.updateRoom(room);
         for (String username : users) {
             log.info("채탕방에 접속중인 유저 ID : {}",username );
             sendMessage(username, roomChat);
@@ -69,6 +71,10 @@ public class MessageController {
     @GetMapping("/room/{username}")
     public ResponseDto findMyRoom(@PathVariable String username){
        return messageService.findMyRoom(username);
+    }
+    @GetMapping("/room/logs/{roomId}")
+    public ResponseDto findLogs(@PathVariable String roomId){
+        return messageService.findMyLogsById(roomId);
     }
     @Async
     protected void sendMessage(String username, RoomChat roomChat){
