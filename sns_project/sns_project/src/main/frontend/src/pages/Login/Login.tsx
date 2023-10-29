@@ -36,7 +36,8 @@ const Login = () => {
       if (res.data.statusCode === 200) {
         const username = data.username;
         // 로그인 시에 고유 id를 받아 저장
-        const id = res.data.result.usertableId;
+        const id = res.data.result.userTableId;
+        console.log(res.data.result);
         const accessToken = res.data.result.accessToken;
         const refreshToken = res.data.result.refreshToken;
         localStorage.setItem("accessToken", accessToken);

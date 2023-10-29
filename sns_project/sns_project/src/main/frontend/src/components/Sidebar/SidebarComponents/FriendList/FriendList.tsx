@@ -1,5 +1,5 @@
 import "./FriendList.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MenuIcon from "@mui/icons-material/Menu";
 import { grey } from "@mui/material/colors";
 import { RootState } from "../../../../redux";
@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { authInstance } from "../../../../interceptors/interceptors";
 import { useNavigate } from "react-router-dom";
+import { setRoom } from "../../../../redux/reducers/chatRoomSlice";
 
 interface ResponseDTO {
   statusCode: string;
@@ -46,6 +47,7 @@ const FriendList = () => {
   const loginUserName = useSelector((state: RootState) => state.loginSlice.username);
   const [openidx, setOpenidx] = useState([false]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const getFriendList = async () => {
     const res = await authInstance.get("/friend");
@@ -62,15 +64,16 @@ const FriendList = () => {
   };
 
   const makeChatroom = async (friend: FriendDTO) => {
-    const participants = [loginuserId, friend.member.id];
+    const participants = [loginUserName, friend.member.username];
     const roomdata = {
-      username: participants,
-      roomID: `${loginUserName}${friend.member.username}`,
+      usernames: participants,
+      roomId: `${loginUserName}${friend.member.username}`,
       roomName: friend.member.name,
     };
     const res = await authInstance.post(`/room`, roomdata);
     if (res.data.statusCode === 200) {
       console.log(res.data.message);
+      dispatch(setRoom(res.data.result));
     }
   };
 

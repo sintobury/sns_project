@@ -7,10 +7,11 @@ import "./Main.css";
 import { RootState } from "../../redux";
 import { useWebsocket } from "../../hook/useWebsocket";
 import { useEffect } from "react";
+import Chatroom from "../../components/Chat/Chatroom";
 
 const Main = () => {
-  const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const { connectWebsocket } = useWebsocket();
+  const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   useEffect(() => {
     connectWebsocket();
   }, []);
@@ -22,6 +23,7 @@ const Main = () => {
         <div className="main_content">
           <Postmaker />
         </div>
+        <Chatroom />
       </div>
       <Footer />
     </div>

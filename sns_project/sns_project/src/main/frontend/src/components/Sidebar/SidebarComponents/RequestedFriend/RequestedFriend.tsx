@@ -54,7 +54,7 @@ const RequestedFriend = () => {
       staleTime: Infinity,
     },
   );
-  console.log(requestedFriendData.data);
+
   return (
     <div className={`requested_friend_container ${isDarkmode && "darkmode"}`}>
       <p className="component_title">친구 요청 목록</p>

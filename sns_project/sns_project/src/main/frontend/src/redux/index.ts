@@ -7,7 +7,7 @@ const persistConfig = {
   key: "root",
   storage,
   whitelist: ["loginSlice", "darkmodeSlice"],
-  blacklist: ["modalSlice"],
+  blacklist: ["modalSlice", "chatRoomSlice"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as webstomp from "webstomp-client";
+
+interface messages {
+  sender: string;
+  senderName: string;
+  roomId: string;
+  message: string;
+}
 
 export const useWebsocket = () => {
   const [client, setClient] = useState<webstomp.Client | null>(null);
+  const [messages, setMessages] = useState<messages | null>(null);
+  const [messageList, setMessageList] = useState<messages[]>([]);
 
-  // useEffect(() => {
   const webSocketUrl = process.env.REACT_APP_WEB_SOCKET_URL;
   const socket = new WebSocket(`${webSocketUrl}/ws/chat`);
   const stompClient = webstomp.over(socket);
@@ -13,8 +21,10 @@ export const useWebsocket = () => {
   };
   const connectWebsocket = () => {
     stompClient.connect(headers, () => {
-      stompClient.subscribe(`${process.env.REACT_APP_WEB_SOCKET_URL}/user/topic/data`, () => {
-        console.log("websocket connected");
+      console.log("websocket connected");
+      stompClient.subscribe(`/user/topic/data`, (message) => {
+        setMessages(JSON.parse(message.body));
+        setMessageList([...messageList, JSON.parse(message.body)]);
       });
     });
     setClient(stompClient);
@@ -25,7 +35,9 @@ export const useWebsocket = () => {
       console.log("websocket disconnected");
     });
   };
-  // }, []);
+  useEffect(() => {
+    connectWebsocket();
+  }, []);
 
-  return { client, connectWebsocket, disconnect };
+  return { stompClient, client, connectWebsocket, disconnect, messages, messageList };
 };
