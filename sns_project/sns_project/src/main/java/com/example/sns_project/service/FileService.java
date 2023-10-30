@@ -7,6 +7,7 @@ import com.example.sns_project.repository.FileRepository;
 import com.example.sns_project.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,5 +54,13 @@ public class FileService {
     private String extractExt(String originalFilename){
         int pos = originalFilename.lastIndexOf(".");
         return originalFilename.substring(pos + 1);
+    }
+    public ResponseDto getProfile(String username) throws MalformedURLException {
+        Profile profile = fileRepository.findProfileByUsername(username).get(0);
+        if(profile.getPath() == null){
+            return new ResponseDto(HttpStatus.OK.value(), "프로필이 비어있습니다.", null);
+        }else{
+            return new ResponseDto(HttpStatus.OK.value(), "프로필 반환.", new UrlResource("file:" + profile.getPath()));
+        }
     }
 }

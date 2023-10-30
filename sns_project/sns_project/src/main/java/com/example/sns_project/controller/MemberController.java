@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 
 @RestController
@@ -53,5 +54,9 @@ public class MemberController {
     @PostMapping("/member/profile")
     public ResponseDto memberProfileUploads(@AuthenticationPrincipal CustomDetails customDetails, @RequestParam MultipartFile file) throws IOException {
         return fileService.saveProfile(customDetails.getUsername(), file);
+    }
+    @GetMapping("/member/profile")
+    public ResponseDto memberProfile(@AuthenticationPrincipal CustomDetails customDetails) throws MalformedURLException {
+        return fileService.getProfile(customDetails.getUsername());
     }
 }
