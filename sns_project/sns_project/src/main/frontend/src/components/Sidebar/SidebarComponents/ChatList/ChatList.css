@@ -1,0 +1,32 @@
+.chatlist_container {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 5px;
+    border-radius: 6px;
+    height: 30rem;
+    overflow-y: scroll;
+    background-color: #81cc76;
+    transition: 0.7s;
+    &.darkmode {
+        color: white;
+        background-color: #212121;
+    }
+}
+
+.room_info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #66ac5c;
+    padding: 1rem;
+    border-radius: 6px;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #515151;
+        color: white;
+    }
+}

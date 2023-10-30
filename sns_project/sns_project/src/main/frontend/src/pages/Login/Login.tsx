@@ -18,6 +18,7 @@ interface loginForm {
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const isLogin = useSelector((state: RootState) => state.loginSlice.isLogin);
   // const connectLoginSocket = () => {
   //   useWebsocket();
@@ -68,12 +69,15 @@ const Login = () => {
     }
   }, [isLogin]);
   return (
-    <div className="background_login">
+    <div className={`background_login ${isDarkmode && "darkmode"}`}>
       <div className="login_container">
-        <p className="logo">SNS_Project</p>
+        <p className={`logo ${isDarkmode && "darkmode"}`}>SNS_Project</p>
         <div className="login_body_container">
-          <div className="login_explain_container">web설명</div>
-          <form className="login_function_container" onSubmit={handleSubmit(handleLogin)}>
+          <div className={`login_explain_container ${isDarkmode && "darkmode"}`}>web설명</div>
+          <form
+            className={`login_function_container ${isDarkmode && "darkmode"}`}
+            onSubmit={handleSubmit(handleLogin)}
+          >
             <div className="login_input_container">
               <label htmlFor="input_username">아이디</label>
               <input

@@ -99,7 +99,7 @@ const Addfriend = () => {
   }, [MenuRef, friendSearchData]);
   return (
     <div className={`add_friend_container ${isDarkmode && "darkmode"}`}>
-      <p className="component_title">친구 추가</p>
+      <p className="component_title">전체 유저</p>
       <div className="add_friend_search_container">
         <input
           className="add_friend_input"

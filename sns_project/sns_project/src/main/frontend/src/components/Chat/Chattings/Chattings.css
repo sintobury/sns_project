@@ -7,7 +7,7 @@
     height: 23rem;
     overflow-y: scroll;
     background-color: #66ac5c;
-    padding: 0 .5rem;
+    padding: .5rem;
     border-radius: 6px;
     transition: 0.7s;
     &.darkmode {

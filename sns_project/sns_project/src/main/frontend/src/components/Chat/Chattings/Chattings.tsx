@@ -5,9 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import { authInstance } from "../../../interceptors/interceptors";
 import { useEffect, useRef } from "react";
 
-interface childProps {
-  roomId: string;
-}
 interface ResponseDTO {
   statusCode: string;
   message: string;
@@ -21,9 +18,10 @@ interface chatting {
   message: string;
 }
 
-const Chattings = ({ roomId }: childProps) => {
+const Chattings = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginUser = useSelector((state: RootState) => state.loginSlice.username);
+  const roomId = useSelector((state: RootState) => state.chatRoomSlice.roomId);
   const chattingRef = useRef<HTMLDivElement | null>(null);
 
   const getChattingLog = async () => {

@@ -2,15 +2,17 @@ import { useState } from "react";
 import Button from "../Common/Button/Button";
 import HomeIcon from "@mui/icons-material/Home";
 import GroupIcon from "@mui/icons-material/Group";
-import StarIcon from "@mui/icons-material/Star";
+// import StarIcon from "@mui/icons-material/Star";
+import ChatBubble from "@mui/icons-material/ChatBubble";
 import "./Sidebar.css";
-import { yellow } from "@mui/material/colors";
+// import { yellow } from "@mui/material/colors";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import { useQueryClient } from "@tanstack/react-query";
 import Addfriend from "./SidebarComponents/AddFriend/Addfriend";
 import RequestedFriend from "./SidebarComponents/RequestedFriend/RequestedFriend";
 import FriendList from "./SidebarComponents/FriendList/FriendList";
+import ChatList from "./SidebarComponents/ChatList/ChatList";
 
 const Sidebar = () => {
   const [mode, setMode] = useState("addFriend");
@@ -28,7 +30,7 @@ const Sidebar = () => {
       <div className={`sidebar_button_container ${isDarkmode && "darkmode"}`}>
         <Button
           icon={<HomeIcon sx={{ color: "#70e15e" }} />}
-          text="친구 추가"
+          text="전체 유저"
           type="button"
           onClick={moveAdd}
         />
@@ -45,20 +47,27 @@ const Sidebar = () => {
           onClick={() => setMode("friendList")}
         />
         <Button
+          icon={<ChatBubble sx={{ color: "#70e15e" }} />}
+          text="채팅 목록"
+          type="button"
+          onClick={() => setMode("chatList")}
+        />
+        {/* <Button
           icon={<StarIcon sx={{ color: yellow[700] }} />}
           text="즐겨찾기"
           type="button"
           onClick={() => setMode("bookmarkList")}
-        />
+        /> */}
       </div>
       {mode === "addFriend" && <Addfriend />}
       {mode === "requestedFriend" && <RequestedFriend />}
       {mode === "friendList" && <FriendList />}
-      {mode === "bookmarkList" && (
+      {mode === "chatList" && <ChatList />}
+      {/* {mode === "bookmarkList" && (
         <div className={`bookmark_list ${isDarkmode && "darkmode"}`}>
           <p className="component_title">즐겨찾기</p>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

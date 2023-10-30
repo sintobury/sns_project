@@ -35,11 +35,17 @@ interface MemberDTO {
   imgurl: string;
 }
 
-// interface room {
-//   username: string[];
-//   roomID: string;
-//   roomName: string;
-// }
+interface roomResponse {
+  statusCode: string;
+  message: string;
+  result: room[];
+}
+
+interface room {
+  username: string[];
+  roomID: string;
+  roomName: string;
+}
 
 const FriendList = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
@@ -59,11 +65,22 @@ const FriendList = () => {
     staleTime: Infinity,
   });
 
+  const getRoomlist = async () => {
+    const res = await authInstance.get(`/room/${loginUserName}`);
+    return res.data;
+  };
+
+  const roomList = useQuery<roomResponse>(["roomlist", loginUserName], getRoomlist);
+
   const navigateProfile = (username: string) => {
     navigate(`/profile?username=${username}`);
   };
 
   const makeChatroom = async (friend: FriendDTO) => {
+    const existRoom = roomList.data?.result.find((el) => el.roomName === friend.member.name);
+    if (existRoom) {
+      dispatch(setRoom(existRoom));
+    }
     const participants = [loginUserName, friend.member.username];
     const roomdata = {
       usernames: participants,

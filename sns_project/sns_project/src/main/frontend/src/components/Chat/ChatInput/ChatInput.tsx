@@ -7,12 +7,9 @@ import { useWebsocket } from "../../../hook/useWebsocket";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux";
 
-interface childProps {
-  roomId: string;
-}
-
-const ChatInput = ({ roomId }: childProps) => {
+const ChatInput = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
+  const roomId = useSelector((state: RootState) => state.chatRoomSlice.roomId);
   const [message, setMessage] = useState<string>("");
   const queryClient = useQueryClient();
   const { client, isConnected } = useWebsocket();
@@ -35,9 +32,9 @@ const ChatInput = ({ roomId }: childProps) => {
     // 실재 채팅 전송 함수 실행
     if (client && isConnected) {
       client.send(`/app/message/sendToRoom/send`, JSON.stringify(socketMessage), {});
-      queryClient.refetchQueries(["chattings"]);
     }
     setMessage("");
+    queryClient.refetchQueries(["chattings"]);
   };
 
   const sendMessageByEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {

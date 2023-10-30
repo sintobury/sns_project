@@ -4,6 +4,9 @@
     display: flex;
     justify-content: center;
     align-items: stretch;
+    &.darkmode {
+        background-color: #121212;
+    }
 }
 
 .form_title {
@@ -25,6 +28,11 @@
     justify-content: flex-start;
     align-items: stretch;
     gap: 2rem;
+    &.darkmode {
+        background-color: #313131;
+        color: white;
+        border: .0625rem solid #313131;
+    }
 }
 
 .signup_form {

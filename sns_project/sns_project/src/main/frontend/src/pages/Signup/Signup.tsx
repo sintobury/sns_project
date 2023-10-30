@@ -4,6 +4,8 @@ import "./Signup.css";
 import { useForm } from "react-hook-form";
 import { defaultInstance } from "../../interceptors/interceptors";
 import Button from "../../components/Common/Button/Button";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux";
 interface signupField {
   name: string;
   username: string;
@@ -15,6 +17,9 @@ interface signupField {
 }
 
 const Signup = () => {
+  const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
+  const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors, isSubmitting },
@@ -22,8 +27,6 @@ const Signup = () => {
     getValues,
   } = useForm<signupField>();
 
-  const navigate = useNavigate();
-  const [success, setSuccess] = useState(false);
   const handleSignup = async (data: signupField) => {
     const body = {
       username: data.username,
@@ -58,8 +61,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="background_signup">
-      <div className="signup_container">
+    <div className={`background_signup ${isDarkmode && "darkmode"}`}>
+      <div className={`signup_container ${isDarkmode && "darkmode"}`}>
         <p className="form_title">회원가입</p>
         <form onSubmit={handleSubmit(handleSignup)} className="signup_form">
           <label htmlFor="name" className="form_label">

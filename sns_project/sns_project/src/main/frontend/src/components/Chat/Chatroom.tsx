@@ -6,7 +6,7 @@ import Chattings from "./Chattings/Chattings";
 
 const Chatroom = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
-  const { roomId, roomName } = useSelector((state: RootState) => state.chatRoomSlice);
+  const { roomName } = useSelector((state: RootState) => state.chatRoomSlice);
   if (roomName === "") {
     return null;
   }
@@ -16,8 +16,8 @@ const Chatroom = () => {
         <img alt="chatroom_representive_img"></img>
         <p className="chatroom_title">{roomName}</p>
       </div>
-      <Chattings roomId={roomId} />
-      <ChatInput roomId={roomId} />
+      <Chattings />
+      <ChatInput />
     </div>
   );
 };
