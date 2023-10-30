@@ -1,5 +1,6 @@
 package com.example.sns_project.repository;
 
+import com.example.sns_project.entity.Files;
 import com.example.sns_project.entity.Member;
 import com.example.sns_project.entity.Profile;
 import jakarta.persistence.EntityManager;
@@ -15,11 +16,18 @@ import java.util.List;
 public class FileRepository {
     private final EntityManager em;
 
-    public void save(Profile profile){
+    public void saveProfile(Profile profile){
         if(profile.getId() == null){
             em.persist(profile);
         }else{
             em.merge(profile);
+        }
+    }
+    public void saveBoardFile(Files files){
+        if(files.getId() == null){
+            em.persist(files);
+        }else{
+            em.merge(files);
         }
     }
     public List<Profile> findProfileByUsername(String username){

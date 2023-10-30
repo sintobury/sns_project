@@ -1,0 +1,44 @@
+package com.example.sns_project.service;
+
+import com.example.sns_project.dto.BoardDto;
+import com.example.sns_project.dto.ResponseDto;
+import com.example.sns_project.entity.Board;
+import com.example.sns_project.entity.Member;
+import com.example.sns_project.repository.BoardRepository;
+import com.example.sns_project.repository.FileRepository;
+import com.example.sns_project.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class BoardService {
+    private final BoardRepository boardRepository;
+    private final FileRepository fileRepository;
+    private final MemberRepository memberRepository;
+
+    public Board saveBoard(String username, BoardDto boardDto){
+        log.info("글 저장 : {}", boardDto.getTitle());
+        Member member = memberRepository.findByUsername(username).get(0);
+        Board board = new Board(member, boardDto.getTitle(), boardDto.getContent(), boardDto.getCreateAt(), boardDto.getHashTag());
+        log.info("보드 정보 : {}",board);
+        boardRepository.save(board);
+        return board;
+    }
+    public ResponseDto getBoard(String name) throws MalformedURLException {
+        List<Board> result = boardRepository.findBoardByName(name);
+        List<BoardDto> boardList = new ArrayList<>();
+        for (Board board : result) {
+            boardList.add(board.convertDto());
+        }
+        return new ResponseDto(HttpStatus.OK.value(), "성공적으로 반환완료", boardList);
+    }
+}
