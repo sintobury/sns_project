@@ -25,4 +25,10 @@ public class BoardRepository {
                 "join fetch b.files f " +
                 "where b.member.name = :name", Board.class).setParameter("name", name).getResultList();
     }
+    public Board findById(Long id){
+       return em.find(Board.class, id);
+    }
+    public void deleteBoard(Board board){
+        em.remove(board);
+    }
 }

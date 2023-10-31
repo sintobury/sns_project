@@ -17,4 +17,10 @@ public class RoomDto {
         this.roomName = roomName;
         this.usernames = usernames;
     }
+
+    public RoomDto(String roomId, String roomName, List<String> usernames) {
+        this.roomId = roomId;
+        this.roomName = roomName;
+        this.usernames = usernames;
+    }
 }

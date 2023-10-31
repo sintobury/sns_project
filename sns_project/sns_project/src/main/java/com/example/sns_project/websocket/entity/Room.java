@@ -1,6 +1,7 @@
 package com.example.sns_project.websocket.entity;
 
 import com.example.sns_project.websocket.messageform.RoomChat;
+import com.example.sns_project.websocket.websocketdto.RoomDto;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -33,5 +35,9 @@ public class Room {
     }
     public void addLogs(RoomChat roomChat) {
         logs.add(roomChat);
+    }
+    public RoomDto convertDto(){
+        List<String> usernames = new ArrayList<>(users);
+        return new RoomDto(roomId, roomName, usernames);
     }
 }

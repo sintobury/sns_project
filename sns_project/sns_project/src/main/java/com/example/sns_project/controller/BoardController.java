@@ -1,15 +1,18 @@
 package com.example.sns_project.controller;
 
 import com.example.sns_project.dto.BoardDto;
+import com.example.sns_project.dto.CommentDto;
 import com.example.sns_project.dto.ResponseDto;
 import com.example.sns_project.entity.Board;
 import com.example.sns_project.security.auth.CustomDetails;
 import com.example.sns_project.service.BoardService;
 import com.example.sns_project.service.FileService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -29,5 +32,17 @@ public class BoardController {
     @GetMapping("/board/{name}")
     public ResponseDto getBoardByName(@PathVariable String name) throws MalformedURLException {
         return boardService.getBoard(name);
+    }
+    @DeleteMapping("/board")
+    public ResponseDto deleteBoardByName(@RequestBody BoardDto boardDto){
+        return boardService.deleteBoard(boardDto);
+    }
+    @PostMapping("/comment")
+    public ResponseDto saveComment(@AuthenticationPrincipal CustomDetails customDetails, @RequestBody CommentDto commentDto){
+        return boardService.saveComment(customDetails.getUsername(), commentDto);
+    }
+    @DeleteMapping("/comment")
+    public ResponseDto deleteComment(@RequestBody CommentDto commentDto){
+        return boardService.deleteComment(commentDto);
     }
 }

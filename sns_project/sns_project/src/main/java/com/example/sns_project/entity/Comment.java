@@ -31,4 +31,12 @@ public class Comment {
 
     @Enumerated(EnumType.STRING)
     private CommentEnum state;
+
+    public Comment(Member member, Board board, String content, LocalDateTime createAt, CommentEnum state) {
+        this.member = member;
+        this.board = board;
+        this.content = content;
+        this.createAt = createAt;
+        this.state = state;
+    }
 }

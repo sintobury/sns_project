@@ -45,10 +45,10 @@ public class MessageService {
     }
     public ResponseDto findMyRoom(String username){
         ArrayList<Room> rooms = roomRepository.findAll();
-        ArrayList<String> result = new ArrayList<>();
+        ArrayList<RoomDto> result = new ArrayList<>();
         for (Room room : rooms) {
             if(room.getUsers().contains(username)){
-                result.add(room.getRoomId());
+                result.add(room.convertDto());
             }
         }
         return new ResponseDto(HttpStatus.OK.value(), "내가 속한 채탕방 반환", result);
