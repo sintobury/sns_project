@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { authInstance } from "../../../../interceptors/interceptors";
 import { useNavigate } from "react-router-dom";
 import { setRoom } from "../../../../redux/reducers/chatRoomSlice";
+import Loading from "../../../Common/Loading/Loading";
 
 interface ResponseDTO {
   statusCode: string;
@@ -42,7 +43,7 @@ interface roomResponse {
 }
 
 interface room {
-  username: string[];
+  usernames: string[];
   roomID: string;
   roomName: string;
 }
@@ -77,22 +78,26 @@ const FriendList = () => {
   };
 
   const makeChatroom = async (friend: FriendDTO) => {
-    const existRoom = roomList.data?.result.find((el) => el.roomName === friend.member.name);
+    const existRoom = roomList.data?.result.find(
+      (el) => el.usernames.includes(friend.member.username) && el.usernames.length === 2,
+    );
+
     if (existRoom) {
       dispatch(setRoom(existRoom));
-    }
-    const participants = [loginUserName, friend.member.username];
-    const roomdata = {
-      usernames: participants,
-      roomId: `${loginUserName}${friend.member.username}`,
-      roomName: friend.member.name,
-    };
-    const res = await authInstance.post(`/room`, roomdata);
-    if (res.data.statusCode === 200) {
-      console.log(res.data.message);
-      dispatch(setRoom(res.data.result));
-      const newArr = new Array(friendlistData.data?.result.length).fill(false);
-      setOpenidx(newArr);
+    } else {
+      const participants = [loginUserName, friend.member.username];
+      const roomdata = {
+        usernames: participants,
+        roomId: `${loginUserName}${friend.member.username}`,
+        roomName: friend.member.name,
+      };
+      const res = await authInstance.post(`/room`, roomdata);
+      if (res.data.statusCode === 200) {
+        console.log(res.data.message);
+        dispatch(setRoom(res.data.result));
+        const newArr = new Array(friendlistData.data?.result.length).fill(false);
+        setOpenidx(newArr);
+      }
     }
   };
 
@@ -118,7 +123,9 @@ const FriendList = () => {
   return (
     <div className={`friendlist_container ${isDarkmode && "darkmode"}`}>
       <p className="component_title">친구 목록</p>
-      {friendlistData.isLoading ? null : (
+      {friendlistData.isLoading ? (
+        <Loading />
+      ) : (
         <div className="user_container" ref={MenuRef}>
           {friendlistData.data?.result.map((el: FriendDTO, idx) => (
             <div className={`user ${isDarkmode && "darkmode"}`} key={el.member.username}>

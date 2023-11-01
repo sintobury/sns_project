@@ -8,6 +8,7 @@ import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { authInstance } from "../../../../interceptors/interceptors";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../../Common/Loading/Loading";
 
 interface ResponseDTO {
   statusCode: string;
@@ -115,7 +116,9 @@ const Addfriend = () => {
           onClick={() => friendSearchData.refetch()}
         />
       </div>
-      {friendSearchData.isLoading ? null : (
+      {friendSearchData.isLoading ? (
+        <Loading />
+      ) : (
         <div className="user_container" ref={MenuRef}>
           {friendSearchData.data?.result.length === 0 && (
             <div>

@@ -4,6 +4,7 @@ import { RootState } from "../../../redux";
 import { useQuery } from "@tanstack/react-query";
 import { authInstance } from "../../../interceptors/interceptors";
 import { useEffect, useRef } from "react";
+import Loading from "../../Common/Loading/Loading";
 
 interface ResponseDTO {
   statusCode: string;
@@ -34,6 +35,7 @@ const Chattings = () => {
   }, [chattingData]);
   return (
     <div className={`chatting_container ${isDarkmode && "darkmode"}`}>
+      {chattingData.isLoading && <Loading />}
       {chattingData.data?.result
         ?.filter((el) => el.roomId === roomId)
         .map((el, idx) => (

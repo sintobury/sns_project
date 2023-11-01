@@ -12,6 +12,7 @@ import Friend from "../../components/ProfileTab/Friend/Friend";
 import ProfilePostList from "../../components/ProfileTab/ProfilePostList/ProfilePostList";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
+import Chatroom from "../../components/Chat/Chatroom";
 
 interface ResponseDTO {
   statusCode: string;
@@ -112,6 +113,7 @@ const Profile = () => {
             )}
           </div>
         )}
+        <Chatroom />
       </div>
       <Footer />
     </div>

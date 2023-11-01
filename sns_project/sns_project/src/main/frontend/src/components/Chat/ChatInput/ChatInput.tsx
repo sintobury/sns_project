@@ -34,7 +34,9 @@ const ChatInput = () => {
       client.send(`/app/message/sendToRoom/send`, JSON.stringify(socketMessage), {});
     }
     setMessage("");
-    queryClient.refetchQueries(["chattings"]);
+    setTimeout(() => {
+      queryClient.refetchQueries(["chattings"]);
+    }, 1000);
   };
 
   const sendMessageByEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {

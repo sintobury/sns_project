@@ -32,9 +32,14 @@ const ChatList = () => {
   const openChatroom = (roomdata: room) => {
     dispatch(setRoom(roomdata));
   };
-
+  console.log(roomList.data);
   return (
     <div className={`chatlist_container ${isDarkmode && "darkmode"}`}>
+      {roomList.data?.result.length === 0 && (
+        <div>
+          <p className="explain">채팅 목록이 없습니다.</p>
+        </div>
+      )}
       {roomList.data?.result.map((el) => (
         <div
           className={`room_info ${isDarkmode && "darkmode"}`}

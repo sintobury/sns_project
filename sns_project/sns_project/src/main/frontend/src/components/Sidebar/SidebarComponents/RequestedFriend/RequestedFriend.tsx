@@ -4,6 +4,7 @@ import { authInstance } from "../../../../interceptors/interceptors";
 import { useQuery } from "@tanstack/react-query";
 import { RootState } from "../../../../redux";
 import Button from "../../../Common/Button/Button";
+import Loading from "../../../Common/Loading/Loading";
 
 interface ResponseDTO {
   statusCode: string;
@@ -58,7 +59,9 @@ const RequestedFriend = () => {
   return (
     <div className={`requested_friend_container ${isDarkmode && "darkmode"}`}>
       <p className="component_title">친구 요청 목록</p>
-      {requestedFriendData.isLoading ? null : (
+      {requestedFriendData.isLoading ? (
+        <Loading />
+      ) : (
         <div className="user_container">
           {requestedFriendData.data && requestedFriendData.data.result.length === 0 && (
             <div>

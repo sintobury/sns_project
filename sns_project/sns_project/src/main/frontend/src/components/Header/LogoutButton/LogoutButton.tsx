@@ -16,7 +16,7 @@ const LogoutButton = () => {
   const handleLogout = async () => {
     const refreshToken = localStorage.getItem("refreshToken");
     const res = await defaultInstance.post("/logout", { refreshToken });
-    if (res.data.statusCode === 200) {
+    if (res.data.statusCode === 200 || res.data.statusCode === 400) {
       dispatch(logout());
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");

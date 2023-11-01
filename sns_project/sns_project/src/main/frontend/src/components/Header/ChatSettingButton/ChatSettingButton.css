@@ -11,8 +11,10 @@
     background-color: #81cc76;
     border: 1px solid #588c50;
     border-radius: 5px;
+    width: 18.75rem;
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     transition: 0.7s;
     &.darkmode {
         background-color: #424242;
@@ -29,7 +31,24 @@
 }
 
 .chatroom_title_input {
+    flex: 1 0 auto;
     padding: .5rem .75rem;
     border-radius: 6px;
     border: none;
+}
+
+.friend_list_container {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 5px;
+    height: 8.75rem;
+    overflow-y: scroll;
+}
+
+.chat_member_checkbox {
+    width: 1.25rem;
+    aspect-ratio: 1/1;
 }
