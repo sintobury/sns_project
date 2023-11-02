@@ -12,6 +12,5 @@ public interface RoomRepository extends CrudRepository<Room, String> {
     @Override
     ArrayList<Room> findAll();
 
-    @Override
-    Optional<Room> findById(String s);
+
 }

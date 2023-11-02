@@ -54,9 +54,16 @@ public class MessageService {
         return new ResponseDto(HttpStatus.OK.value(), "내가 속한 채탕방 반환", result);
     }
     public ResponseDto findMyLogsById(String roomId){
-        Room room = roomRepository.findById(roomId).get();
-        ArrayList<RoomChat> logs = room.getLogs();
-        return new ResponseDto(HttpStatus.OK.value(), "로그 반환", logs);
+        Optional<Room> roomOptional = roomRepository.findById(roomId);
+        if(roomOptional.isPresent()){
+            Room room = roomOptional.get();
+            roomRepository.findById(roomId);
+            ArrayList<RoomChat> logs = room.getLogs();
+            return new ResponseDto(HttpStatus.OK.value(), "로그 반환", logs);
+        }else{
+            return new ResponseDto(HttpStatus.BAD_REQUEST.value(), "해당 방이 존재 하지 않음", null);
+        }
+
     }
 
 

@@ -38,6 +38,7 @@ public class MessageController {
     }*/
     // 채팅방 유저한테 메세지를 보낼 때 사용
     @MessageMapping("/message/sendToRoom/send")
+    @Async
     public void send(RoomChat roomChat)  {
         Room room = messageService.findById(roomChat.getRoomId());
         Set<String> users = room.getUsers();
@@ -72,6 +73,7 @@ public class MessageController {
     public ResponseDto findMyRoom(@PathVariable String username){
        return messageService.findMyRoom(username);
     }
+    @Async
     @GetMapping("/room/logs/{roomId}")
     public ResponseDto findLogs(@PathVariable String roomId){
         return messageService.findMyLogsById(roomId);

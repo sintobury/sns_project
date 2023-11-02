@@ -4,11 +4,13 @@ import com.example.sns_project.enums.CommentEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Comment {
     @Id
     @Column(name = "comment_id")
