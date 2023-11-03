@@ -2,6 +2,7 @@ package com.example.sns_project.service;
 
 import com.example.sns_project.dto.BoardDto;
 import com.example.sns_project.dto.CommentDto;
+import com.example.sns_project.dto.FriendDto;
 import com.example.sns_project.dto.ResponseDto;
 import com.example.sns_project.entity.Board;
 import com.example.sns_project.entity.Comment;
@@ -25,7 +26,6 @@ import java.util.ResourceBundle;
 @Slf4j
 public class BoardService {
     private final BoardRepository boardRepository;
-    private final FileRepository fileRepository;
     private final MemberRepository memberRepository;
     private final CommentRepository commentRepository;
 
@@ -42,6 +42,16 @@ public class BoardService {
         List<BoardDto> boardList = new ArrayList<>();
         for (Board board : result) {
             boardList.add(board.convertDto());
+        }
+        return new ResponseDto(HttpStatus.OK.value(), "성공적으로 반환완료", boardList);
+    }
+    public ResponseDto getFriendBoard(List<FriendDto> friends) throws MalformedURLException {
+        List<BoardDto> boardList = new ArrayList<>();
+        for (FriendDto friend : friends) {
+            List<Board> result = boardRepository.findBoardByName(friend.getMember().getName());
+            for (Board board : result) {
+                boardList.add(board.convertDto());
+            }
         }
         return new ResponseDto(HttpStatus.OK.value(), "성공적으로 반환완료", boardList);
     }

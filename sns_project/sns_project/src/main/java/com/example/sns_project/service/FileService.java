@@ -1,5 +1,6 @@
 package com.example.sns_project.service;
 
+import com.example.sns_project.dto.BoardDto;
 import com.example.sns_project.dto.ResponseDto;
 import com.example.sns_project.entity.Board;
 import com.example.sns_project.entity.Files;
@@ -72,6 +73,7 @@ public class FileService {
         }
         return new ResponseDto(HttpStatus.OK.value(), "저장 완료", null);
     }
+
 
     private String extractExt(String originalFilename){
         int pos = originalFilename.lastIndexOf(".");
