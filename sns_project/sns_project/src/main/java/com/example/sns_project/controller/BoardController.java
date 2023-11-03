@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -33,8 +34,9 @@ public class BoardController {
     private  final FriendService friendService;
     private final MemberService memberService;
     @PostMapping("/board")
-    public ResponseDto saveBoard(@AuthenticationPrincipal CustomDetails customDetails, @RequestBody BoardDto boardDto, @RequestParam List<MultipartFile> files) throws IOException {
+    public ResponseDto saveBoard(@AuthenticationPrincipal CustomDetails customDetails, @RequestParam String title, @RequestParam String content, @RequestParam LocalDateTime createAt, @RequestParam String hashTag, @RequestParam List<MultipartFile> files) throws IOException {
         log.info("게시글 저장 핸들러");
+        BoardDto boardDto = new BoardDto(title, content, createAt, hashTag);
         Board board = boardService.saveBoard(customDetails.getUsername(), boardDto);
         return fileService.saveBoardFile(board, files);
     }
