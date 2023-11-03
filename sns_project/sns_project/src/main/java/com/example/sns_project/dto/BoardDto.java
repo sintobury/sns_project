@@ -21,7 +21,6 @@ public class BoardDto {
     private LocalDateTime createAt;
 
     private String hashTag;
-    private List<MultipartFile> files;
     private List<UrlResource> boardFiles;
 
     public BoardDto(Long id, String title, String content, LocalDateTime createAt, String hashTag, List<UrlResource> boardFiles) {
@@ -33,11 +32,10 @@ public class BoardDto {
         this.boardFiles = boardFiles;
     }
 
-    public BoardDto(String title, String content, LocalDateTime createAt, String hashTag, List<MultipartFile> files) {
+    public BoardDto(String title, String content, LocalDateTime createAt, String hashTag) {
         this.title = title;
         this.content = content;
         this.createAt = createAt;
         this.hashTag = hashTag;
-        this.files = files;
     }
 }

@@ -11,6 +11,7 @@ import com.example.sns_project.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,6 +25,10 @@ public class FriendController {
         log.info("친구 리스트 핸들러");
         Member member = memberService.findByUsername(customDetails.getUsername());
         return friendService.findFriendList(member.getId());
+    }
+    @GetMapping("/friend/{userId}")
+    public ResponseDto getFriendListByName(@PathVariable Long userId){
+        return friendService.findFriendList(userId);
     }
     @GetMapping("/friend/request")
     public ResponseDto getRequestFriendList(@AuthenticationPrincipal CustomDetails customDetails){

@@ -14,9 +14,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,9 +27,10 @@ public class BoardController {
     private final BoardService boardService;
     private final FileService fileService;
     @PostMapping("/board")
-    public ResponseDto saveBoard(@AuthenticationPrincipal CustomDetails customDetails, @RequestBody BoardDto boardDto) throws IOException {
+    public ResponseDto saveBoard(@AuthenticationPrincipal CustomDetails customDetails, @RequestBody BoardDto boardDto, @RequestParam List<MultipartFile> files) throws IOException {
+        log.info("게시글 저장 핸들러");
         Board board = boardService.saveBoard(customDetails.getUsername(), boardDto);
-        return fileService.saveBoardFile(board, boardDto.getFiles());
+        return fileService.saveBoardFile(board, files);
     }
     @GetMapping("/board/{name}")
     public ResponseDto getBoardByName(@PathVariable String name) throws MalformedURLException {
