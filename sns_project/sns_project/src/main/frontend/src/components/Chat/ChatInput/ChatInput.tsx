@@ -36,7 +36,7 @@ const ChatInput = () => {
     setMessage("");
     setTimeout(() => {
       queryClient.refetchQueries(["chattings"]);
-    }, 1000);
+    }, 500);
   };
 
   const sendMessageByEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {

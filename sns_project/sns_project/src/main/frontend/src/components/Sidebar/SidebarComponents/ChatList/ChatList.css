@@ -25,6 +25,7 @@
     padding: 1rem;
     border-radius: 6px;
     transition: 0.7s;
+    cursor: pointer;
     &.darkmode {
         background-color: #515151;
         color: white;

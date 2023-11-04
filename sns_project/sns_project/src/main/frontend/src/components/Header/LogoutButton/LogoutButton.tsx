@@ -6,6 +6,7 @@ import { defaultInstance } from "../../../interceptors/interceptors";
 import { RootState } from "../../../redux";
 import { useWebsocket } from "../../../hook/useWebsocket";
 import { useQueryClient } from "@tanstack/react-query";
+import { resetRoom } from "../../../redux/reducers/chatRoomSlice";
 
 const LogoutButton = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
@@ -18,6 +19,7 @@ const LogoutButton = () => {
     const res = await defaultInstance.post("/logout", { refreshToken });
     if (res.data.statusCode === 200 || res.data.statusCode === 400) {
       dispatch(logout());
+      dispatch(resetRoom());
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       disconnect();

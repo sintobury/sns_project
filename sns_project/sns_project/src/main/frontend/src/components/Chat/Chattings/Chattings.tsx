@@ -31,7 +31,7 @@ const Chattings = () => {
   };
   const chattingData = useQuery<ResponseDTO>(["chattings", roomId], getChattingLog);
   useEffect(() => {
-    chattingRef.current?.scrollIntoView({ behavior: "smooth" });
+    chattingRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [chattingData]);
   return (
     <div className={`chatting_container ${isDarkmode && "darkmode"}`}>

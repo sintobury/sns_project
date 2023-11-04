@@ -4,14 +4,9 @@ import Button from "../../Common/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux";
 import { authInstance } from "../../../interceptors/interceptors";
-import { useQuery } from "@tanstack/react-query";
 import { setRoom } from "../../../redux/reducers/chatRoomSlice";
-
-interface ResponseDTO {
-  statusCode: string;
-  message: string;
-  result: FriendDTO[];
-}
+import { useGetRoomList } from "../../../hook/useGetRoomList";
+import { useGetFriendList } from "../../../hook/useGetFriendList";
 
 interface FriendDTO {
   id: string;
@@ -33,42 +28,15 @@ interface MemberDTO {
   imgurl: string;
 }
 
-interface roomResponse {
-  statusCode: string;
-  message: string;
-  result: room[];
-}
-
-interface room {
-  usernames: string[];
-  roomID: string;
-  roomName: string;
-}
-
 const ChatSettingButton = () => {
   const [openSetting, setOpenSetting] = useState(false);
   const [title, setTitle] = useState("");
   const [chatmember, setChatmember] = useState<string[]>([]);
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
-  const loginuserId = useSelector((state: RootState) => state.loginSlice.id);
   const loginUserName = useSelector((state: RootState) => state.loginSlice.username);
   const dispatch = useDispatch();
-  const getFriendList = async () => {
-    const res = await authInstance.get("/friend");
-    console.log(res.data);
-    return res.data;
-  };
-
-  const friendlistData = useQuery<ResponseDTO>(["friendList", loginuserId], getFriendList, {
-    staleTime: Infinity,
-  });
-
-  const getRoomlist = async () => {
-    const res = await authInstance.get(`/room/${loginUserName}`);
-    return res.data;
-  };
-
-  const roomList = useQuery<roomResponse>(["roomlist", loginUserName], getRoomlist);
+  const { friendlistData } = useGetFriendList();
+  const { roomList } = useGetRoomList();
 
   const handleCheck = (e: ChangeEvent<HTMLInputElement>, username: string) => {
     if (e.target.checked) {
@@ -77,13 +45,6 @@ const ChatSettingButton = () => {
       setChatmember(chatmember.filter((el) => el !== username));
     }
   };
-  // const addChatmember = (username: string) => {
-  //   setChatmember([...chatmember, username]);
-  // };
-
-  // const removeChatmember = (username: string) => {
-  //   setChatmember(chatmember.filter((el) => el !== username));
-  // };
 
   const makeChatRoom = async () => {
     const existRoom = roomList.data?.result.find(
@@ -139,7 +100,7 @@ const ChatSettingButton = () => {
             <Button text="만들기" type="button" design="black" onClick={makeChatRoom} />
           </div>
           <div className={`friend_list_container ${isDarkmode && "darkmode"}`}>
-            {friendlistData.data?.result.map((el) => (
+            {friendlistData.data?.result.map((el: FriendDTO) => (
               <div className={`user ${isDarkmode && "darkmode"}`} key={el.member.username}>
                 <div className="user_info_container">
                   <img className="profile_img" src={el.member.imgurl} alt="user_img" />

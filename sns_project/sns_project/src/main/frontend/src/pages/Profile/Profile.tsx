@@ -13,6 +13,8 @@ import ProfilePostList from "../../components/ProfileTab/ProfilePostList/Profile
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import Chatroom from "../../components/Chat/Chatroom";
+import Button from "../../components/Common/Button/Button";
+import { FormEvent } from "react";
 
 interface ResponseDTO {
   statusCode: string;
@@ -44,6 +46,23 @@ const Profile = () => {
     { name: "사진 및 동영상", value: "media" },
   ];
   const tabMenu = searchParams.get("tabmenu");
+  const submitImg = async (e: FormEvent) => {
+    e.preventDefault();
+    const target = e.target as HTMLFormElement;
+    const file = target.profile_img.files[0];
+    const form = new FormData();
+    form.append("file", file);
+    const res = await authInstance.post(`/member/profile`, form, {
+      // headers: {
+      //   "Content-Type": "multipart/form-data",
+      // },
+    });
+    console.log(res.data);
+  };
+  // const getuserProfileImg = async () => {
+  //   const res = await authInstance.get(`/member/profile`);
+  //   return res.data;
+  // };
   const getUserInfo = async () => {
     try {
       if (username) {
@@ -59,6 +78,7 @@ const Profile = () => {
       }
     }
   };
+
   const handleProfileTab = (e: React.MouseEvent) => {
     const target = e.target as HTMLDivElement;
     const menu = tabmenulist.find((el) => el.name === target.innerText)?.value;
@@ -87,6 +107,10 @@ const Profile = () => {
                   {profileData?.result.name}
                 </label>
               </div>
+              <form onSubmit={(e) => submitImg(e)} encType="multipart/form-data">
+                <input id="profile_img" type="file" accept="image/*" name="profile_img" />
+                <Button type="submit" text="저장" design="black" />
+              </form>
               <div className="profile_tab_container">
                 {tabmenulist.map((el) => (
                   <div

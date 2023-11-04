@@ -4,17 +4,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { grey } from "@mui/material/colors";
 import { RootState } from "../../../../redux";
 import { useState, useEffect, useRef } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { authInstance } from "../../../../interceptors/interceptors";
 import { useNavigate } from "react-router-dom";
 import { setRoom } from "../../../../redux/reducers/chatRoomSlice";
 import Loading from "../../../Common/Loading/Loading";
-
-interface ResponseDTO {
-  statusCode: string;
-  message: string;
-  result: FriendDTO[];
-}
+import { useGetFriendList } from "../../../../hook/useGetFriendList";
+import { useGetRoomList } from "../../../../hook/useGetRoomList";
 
 interface FriendDTO {
   id: string;
@@ -36,42 +31,14 @@ interface MemberDTO {
   imgurl: string;
 }
 
-interface roomResponse {
-  statusCode: string;
-  message: string;
-  result: room[];
-}
-
-interface room {
-  usernames: string[];
-  roomID: string;
-  roomName: string;
-}
-
 const FriendList = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
-  const loginuserId = useSelector((state: RootState) => state.loginSlice.id);
   const loginUserName = useSelector((state: RootState) => state.loginSlice.username);
   const [openidx, setOpenidx] = useState([false]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const getFriendList = async () => {
-    const res = await authInstance.get("/friend");
-    console.log(res.data);
-    return res.data;
-  };
-
-  const friendlistData = useQuery<ResponseDTO>(["friendList", loginuserId], getFriendList, {
-    staleTime: Infinity,
-  });
-
-  const getRoomlist = async () => {
-    const res = await authInstance.get(`/room/${loginUserName}`);
-    return res.data;
-  };
-
-  const roomList = useQuery<roomResponse>(["roomlist", loginUserName], getRoomlist);
+  const { friendlistData } = useGetFriendList();
+  const { roomList } = useGetRoomList();
 
   const navigateProfile = (username: string) => {
     navigate(`/profile?username=${username}`);

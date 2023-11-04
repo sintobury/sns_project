@@ -16,8 +16,13 @@ const chatRoomSlice = createSlice({
       state.usernames = usernames;
       state.roomName = roomName;
     },
+    resetRoom(state) {
+      state.roomId = "";
+      state.roomName = "";
+      state.usernames = [];
+    },
   },
 });
 
-export const { setRoom } = chatRoomSlice.actions;
+export const { setRoom, resetRoom } = chatRoomSlice.actions;
 export default chatRoomSlice.reducer;
