@@ -55,6 +55,7 @@ public class FileService {
         String type = extractExt(originalFilename);
         String uuid = UUID.randomUUID().toString() + "." + type;
         String path = getProfileFullPath(uuid);
+        log.info("저장 될 경로 : {}", uuid);
         file.transferTo(new File(path));
         Profile profile = new Profile(member, path, file.getName(), type, file.getSize());
         fileRepository.saveProfile(profile);

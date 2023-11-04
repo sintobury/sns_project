@@ -34,11 +34,11 @@ public class BoardController {
     private  final FriendService friendService;
     private final MemberService memberService;
     @PostMapping("/board")
-    public ResponseDto saveBoard(@AuthenticationPrincipal CustomDetails customDetails, @RequestParam String title, @RequestParam String content, @RequestParam LocalDateTime createAt, @RequestParam String hashTag, @RequestParam List<MultipartFile> files) throws IOException {
+    public ResponseDto saveBoard(@AuthenticationPrincipal CustomDetails customDetails, @ModelAttribute BoardDto boardDto) throws IOException {
         log.info("게시글 저장 핸들러");
-        BoardDto boardDto = new BoardDto(title, content, createAt, hashTag);
+
         Board board = boardService.saveBoard(customDetails.getUsername(), boardDto);
-        return fileService.saveBoardFile(board, files);
+        return fileService.saveBoardFile(board, boardDto.getFiles());
     }
     @GetMapping("/board/{name}")
     public ResponseDto getBoardByName(@PathVariable String name) throws MalformedURLException {

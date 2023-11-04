@@ -1,6 +1,7 @@
 package com.example.sns_project.websocket;
 
 import com.example.sns_project.dto.ResponseDto;
+import com.example.sns_project.repository.RedisRepository;
 import com.example.sns_project.websocket.messageform.Chat;
 import com.example.sns_project.websocket.websocketdto.InviteDto;
 import com.example.sns_project.websocket.entity.Room;
@@ -23,6 +24,7 @@ import java.util.Set;
 public class MessageController {
     private final SimpMessageSendingOperations messageTemplate;
     private final MessageService messageService;
+    private final RedisRepository redisRepository;
 
   /*  // 유저한테 메세지 보낼시 1:1 채팅방이 생성되며 유저를 초대할 수 있음.
     @MessageMapping("/message/sendToUser")
@@ -46,8 +48,10 @@ public class MessageController {
         room.addLogs(roomChat);
         messageService.updateRoom(room);
         for (String username : users) {
-            log.info("채탕방에 접속중인 유저 ID : {}",username );
-            sendMessage(username, roomChat);
+            if(redisRepository.existsByUsername(username)){
+                log.info("채탕방에 접속중인 유저 ID : {}",username );
+                sendMessage(username, roomChat);
+            }
         }
     }
     // 채팅방에 유저를 초대할 때 사용

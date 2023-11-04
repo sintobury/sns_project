@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RedisRepository extends CrudRepository<LoginInfo, String > {
     boolean existsByRefreshToken(String s);
+    boolean existsByUsername(String s);
     LoginInfo findByRefreshToken(String s);
 
 }
