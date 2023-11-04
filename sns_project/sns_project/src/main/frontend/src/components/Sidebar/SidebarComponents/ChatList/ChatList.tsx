@@ -1,15 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./ChatList.css";
 import { RootState } from "../../../../redux";
-import { authInstance } from "../../../../interceptors/interceptors";
-import { useQuery } from "@tanstack/react-query";
 import { setRoom } from "../../../../redux/reducers/chatRoomSlice";
-
-interface ResponseDTO {
-  statusCode: string;
-  message: string;
-  result: room[];
-}
+import { useGetRoomList } from "../../../../hook/useGetRoomList";
 
 interface room {
   roomId: string;
@@ -20,19 +13,12 @@ interface room {
 
 const ChatList = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
-  const loginUsername = useSelector((state: RootState) => state.loginSlice.username);
+  const { roomList } = useGetRoomList();
   const dispatch = useDispatch();
-
-  const getRoomList = async () => {
-    const res = await authInstance.get(`/room/${loginUsername}`);
-    return res.data;
-  };
-  const roomList = useQuery<ResponseDTO>(["roomlist", loginUsername], getRoomList);
 
   const openChatroom = (roomdata: room) => {
     dispatch(setRoom(roomdata));
   };
-  console.log(roomList.data);
   return (
     <div className={`chatlist_container ${isDarkmode && "darkmode"}`}>
       {roomList.data?.result.length === 0 && (
@@ -46,7 +32,7 @@ const ChatList = () => {
           onClick={() => openChatroom(el)}
           key={el.roomId}
         >
-          <img alt="chatroom_representive_img" src={el.img}></img>
+          <img alt="chatroom_img" src={el.img}></img>
           <p className="room_title">{el.roomName}</p>
         </div>
       ))}

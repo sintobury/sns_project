@@ -35,10 +35,12 @@ interface MemberDTO {
 
 const Profile = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
+  const loginusername = useSelector((state: RootState) => state.loginSlice.username);
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const username = searchParams.get("username");
+  console.log(username);
   const tabmenulist = [
     { name: "프로필", value: "" },
     { name: "정보", value: "info" },
@@ -89,9 +91,13 @@ const Profile = () => {
     }
   };
 
-  const { isLoading, data: profileData } = useQuery<ResponseDTO>(["profileData"], getUserInfo, {
-    staleTime: Infinity,
-  });
+  const { isLoading, data: profileData } = useQuery<ResponseDTO>(
+    ["profileData", loginusername],
+    getUserInfo,
+    {
+      staleTime: Infinity,
+    },
+  );
   console.log(profileData);
   return (
     <div className={`profile_page ${isDarkmode && "darkmode"}`}>
@@ -107,10 +113,12 @@ const Profile = () => {
                   {profileData?.result.name}
                 </label>
               </div>
-              <form onSubmit={(e) => submitImg(e)} encType="multipart/form-data">
-                <input id="profile_img" type="file" accept="image/*" name="profile_img" />
-                <Button type="submit" text="저장" design="black" />
-              </form>
+              {username === null && (
+                <form onSubmit={(e) => submitImg(e)} encType="multipart/form-data">
+                  <input id="profile_img" type="file" accept="image/*" name="profile_img" />
+                  <Button type="submit" text="저장" design="black" />
+                </form>
+              )}
               <div className="profile_tab_container">
                 {tabmenulist.map((el) => (
                   <div
@@ -135,6 +143,7 @@ const Profile = () => {
                 </div>
               </div>
             )}
+            {tabMenu === ""}
           </div>
         )}
         <Chatroom />

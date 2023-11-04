@@ -48,6 +48,16 @@ const RequestedFriend = () => {
     }
   };
 
+  const refuseFriendRequest = async (friendData: FriendDTO) => {
+    const res = await authInstance.delete(`/friend`, {
+      data: friendData,
+    });
+    if (res.data.statusCode === 200) {
+      alert(res.data.message);
+      requestedFriendData.refetch();
+    }
+  };
+
   const requestedFriendData = useQuery<ResponseDTO>(
     ["requestedFriendList", loginUserId],
     getRequestedFriend,
@@ -80,6 +90,12 @@ const RequestedFriend = () => {
                   type="button"
                   design="black"
                   onClick={() => acceptFriendRequest(el)}
+                />
+                <Button
+                  text="거절"
+                  type="button"
+                  design="black"
+                  onClick={() => refuseFriendRequest(el)}
                 />
               </div>
             ))}

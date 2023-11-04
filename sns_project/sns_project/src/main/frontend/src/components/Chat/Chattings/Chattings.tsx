@@ -29,7 +29,9 @@ const Chattings = () => {
     const res = await authInstance.get(`/room/logs/${roomId}`);
     return res.data;
   };
-  const chattingData = useQuery<ResponseDTO>(["chattings", roomId], getChattingLog);
+  const chattingData = useQuery<ResponseDTO>(["chattings", roomId], getChattingLog, {
+    staleTime: Infinity,
+  });
   useEffect(() => {
     chattingRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [chattingData]);

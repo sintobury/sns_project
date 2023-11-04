@@ -14,9 +14,7 @@ const Header = () => {
       <header className="header_container">
         <Homeicon />
         <div className="header_function">
-          <div className="search_part">
-            <PostSearch />
-          </div>
+          <PostSearch />
           <div className="optional_button_container">
             <ChatSettingButton />
             <Alert />

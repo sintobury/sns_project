@@ -132,7 +132,7 @@ const Addfriend = () => {
                 <p className="user_name">{el.name}</p>
               </div>
               <div className="user_button_container" onClick={() => openMenu(idx)}>
-                {isDarkmode ? <MenuIcon sx={{ color: grey[500] }} /> : <MenuIcon />}
+                {isDarkmode ? <MenuIcon sx={{ color: grey[800] }} /> : <MenuIcon />}
                 {openidx[idx] && (
                   <div className={`user_interaction_button_container ${isDarkmode && "darkmode"}`}>
                     <div

@@ -34,8 +34,9 @@ const ChatSettingButton = () => {
   const [chatmember, setChatmember] = useState<string[]>([]);
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginUserName = useSelector((state: RootState) => state.loginSlice.username);
+  const loginuserId = useSelector((state: RootState) => state.loginSlice.id);
   const dispatch = useDispatch();
-  const { friendlistData } = useGetFriendList();
+  const { friendlistData } = useGetFriendList(loginuserId);
   const { roomList } = useGetRoomList();
 
   const handleCheck = (e: ChangeEvent<HTMLInputElement>, username: string) => {

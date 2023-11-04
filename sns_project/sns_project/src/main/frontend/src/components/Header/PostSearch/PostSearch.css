@@ -1,15 +1,15 @@
 .postsearch_container {
-    width: 100%;
+    flex: 1 0 auto;
     display: flex;
     flex-direction: row;
-    justify-items: stretch;
+    justify-content: flex-start;
     align-items: center;
     gap: 10px;
 }
 
 .Post_Search {
     flex: 1 0 auto;
-    max-width: 25rem;
+    max-width: 19rem;
     border: none;
     border-radius: 5px;
     height: 1.25rem;
@@ -28,6 +28,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    cursor: pointer;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
 }
@@ -42,6 +43,7 @@
     border: 1px solid #e0e0e0;
     border-bottom: 1px solid #BDBDBD;
     font-size: .875rem;
+    cursor: pointer;
     transition: 0.7s;
     &.darkmode {
         background-color: #515151;

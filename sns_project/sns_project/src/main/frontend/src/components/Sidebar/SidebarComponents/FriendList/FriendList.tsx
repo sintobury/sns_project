@@ -34,10 +34,11 @@ interface MemberDTO {
 const FriendList = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginUserName = useSelector((state: RootState) => state.loginSlice.username);
+  const loginuserId = useSelector((state: RootState) => state.loginSlice.id);
   const [openidx, setOpenidx] = useState([false]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { friendlistData } = useGetFriendList();
+  const { friendlistData } = useGetFriendList(loginuserId);
   const { roomList } = useGetRoomList();
 
   const navigateProfile = (username: string) => {
@@ -101,7 +102,7 @@ const FriendList = () => {
                 <p className="user_name">{el.member.name}</p>
               </div>
               <div className="user_button_container" onClick={() => openMenu(idx)}>
-                {isDarkmode ? <MenuIcon sx={{ color: grey[500] }} /> : <MenuIcon />}
+                {isDarkmode ? <MenuIcon sx={{ color: grey[800] }} /> : <MenuIcon />}
                 {openidx[idx] && (
                   <div className={`user_interaction_button_container ${isDarkmode && "darkmode"}`}>
                     <div

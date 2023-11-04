@@ -1,5 +1,8 @@
 .homeicon {
-    flex: 0 0 26.25rem;
+    flex: 0 0 25rem; 
+    @media (max-width:62.5rem) {
+        flex: 1 0 auto;
+    }
 }
 a {
     color: black;

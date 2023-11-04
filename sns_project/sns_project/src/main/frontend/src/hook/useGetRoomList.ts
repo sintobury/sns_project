@@ -11,8 +11,9 @@ interface roomResponse {
 
 interface room {
   usernames: string[];
-  roomID: string;
+  roomId: string;
   roomName: string;
+  img?: string;
 }
 
 export const useGetRoomList = () => {

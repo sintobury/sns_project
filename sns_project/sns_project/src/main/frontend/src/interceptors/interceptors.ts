@@ -12,45 +12,45 @@ const onErrorRequest = (err: AxiosError | Error) => {
   return Promise.reject(err);
 };
 
+let notAlerted = true;
 const onResponse = async (res: AxiosResponse) => {
   const originalConfig = res.config;
-  let block = true;
   if (res.data.statusCode === 401) {
-    if (block) {
-      setTimeout(() => {
-        block = !block;
-      }, 600000);
-      try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/refresh`, {
-          refreshToken: localStorage.getItem("refreshToken"),
-        });
-        if (res.data.statusCode === 200) {
-          localStorage.setItem("accessToken", res.data.result.accessToken);
-          console.log("access refreshed");
-        } else if (res.data.statusCode === 400) {
-          console.log("refresh expired");
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
+    try {
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/refresh`, {
+        refreshToken: localStorage.getItem("refreshToken"),
+      });
+      if (res.data.statusCode === 200) {
+        localStorage.setItem("accessToken", res.data.result.accessToken);
+        console.log("access refreshed");
+      } else if (res.data.statusCode === 400) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        if (notAlerted) {
           alert("로그인시간이 만료되었습니다.");
-          window.location.replace("/");
-        } else if (res.data.statusCode === 405) {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          alert("중복 로그인으로 인해 로그아웃 되었습니다.");
-          window.location.replace("/");
         }
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          if (error.response?.status === 401) {
-            console.log(`error: ${error}`);
-          }
+        notAlerted = false;
+        window.location.replace("/");
+        setTimeout(() => {
+          notAlerted = true;
+        }, 1000);
+      } else if (res.data.statusCode === 405) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        alert("중복 로그인으로 인해 로그아웃 되었습니다.");
+        window.location.replace("/");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          console.log(`error: ${error}`);
         }
       }
-      const newAccessToken = localStorage.getItem("accessToken");
-      if (originalConfig && originalConfig.headers) {
-        originalConfig.headers.Authorization = `Bearer ${newAccessToken}`;
-        return await axios(originalConfig);
-      }
+    }
+    const newAccessToken = localStorage.getItem("accessToken");
+    if (originalConfig && originalConfig.headers) {
+      originalConfig.headers.Authorization = `Bearer ${newAccessToken}`;
+      return await axios(originalConfig);
     }
   }
 

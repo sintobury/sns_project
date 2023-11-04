@@ -29,16 +29,21 @@ interface MemberDTO {
   imgurl: string;
 }
 
-export const useGetFriendList = () => {
-  const loginusername = useSelector((state: RootState) => state.loginSlice.username);
+export const useGetFriendList = (userId: number) => {
+  const loginuserId = useSelector((state: RootState) => state.loginSlice.id);
   const getFriendList = async () => {
-    const res = await authInstance.get("/friend");
-    console.log(res.data);
-    return res.data;
+    if (userId === loginuserId) {
+      const res = await authInstance.get("/friend");
+      return res.data;
+    } else {
+      const res = await authInstance.get(`/friend/${userId}`);
+      return res.data;
+    }
   };
 
-  const friendlistData = useQuery<ResponseDTO>(["friendList", loginusername], getFriendList, {
+  const friendlistData = useQuery<ResponseDTO>(["friendList", loginuserId], getFriendList, {
     staleTime: Infinity,
   });
+
   return { friendlistData };
 };
