@@ -1,0 +1,18 @@
+.notification_container {
+    background-color: #81cc76;
+    border-radius: 6px;
+    overflow: hidden;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+    }
+}
+
+.notification {
+    font-size: 1rem;
+    padding: .5rem .75rem;
+    transition: 0.7s;
+    &.darkmode {
+        color: white;
+    }
+}

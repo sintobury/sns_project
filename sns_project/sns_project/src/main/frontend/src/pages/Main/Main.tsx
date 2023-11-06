@@ -8,6 +8,7 @@ import { RootState } from "../../redux";
 import { useWebsocket } from "../../hook/useWebsocket";
 import { useEffect } from "react";
 import Chatroom from "../../components/Chat/Chatroom";
+import PostList from "../../components/PostList/PostList";
 
 const Main = () => {
   const { connectWebsocket } = useWebsocket();
@@ -22,6 +23,7 @@ const Main = () => {
         <Sidebar />
         <div className="main_content">
           <Postmaker />
+          <PostList />
         </div>
         <Chatroom />
       </div>
