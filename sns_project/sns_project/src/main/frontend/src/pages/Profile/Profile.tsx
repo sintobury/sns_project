@@ -14,8 +14,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import Chatroom from "../../components/Chat/Chatroom";
 import Button from "../../components/Common/Button/Button";
-import { FormEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import Loading from "../../components/Common/Loading/Loading";
+import ProfileFriend from "../../components/ProfileFriend/ProfileFriend";
 
 interface ResponseDTO {
   statusCode: string;
@@ -37,6 +38,7 @@ interface MemberDTO {
 const Profile = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginusername = useSelector((state: RootState) => state.loginSlice.username);
+  const [fileImg, setFileImg] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -60,6 +62,14 @@ const Profile = () => {
       // },
     });
     console.log(res.data);
+  };
+
+  const displayUploadFile = (e: ChangeEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    if (target.files) {
+      const file = target.files[0];
+      setFileImg(URL.createObjectURL(file));
+    }
   };
   // const getuserProfileImg = async () => {
   //   const res = await authInstance.get(`/member/profile`);
@@ -122,7 +132,16 @@ const Profile = () => {
                     encType="multipart/form-data"
                     className="profile_img_form"
                   >
-                    <input id="profile_img" type="file" accept="image/*" name="profile_img" />
+                    <div className="file_upload_container">
+                      <img src={fileImg} alt="file_img" className="uploadfile" />
+                      <input
+                        id="profile_img"
+                        type="file"
+                        accept="image/*"
+                        name="profile_img"
+                        onChange={displayUploadFile}
+                      />
+                    </div>
                     <Button type="submit" text="저장" design="black" />
                   </form>
                 )}
@@ -146,11 +165,11 @@ const Profile = () => {
                     <Friend userId={profileData?.result.id} username={username} />
                   </div>
                   <div className="right_container">
-                    <ProfilePostList />
+                    <ProfilePostList username={username} />
                   </div>
                 </div>
               )}
-              {tabMenu === ""}
+              {tabMenu === "friend" && <ProfileFriend userId={profileData.result.id} />}
             </div>
           )
         )}

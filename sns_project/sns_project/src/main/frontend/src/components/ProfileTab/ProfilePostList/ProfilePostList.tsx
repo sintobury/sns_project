@@ -6,7 +6,11 @@ import PostList from "../../PostList/PostList";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { RootState } from "../../../redux";
 
-const ProfilePostList = () => {
+interface childProps {
+  username: string | null;
+}
+
+const ProfilePostList = ({ username }: childProps) => {
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState("latest");
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
@@ -19,7 +23,7 @@ const ProfilePostList = () => {
     const target = e.target as HTMLDivElement;
     setOption(target.innerText);
     setOpen(false);
-    navigate(`${location.pathname}?option=${option}`);
+    navigate(`${location.pathname}?username=${username}&option=${option}`);
   };
   const filterOption = [{ name: "최신순", value: "latest" }];
 
