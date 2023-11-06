@@ -30,7 +30,7 @@ public class BoardServiceTest {
     void saveBoard() throws MalformedURLException {
         Member member = new Member("test", "test", "test", "test", LocalDateTime.now(), "test", "test", LocalDateTime.now(), MemberRole.ROLE_USER);
         memberRepository.save(member);
-        BoardDto boardDto = new BoardDto("title", "content", LocalDateTime.now(), "hash");
+        BoardDto boardDto = new BoardDto("title", "content", LocalDateTime.now(), "hash", null);
         Board board = boardService.saveBoard("test", boardDto);
         ResponseDto test = boardService.getBoard("test");
     }
