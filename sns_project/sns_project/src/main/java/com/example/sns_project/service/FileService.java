@@ -28,8 +28,8 @@ import java.util.UUID;
 public class FileService {
     private final MemberRepository memberRepository;
     private final FileRepository fileRepository;
-    private static String profileUrl = "/profile/";
-    private static String boardUrl = "/board/";
+    private static String profileUrl = "/tmp/profile/";
+    private static String boardUrl = "/tmp/board/";
     private String getProfileFullPath(String filename){
         return profileUrl + filename;
     }
