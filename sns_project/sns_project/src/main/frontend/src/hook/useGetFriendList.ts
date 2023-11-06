@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { authInstance } from "../interceptors/interceptors";
 import { useQuery } from "@tanstack/react-query";
 import { RootState } from "../redux";
+import { useLocation } from "react-router-dom";
 
 interface ResponseDTO {
   statusCode: string;
@@ -31,6 +32,9 @@ interface MemberDTO {
 
 export const useGetFriendList = (userId: number) => {
   const loginuserId = useSelector((state: RootState) => state.loginSlice.id);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const username = searchParams.get("username");
   const getFriendList = async () => {
     if (userId === loginuserId) {
       const res = await authInstance.get("/friend");
@@ -41,9 +45,13 @@ export const useGetFriendList = (userId: number) => {
     }
   };
 
-  const friendlistData = useQuery<ResponseDTO>(["friendList", loginuserId], getFriendList, {
-    staleTime: Infinity,
-  });
+  const friendlistData = useQuery<ResponseDTO>(
+    ["friendList", loginuserId, username],
+    getFriendList,
+    {
+      staleTime: Infinity,
+    },
+  );
 
   return { friendlistData };
 };

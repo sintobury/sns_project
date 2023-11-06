@@ -11,3 +11,25 @@
         color: white;
     }
 }
+
+.friendList {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile_user_friend {
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    border-radius: 6px;
+    background-color: #5f9a56;
+    &.darkmode {
+        background-color: #515151;
+    }
+}

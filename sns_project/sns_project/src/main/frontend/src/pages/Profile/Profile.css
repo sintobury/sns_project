@@ -58,6 +58,13 @@
     }
 }
 
+.profile_img_form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .label {
     color: #212121;
     transition: 0.7s;

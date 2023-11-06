@@ -42,6 +42,8 @@ const FriendList = () => {
   const { roomList } = useGetRoomList();
 
   const navigateProfile = (username: string) => {
+    const newArr = new Array(friendlistData.data?.result.length).fill(false);
+    setOpenidx(newArr);
     navigate(`/profile?username=${username}`);
   };
 

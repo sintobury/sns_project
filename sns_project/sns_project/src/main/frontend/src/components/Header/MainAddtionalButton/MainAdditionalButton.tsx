@@ -13,8 +13,9 @@ const MainAdditionalButton = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
+  const loginusername = useSelector((state: RootState) => state.loginSlice.username);
   const navigateProfile = () => {
-    navigate("/profile");
+    navigate(`/profile?username=${loginusername}`);
     setOpenMenu(false);
   };
   const setDarkmode = () => {

@@ -76,6 +76,8 @@ const Addfriend = () => {
   };
 
   const navigateProfile = (username: string) => {
+    const newArr = new Array(friendSearchData.data?.result.length).fill(false);
+    setOpenidx(newArr);
     navigate(`/profile?username=${username}`);
   };
 

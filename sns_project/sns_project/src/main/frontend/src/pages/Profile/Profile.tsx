@@ -15,6 +15,7 @@ import { RootState } from "../../redux";
 import Chatroom from "../../components/Chat/Chatroom";
 import Button from "../../components/Common/Button/Button";
 import { FormEvent } from "react";
+import Loading from "../../components/Common/Loading/Loading";
 
 interface ResponseDTO {
   statusCode: string;
@@ -23,7 +24,7 @@ interface ResponseDTO {
 }
 
 interface MemberDTO {
-  id: string;
+  id: number;
   username: string;
   password: string;
   name: string;
@@ -40,7 +41,6 @@ const Profile = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const username = searchParams.get("username");
-  console.log(username);
   const tabmenulist = [
     { name: "프로필", value: "" },
     { name: "정보", value: "info" },
@@ -67,7 +67,7 @@ const Profile = () => {
   // };
   const getUserInfo = async () => {
     try {
-      if (username) {
+      if (username !== loginusername) {
         const res = await authInstance.get(`/member/info/${username}`);
         return res.data;
       } else {
@@ -85,14 +85,14 @@ const Profile = () => {
     const target = e.target as HTMLDivElement;
     const menu = tabmenulist.find((el) => el.name === target.innerText)?.value;
     if (menu === "") {
-      navigate(`/profile`);
+      navigate(`/profile?username=${username}`);
     } else {
-      navigate(`/profile?tabmenu=${menu}`);
+      navigate(`/profile?username=${username}&tabmenu=${menu}`);
     }
   };
 
   const { isLoading, data: profileData } = useQuery<ResponseDTO>(
-    ["profileData", loginusername],
+    ["profileData", username],
     getUserInfo,
     {
       staleTime: Infinity,
@@ -104,47 +104,55 @@ const Profile = () => {
       <Header />
       <div className="main_content_container">
         <Sidebar />
-        {isLoading ? null : (
-          <div className="profile_container">
-            <div className={`profile_summary_container ${isDarkmode && "darkmode"}`}>
-              <div className={`profile_img_container ${isDarkmode && "darkmode"}`}>
-                <img className="profile_img" id="user_profile_img" alt="user_img"></img>
-                <label htmlFor="user_profile_img" className={`label ${isDarkmode && "darkmode"}`}>
-                  {profileData?.result.name}
-                </label>
-              </div>
-              {username === null && (
-                <form onSubmit={(e) => submitImg(e)} encType="multipart/form-data">
-                  <input id="profile_img" type="file" accept="image/*" name="profile_img" />
-                  <Button type="submit" text="저장" design="black" />
-                </form>
-              )}
-              <div className="profile_tab_container">
-                {tabmenulist.map((el) => (
-                  <div
-                    className={`tab_menu ${isDarkmode && "darkmode"}`}
-                    key={el.value}
-                    onClick={handleProfileTab}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          profileData && (
+            <div className="profile_container">
+              <div className={`profile_summary_container ${isDarkmode && "darkmode"}`}>
+                <div className={`profile_img_container ${isDarkmode && "darkmode"}`}>
+                  <img className="profile_img" id="user_profile_img" alt="user_img"></img>
+                  <label htmlFor="user_profile_img" className={`label ${isDarkmode && "darkmode"}`}>
+                    {profileData?.result.name}
+                  </label>
+                </div>
+                {username === loginusername && (
+                  <form
+                    onSubmit={(e) => submitImg(e)}
+                    encType="multipart/form-data"
+                    className="profile_img_form"
                   >
-                    {el.name}
+                    <input id="profile_img" type="file" accept="image/*" name="profile_img" />
+                    <Button type="submit" text="저장" design="black" />
+                  </form>
+                )}
+                <div className="profile_tab_container">
+                  {tabmenulist.map((el) => (
+                    <div
+                      className={`tab_menu ${isDarkmode && "darkmode"}`}
+                      key={el.value}
+                      onClick={handleProfileTab}
+                    >
+                      {el.name}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {!tabMenu && (
+                <div className="info_container">
+                  <div className="left_container">
+                    <Summary />
+                    <MediaList />
+                    <Friend userId={profileData?.result.id} username={username} />
                   </div>
-                ))}
-              </div>
+                  <div className="right_container">
+                    <ProfilePostList />
+                  </div>
+                </div>
+              )}
+              {tabMenu === ""}
             </div>
-            {!tabMenu && (
-              <div className="info_container">
-                <div className="left_container">
-                  <Summary />
-                  <MediaList />
-                  <Friend />
-                </div>
-                <div className="right_container">
-                  <ProfilePostList />
-                </div>
-              </div>
-            )}
-            {tabMenu === ""}
-          </div>
+          )
         )}
         <Chatroom />
       </div>

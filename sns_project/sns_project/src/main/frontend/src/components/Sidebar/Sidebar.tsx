@@ -52,22 +52,11 @@ const Sidebar = () => {
           type="button"
           onClick={() => setMode("chatList")}
         />
-        {/* <Button
-          icon={<StarIcon sx={{ color: yellow[700] }} />}
-          text="즐겨찾기"
-          type="button"
-          onClick={() => setMode("bookmarkList")}
-        /> */}
       </div>
       {mode === "addFriend" && <Addfriend />}
       {mode === "requestedFriend" && <RequestedFriend />}
       {mode === "friendList" && <FriendList />}
       {mode === "chatList" && <ChatList />}
-      {/* {mode === "bookmarkList" && (
-        <div className={`bookmark_list ${isDarkmode && "darkmode"}`}>
-          <p className="component_title">즐겨찾기</p>
-        </div>
-      )} */}
     </div>
   );
 };

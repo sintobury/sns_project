@@ -33,7 +33,6 @@ const PostList = () => {
   const postList = useQuery<BoardListResponse>(["postList", loginusername], getFriendPostList, {
     staleTime: Infinity,
   });
-  console.log(postList.data);
   return (
     <div className="postlist_container">
       {postList.isLoading ? (
