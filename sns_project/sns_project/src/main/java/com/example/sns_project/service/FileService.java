@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,8 +30,8 @@ import java.util.UUID;
 public class FileService {
     private final MemberRepository memberRepository;
     private final FileRepository fileRepository;
-    private static String profileUrl = "/tmp/profile/";
-    private static String boardUrl = "/tmp/board/";
+    private static String profileUrl = "/profile/";
+    private static String boardUrl = "/board/";
     private String getProfileFullPath(String filename){
         return profileUrl + filename;
     }
@@ -68,8 +70,10 @@ public class FileService {
             String type = extractExt(originalFilename);
             String uuid = UUID.randomUUID().toString() + "." + type;
             String path = getBoardFullPath(uuid);
-            file.transferTo(new File(path));
+            Path a_path = Paths.get(path).toAbsolutePath();
+            file.transferTo(a_path.toFile());
             Files data = new Files(board, path, file.getName(), type, file.getSize());
+
             fileRepository.saveBoardFile(data);
         }
         return new ResponseDto(HttpStatus.OK.value(), "저장 완료", null);
