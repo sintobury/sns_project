@@ -44,6 +44,9 @@ public class Board {
     }
 
     private String hashTag;
+    @JsonIgnore
+    @OneToMany(mappedBy = "board")
+    private List<Comment> comments = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "board")

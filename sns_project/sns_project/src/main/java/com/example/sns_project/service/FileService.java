@@ -73,7 +73,6 @@ public class FileService {
             Path a_path = Paths.get(path).toAbsolutePath();
             file.transferTo(a_path.toFile());
             Files data = new Files(board, path, file.getName(), type, file.getSize());
-
             fileRepository.saveBoardFile(data);
         }
         return new ResponseDto(HttpStatus.OK.value(), "저장 완료", null);

@@ -36,7 +36,6 @@ public class BoardController {
     @PostMapping("/board")
     public ResponseDto saveBoard(@AuthenticationPrincipal CustomDetails customDetails, @ModelAttribute BoardDto boardDto) throws IOException {
         log.info("게시글 저장 핸들러");
-
         Board board = boardService.saveBoard(customDetails.getUsername(), boardDto);
         return fileService.saveBoardFile(board, boardDto.getFiles());
     }
@@ -61,5 +60,9 @@ public class BoardController {
     @DeleteMapping("/comment")
     public ResponseDto deleteComment(@RequestBody CommentDto commentDto){
         return boardService.deleteComment(commentDto);
+    }
+    @GetMapping("/comment/{boardId}")
+    public ResponseDto findComment(@RequestBody BoardDto boardDto){
+        return boardService.getComment(boardDto);
     }
 }

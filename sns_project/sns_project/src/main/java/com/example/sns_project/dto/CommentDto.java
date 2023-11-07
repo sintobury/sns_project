@@ -13,8 +13,21 @@ public class CommentDto {
     private Long commentId;
     private Long boardId;
     private String content;
-
     private LocalDateTime createAt;
-
     private CommentEnum state;
+
+    public CommentDto(Long commentId, String content, LocalDateTime createAt, CommentEnum state) {
+        this.commentId = commentId;
+        this.content = content;
+        this.createAt = createAt;
+        this.state = state;
+    }
+
+    public CommentDto(Long commentId, Long boardId, String content, LocalDateTime createAt, CommentEnum state) {
+        this.commentId = commentId;
+        this.boardId = boardId;
+        this.content = content;
+        this.createAt = createAt;
+        this.state = state;
+    }
 }

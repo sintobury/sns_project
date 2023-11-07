@@ -73,4 +73,14 @@ public class BoardService {
         commentRepository.delete(comment);
         return new ResponseDto(HttpStatus.OK.value(), "댓글 삭제 완료", null);
     }
+    public ResponseDto getComment(BoardDto boardDto){
+        Board board = boardRepository.findByIdFetchComment(boardDto.getId());
+        List<Comment> comments = board.getComments();
+        ArrayList<CommentDto> result = new ArrayList<>();
+        for (Comment comment : comments) {
+            result.add(comment.convertDto());
+        }
+        return new ResponseDto(HttpStatus.OK.value(), "댓글 가져오기 완료", result);
+
+    }
 }

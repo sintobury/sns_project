@@ -4,11 +4,13 @@ import com.example.sns_project.enums.FriendEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Friend {
     @Id
     @Column(name = "friend_id")
@@ -36,9 +38,5 @@ public class Friend {
         friendRequest.getFriendRequestList().add(this);
         friendRequested.getFriendRequestedList().add(this);
         this.state = state;
-    }
-
-    public Friend() {
-
     }
 }

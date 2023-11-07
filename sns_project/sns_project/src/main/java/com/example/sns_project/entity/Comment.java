@@ -1,5 +1,6 @@
 package com.example.sns_project.entity;
 
+import com.example.sns_project.dto.CommentDto;
 import com.example.sns_project.enums.CommentEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -40,5 +41,8 @@ public class Comment {
         this.content = content;
         this.createAt = createAt;
         this.state = state;
+    }
+    public CommentDto convertDto(){
+        return new CommentDto(this.id, this.content, this.createAt, this.state);
     }
 }
