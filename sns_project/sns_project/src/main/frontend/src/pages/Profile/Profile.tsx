@@ -71,10 +71,21 @@ const Profile = () => {
       setFileImg(URL.createObjectURL(file));
     }
   };
-  // const getuserProfileImg = async () => {
-  //   const res = await authInstance.get(`/member/profile`);
-  //   return res.data;
-  // };
+  const getuserProfileImg = async () => {
+    try {
+      const res = await authInstance.get(`/member/profile`);
+      return res.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log(error);
+      }
+    }
+  };
+
+  const userProfileImg = useQuery(["profile_img", loginusername], getuserProfileImg, {
+    staleTime: Infinity,
+  });
+  console.log(userProfileImg.data);
   const getUserInfo = async () => {
     try {
       if (username !== loginusername) {
@@ -121,7 +132,12 @@ const Profile = () => {
             <div className="profile_container">
               <div className={`profile_summary_container ${isDarkmode && "darkmode"}`}>
                 <div className={`profile_img_container ${isDarkmode && "darkmode"}`}>
-                  <img className="profile_img" id="user_profile_img" alt="user_img"></img>
+                  <img
+                    className="profile_img"
+                    id="user_profile_img"
+                    alt="user_img"
+                    src={userProfileImg.data?.result}
+                  ></img>
                   <label htmlFor="user_profile_img" className={`label ${isDarkmode && "darkmode"}`}>
                     {profileData?.result.name}
                   </label>
@@ -133,7 +149,9 @@ const Profile = () => {
                     className="profile_img_form"
                   >
                     <div className="file_upload_container">
-                      <img src={fileImg} alt="file_img" className="uploadfile" />
+                      {fileImg !== "" && (
+                        <img src={fileImg} alt="file_img" className="uploadfile" />
+                      )}
                       <input
                         id="profile_img"
                         type="file"

@@ -1,7 +1,7 @@
 import "./RequestedFriend.css";
 import { useSelector } from "react-redux";
 import { authInstance } from "../../../../interceptors/interceptors";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { RootState } from "../../../../redux";
 import Button from "../../../Common/Button/Button";
 import Loading from "../../../Common/Loading/Loading";
@@ -35,6 +35,7 @@ interface MemberDTO {
 const RequestedFriend = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginUserId = useSelector((state: RootState) => state.loginSlice.id);
+  const queryClient = useQueryClient();
   const getRequestedFriend = async () => {
     const res = await authInstance.get(`/friend/requested`);
     return res.data;
@@ -45,6 +46,7 @@ const RequestedFriend = () => {
     if (res.data.statusCode === 200) {
       alert(res.data.message);
       requestedFriendData.refetch();
+      queryClient.refetchQueries(["friendList"]);
     }
   };
 
