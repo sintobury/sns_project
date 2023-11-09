@@ -32,6 +32,7 @@ const ChatSettingButton = () => {
   const [openSetting, setOpenSetting] = useState(false);
   const [title, setTitle] = useState("");
   const [chatmember, setChatmember] = useState<string[]>([]);
+  const [checked, setChecked] = useState<boolean[]>([]);
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginUserName = useSelector((state: RootState) => state.loginSlice.username);
   const loginuserId = useSelector((state: RootState) => state.loginSlice.id);
@@ -39,11 +40,27 @@ const ChatSettingButton = () => {
   const { friendlistData } = useGetFriendList(loginuserId);
   const { roomList } = useGetRoomList();
 
-  const handleCheck = (e: ChangeEvent<HTMLInputElement>, username: string) => {
+  const changeCheck = (e: ChangeEvent<HTMLInputElement>, username: string) => {
     if (e.target.checked) {
       setChatmember([...chatmember, username]);
     } else if (!e.target.checked) {
       setChatmember(chatmember.filter((el) => el !== username));
+    }
+  };
+
+  const handleCheck = (idx: number) => {
+    if (checked.length === 0) {
+      const newArr = new Array(friendlistData.data?.result.length).fill(false);
+      newArr[idx] = true;
+      setChecked(newArr);
+    } else if (checked[idx] === false) {
+      const newArr = [...checked];
+      newArr[idx] = true;
+      setChecked(newArr);
+    } else if (checked[idx] === true) {
+      const newArr = [...checked];
+      newArr[idx] = false;
+      setChecked(newArr);
     }
   };
 
@@ -101,16 +118,23 @@ const ChatSettingButton = () => {
             <Button text="만들기" type="button" design="black" onClick={makeChatRoom} />
           </div>
           <div className={`friend_list_container ${isDarkmode && "darkmode"}`}>
-            {friendlistData.data?.result.map((el: FriendDTO) => (
-              <div className={`user ${isDarkmode && "darkmode"}`} key={el.member.username}>
+            {friendlistData.data?.result.map((el: FriendDTO, idx) => (
+              <div
+                className={`user multiple_chatroom ${isDarkmode && "darkmode"}`}
+                key={el.member.username}
+                onClick={() => handleCheck(idx)}
+              >
                 <div className="user_info_container">
                   <img className="profile_img" src={el.member.imgurl} alt="user_img" />
                   <p className="user_name">{el.member.name}</p>
-                  <input
-                    type="checkbox"
-                    className="chat_member_checkbox"
-                    onChange={(e) => handleCheck(e, el.member.username)}
-                  />
+                  <div className="checkbox_container">
+                    <input
+                      type="checkbox"
+                      className="chat_member_checkbox"
+                      onChange={(e) => changeCheck(e, el.member.username)}
+                      checked={checked[idx]}
+                    />
+                  </div>
                 </div>
               </div>
             ))}

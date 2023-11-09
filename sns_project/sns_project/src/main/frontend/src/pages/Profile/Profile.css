@@ -87,6 +87,7 @@
 .profile_tab_container {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
     align-items: center;
     gap: .625rem;
 }

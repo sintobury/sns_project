@@ -48,7 +48,19 @@
     overflow-y: scroll;
 }
 
+.multiple_chatroom {
+    cursor: pointer;
+}
+
 .chat_member_checkbox {
     width: 1.25rem;
     aspect-ratio: 1/1;
+}
+
+.checkbox_container {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
 }
