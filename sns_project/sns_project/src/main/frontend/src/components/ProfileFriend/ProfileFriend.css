@@ -1,5 +1,12 @@
 .profile_user_friend_container {
-    padding-top: 1rem;
+    margin-top: 1rem;
+    padding: .5rem;
+    border-radius: 6px;
+    background-color: #81cc76;
+    &.darkmode {
+        background-color: #212121;
+        color: white;
+    }
 }
 
 .profile_user_friendList {
@@ -10,9 +17,4 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
-    border-radius: 6px;
-    background-color: #81cc76;
-    &.darkmode {
-        background-color: #212121;
-    }
 }

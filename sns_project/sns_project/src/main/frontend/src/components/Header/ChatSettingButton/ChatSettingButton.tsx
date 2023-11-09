@@ -48,7 +48,6 @@ const ChatSettingButton = () => {
     }
   };
 
-  console.log(chatmember);
   const handleCheck = (idx: number, username: string) => {
     if (checked.length === 0) {
       const newArr = new Array(friendlistData.data?.result.length).fill(false);

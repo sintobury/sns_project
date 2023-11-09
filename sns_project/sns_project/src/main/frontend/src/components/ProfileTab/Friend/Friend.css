@@ -15,12 +15,13 @@
 .friendList {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 5px;
 }
 
 .profile_user_friend {
-    width: 30%;
+    width: 26%;
     padding: 1rem;
     display: flex;
     flex-direction: row;

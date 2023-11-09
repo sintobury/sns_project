@@ -21,6 +21,7 @@ const ChatList = () => {
   };
   return (
     <div className={`chatlist_container ${isDarkmode && "darkmode"}`}>
+      <p className="component_title">채팅방 목록</p>
       {roomList.data?.result.length === 0 && (
         <div>
           <p className="explain">채팅 목록이 없습니다.</p>

@@ -19,8 +19,9 @@ const ProfileFriend = ({ userId }: childProps) => {
   };
 
   return (
-    <div className="profile_user_friend_container">
-      <div className={`profile_user_friendList ${isdarkmode && "darkmode"}`}>
+    <div className={`profile_user_friend_container ${isdarkmode && "darkmode"}`}>
+      <p className="component_title">친구목록</p>
+      <div className={`profile_user_friendList`}>
         {friendlistData.isLoading ? (
           <Loading />
         ) : friendlistData.data?.result.length === 0 ? (

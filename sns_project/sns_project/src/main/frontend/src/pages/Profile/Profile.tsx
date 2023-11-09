@@ -31,7 +31,7 @@ interface MemberDTO {
   name: string;
   email: string;
   birth: string;
-  createdAt: string;
+  createAt: string;
   provider: string;
 }
 
@@ -45,7 +45,6 @@ const Profile = () => {
   const username = searchParams.get("username");
   const tabmenulist = [
     { name: "프로필", value: "" },
-    { name: "정보", value: "info" },
     { name: "친구", value: "friend" },
     { name: "사진 및 동영상", value: "media" },
   ];
@@ -178,7 +177,7 @@ const Profile = () => {
               {!tabMenu && (
                 <div className="info_container">
                   <div className="left_container">
-                    <Summary />
+                    <Summary userinfo={profileData.result} />
                     <MediaList />
                     <Friend userId={profileData?.result.id} username={username} />
                   </div>
