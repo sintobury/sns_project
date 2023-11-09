@@ -20,6 +20,7 @@ export const useGetRoomList = () => {
   const loginusername = useSelector((state: RootState) => state.loginSlice.username);
   const getRoomlist = async () => {
     const res = await authInstance.get(`/room/${loginusername}`);
+    console.log(res.data);
     return res.data;
   };
 

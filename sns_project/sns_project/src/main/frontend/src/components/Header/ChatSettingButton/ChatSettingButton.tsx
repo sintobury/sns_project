@@ -48,19 +48,23 @@ const ChatSettingButton = () => {
     }
   };
 
-  const handleCheck = (idx: number) => {
+  console.log(chatmember);
+  const handleCheck = (idx: number, username: string) => {
     if (checked.length === 0) {
       const newArr = new Array(friendlistData.data?.result.length).fill(false);
       newArr[idx] = true;
       setChecked(newArr);
+      setChatmember([...chatmember, username]);
     } else if (checked[idx] === false) {
       const newArr = [...checked];
       newArr[idx] = true;
       setChecked(newArr);
+      setChatmember([...chatmember, username]);
     } else if (checked[idx] === true) {
       const newArr = [...checked];
       newArr[idx] = false;
       setChecked(newArr);
+      setChatmember(chatmember.filter((el) => el !== username));
     }
   };
 
@@ -112,7 +116,7 @@ const ChatSettingButton = () => {
             <input
               className="chatroom_title_input"
               placeholder="채팅방 이름"
-              value={title}
+              value={title || ""}
               onChange={(e) => setTitle(e.target.value)}
             ></input>
             <Button text="만들기" type="button" design="black" onClick={makeChatRoom} />
@@ -122,7 +126,7 @@ const ChatSettingButton = () => {
               <div
                 className={`user multiple_chatroom ${isDarkmode && "darkmode"}`}
                 key={el.member.username}
-                onClick={() => handleCheck(idx)}
+                onClick={() => handleCheck(idx, el.member.username)}
               >
                 <div className="user_info_container">
                   <img className="profile_img" src={el.member.imgurl} alt="user_img" />
@@ -132,7 +136,7 @@ const ChatSettingButton = () => {
                       type="checkbox"
                       className="chat_member_checkbox"
                       onChange={(e) => changeCheck(e, el.member.username)}
-                      checked={checked[idx]}
+                      checked={checked[idx] || false}
                     />
                   </div>
                 </div>
