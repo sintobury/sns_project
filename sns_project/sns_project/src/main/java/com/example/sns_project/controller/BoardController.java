@@ -65,4 +65,8 @@ public class BoardController {
     public ResponseDto findComment(@RequestBody BoardDto boardDto){
         return boardService.getComment(boardDto);
     }
+    @GetMapping("/board/content/{content}")
+    public ResponseDto getBoardByContent(@PathVariable String content) throws MalformedURLException {
+        return boardService.getBoardByContent(content);
+    }
 }
