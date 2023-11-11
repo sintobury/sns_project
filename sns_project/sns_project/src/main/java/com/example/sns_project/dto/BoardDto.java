@@ -14,13 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 public class BoardDto {
     private String title;
-
     private String content;
-
     private LocalDateTime createAt;
-
     private String hashTag;
-
     private List<MultipartFile> files;
 
 }

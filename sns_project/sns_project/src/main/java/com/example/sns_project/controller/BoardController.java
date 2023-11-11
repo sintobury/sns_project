@@ -31,8 +31,9 @@ public class BoardController {
     private  final FriendService friendService;
     private final MemberService memberService;
     @PostMapping("/board")
-    public ResponseDto saveBoard(@AuthenticationPrincipal CustomDetails customDetails, @ModelAttribute BoardDto boardDto) throws IOException {
+    public ResponseDto saveBoard(@AuthenticationPrincipal CustomDetails customDetails, @ModelAttribute BoardDto boardDto, @RequestParam("title") String title) throws IOException {
         log.info("게시글 저장 핸들러");
+        log.info("게시글 재목 : {}", title);
         Board board = boardService.saveBoard(customDetails.getUsername(), boardDto);
         return fileService.saveBoardFile(board, boardDto.getFiles());
     }
