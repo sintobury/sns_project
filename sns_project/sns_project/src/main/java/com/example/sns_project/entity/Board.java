@@ -1,5 +1,6 @@
 package com.example.sns_project.entity;
 
+import com.example.sns_project.dto.BoardDataDto;
 import com.example.sns_project.dto.BoardDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -52,12 +53,12 @@ public class Board {
     @OneToMany(mappedBy = "board")
     private List<Files> files = new ArrayList<>();
 
-    public BoardDto convertDto() throws MalformedURLException {
+    public BoardDataDto convertDto() throws MalformedURLException {
         List<UrlResource> urlResources = new ArrayList<>();
         for (Files file : files) {
             UrlResource urlResource = new UrlResource("file:" + file.getPath());
             urlResources.add(urlResource);
         }
-        return new BoardDto(this.id, this.title, this.content, this.createAt, this.hashTag, urlResources);
+        return new BoardDataDto(this.id, this.title, this.content, this.createAt, this.hashTag, urlResources);
     }
 }

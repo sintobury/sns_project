@@ -1,9 +1,6 @@
 package com.example.sns_project.controller;
 
-import com.example.sns_project.dto.BoardDto;
-import com.example.sns_project.dto.CommentDto;
-import com.example.sns_project.dto.FriendDto;
-import com.example.sns_project.dto.ResponseDto;
+import com.example.sns_project.dto.*;
 import com.example.sns_project.entity.Board;
 import com.example.sns_project.entity.Member;
 import com.example.sns_project.security.auth.CustomDetails;
@@ -50,7 +47,7 @@ public class BoardController {
         return boardService.getFriendBoard(result);
     }
     @DeleteMapping("/board")
-    public ResponseDto deleteBoardByName(@RequestBody BoardDto boardDto){
+    public ResponseDto deleteBoardByName(@RequestBody BoardDataDto boardDto){
         return boardService.deleteBoard(boardDto);
     }
     @PostMapping("/comment")
@@ -62,7 +59,7 @@ public class BoardController {
         return boardService.deleteComment(commentDto);
     }
     @GetMapping("/comment/{boardId}")
-    public ResponseDto findComment(@RequestBody BoardDto boardDto){
+    public ResponseDto findComment(@RequestBody BoardDataDto boardDto){
         return boardService.getComment(boardDto);
     }
     @GetMapping("/board/content/{content}")

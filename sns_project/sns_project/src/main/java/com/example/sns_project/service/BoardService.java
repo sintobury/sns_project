@@ -1,9 +1,6 @@
 package com.example.sns_project.service;
 
-import com.example.sns_project.dto.BoardDto;
-import com.example.sns_project.dto.CommentDto;
-import com.example.sns_project.dto.FriendDto;
-import com.example.sns_project.dto.ResponseDto;
+import com.example.sns_project.dto.*;
 import com.example.sns_project.entity.Board;
 import com.example.sns_project.entity.Comment;
 import com.example.sns_project.entity.Member;
@@ -41,7 +38,7 @@ public class BoardService {
     }
     public ResponseDto getBoard(String name) throws MalformedURLException {
         List<Board> result = boardRepository.findBoardByName(name);
-        List<BoardDto> boardList = new ArrayList<>();
+        List<BoardDataDto> boardList = new ArrayList<>();
         for (Board board : result) {
             boardList.add(board.convertDto());
         }
@@ -49,14 +46,14 @@ public class BoardService {
     }
     public ResponseDto getBoardByContent(String content) throws MalformedURLException {
         List<Board> result = boardRepository.findBoardByContent(content);
-        List<BoardDto> boardList = new ArrayList<>();
+        List<BoardDataDto> boardList = new ArrayList<>();
         for (Board board : result) {
             boardList.add(board.convertDto());
         }
         return new ResponseDto(HttpStatus.OK.value(), "성공적으로 반환완료", boardList);
     }
     public ResponseDto getFriendBoard(List<FriendDto> friends) throws MalformedURLException {
-        List<BoardDto> boardList = new ArrayList<>();
+        List<BoardDataDto> boardList = new ArrayList<>();
         for (FriendDto friend : friends) {
             List<Board> result = boardRepository.findBoardByName(friend.getMember().getName());
             for (Board board : result) {
@@ -65,7 +62,7 @@ public class BoardService {
         }
         return new ResponseDto(HttpStatus.OK.value(), "성공적으로 반환완료", boardList);
     }
-    public ResponseDto deleteBoard(BoardDto boardDto){
+    public ResponseDto deleteBoard(BoardDataDto boardDto){
         Board board = boardRepository.findById(boardDto.getId());
         boardRepository.deleteBoard(board);
         return new ResponseDto(HttpStatus.OK.value(), "게시글 삭제 완료", null);
@@ -84,7 +81,7 @@ public class BoardService {
         commentRepository.delete(comment);
         return new ResponseDto(HttpStatus.OK.value(), "댓글 삭제 완료", null);
     }
-    public ResponseDto getComment(BoardDto boardDto){
+    public ResponseDto getComment(BoardDataDto boardDto){
         Board board = boardRepository.findByIdFetchComment(boardDto.getId());
         List<Comment> comments = board.getComments();
         ArrayList<CommentDto> result = new ArrayList<>();
