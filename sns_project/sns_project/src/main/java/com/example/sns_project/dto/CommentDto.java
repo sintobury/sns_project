@@ -1,6 +1,7 @@
 package com.example.sns_project.dto;
 
 import com.example.sns_project.enums.CommentEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Data;
@@ -13,6 +14,7 @@ public class CommentDto {
     private Long commentId;
     private Long boardId;
     private String content;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createAt;
     private CommentEnum state;
 
