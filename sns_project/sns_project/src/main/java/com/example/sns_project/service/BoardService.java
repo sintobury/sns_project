@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class BoardService {
     private final MemberRepository memberRepository;
     private final CommentRepository commentRepository;
 
+    @Transactional
     public Board saveBoard(String username, BoardDto boardDto){
         log.info("글 저장 : {}", boardDto.getTitle());
         Member member = memberRepository.findByUsername(username).get(0);
@@ -68,6 +70,7 @@ public class BoardService {
         boardRepository.deleteBoard(board);
         return new ResponseDto(HttpStatus.OK.value(), "게시글 삭제 완료", null);
     }
+    @Transactional
     public ResponseDto saveComment(String username, CommentDto commentDto){
         Member member = memberRepository.findByUsername(username).get(0);
         Board board = boardRepository.findById(commentDto.getBoardId());
