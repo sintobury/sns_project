@@ -1,6 +1,7 @@
 package com.example.sns_project.dto;
 
 import com.example.sns_project.entity.Member;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.core.io.UrlResource;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class BoardDto {
     private String title;
@@ -22,11 +24,4 @@ public class BoardDto {
 
     private List<MultipartFile> files;
 
-    public BoardDto(String title, String content, LocalDateTime createAt, String hashTag, List<MultipartFile> files) {
-        this.title = title;
-        this.content = content;
-        this.createAt = createAt;
-        this.hashTag = hashTag;
-        this.files = files;
-    }
 }

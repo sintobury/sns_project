@@ -29,7 +29,7 @@ public class BoardService {
 
     @Transactional
     public Board saveBoard(String username, BoardDto boardDto){
-        log.info("글 저장 : {}", boardDto.getTitle());
+        log.info("title : {}", boardDto.getTitle());
         Member member = memberRepository.findByUsername(username).get(0);
         Board board = new Board(member, boardDto.getTitle(), boardDto.getContent(), boardDto.getCreateAt(), boardDto.getHashTag());
         log.info("보드 정보 : {}",board);
