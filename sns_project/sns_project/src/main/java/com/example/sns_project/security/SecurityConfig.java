@@ -56,7 +56,6 @@ public class SecurityConfig {
                                 .anyRequest().permitAll()
                 )
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(customEntryPoint)
                         .accessDeniedHandler(customAccessDeniedHandler))
                 .oauth2Login(oauth -> oauth
                         .successHandler(oAuth2SuccessHandler)
