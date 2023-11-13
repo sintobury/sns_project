@@ -32,16 +32,18 @@ public class FileService {
     private final FileRepository fileRepository;
     private static String profileUrl = "/profile/";
     private static String boardUrl = "/board/";
-    private String getProfileFullPath(String filename){
+
+    private String getProfileFullPath(String filename) {
         return profileUrl + filename;
     }
-    private String getBoardFullPath(String filename){
-        return boardUrl+ filename;
+
+    private String getBoardFullPath(String filename) {
+        return boardUrl + filename;
     }
 
     @Transactional
     public ResponseDto saveProfile(String username, MultipartFile file) throws IOException {
-        if(file.isEmpty()){
+        if (file.isEmpty()) {
             log.info("saveProfile 프로필 비우기");
             Profile profile = fileRepository.findProfileByUsername(username).get(0);
             profile.setName(null);
@@ -49,7 +51,7 @@ public class FileService {
             profile.setPath(null);
             profile.setSize(null);
             fileRepository.saveProfile(profile);
-            return new ResponseDto(HttpStatus.OK.value(), "프로필을 비웠습니다" , null);
+            return new ResponseDto(HttpStatus.OK.value(), "프로필을 비웠습니다", null);
         }
         log.info("saveProfile 프로필 저장하기");
         Member member = memberRepository.findByUsername(username).get(0);
@@ -61,7 +63,9 @@ public class FileService {
         file.transferTo(new File(path));
         Profile profile = new Profile(member, path, file.getName(), type, file.getSize());
         fileRepository.saveProfile(profile);
-        return new ResponseDto(HttpStatus.OK.value(), "저장 완료" , null);    }
+        return new ResponseDto(HttpStatus.OK.value(), "저장 완료", null);
+    }
+
     @Transactional
     public ResponseDto saveBoardFile(Board board, List<MultipartFile> files) throws IOException {
         for (MultipartFile file : files) {
@@ -79,18 +83,20 @@ public class FileService {
     }
 
 
-    private String extractExt(String originalFilename){
+    private String extractExt(String originalFilename) {
         int pos = originalFilename.lastIndexOf(".");
         return originalFilename.substring(pos + 1);
     }
+
     public UrlResource getProfile(String username) throws MalformedURLException {
         Profile profile = fileRepository.findProfileByUsername(username).get(0);
-        if(profile.getPath() == null){
+        if (profile.getPath() == null) {
             log.info("빈 프로필 반환");
             return null;
-        }else{
+        } else {
             log.info("프로필 반환");
-            new UrlResource("file:" + profile.getPath());
+           return new UrlResource("file:" + profile.getPath());
         }
     }
 }
+
