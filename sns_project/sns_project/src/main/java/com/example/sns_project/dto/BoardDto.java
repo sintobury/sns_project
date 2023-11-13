@@ -16,7 +16,6 @@ import java.util.List;
 public class BoardDto {
     private String title;
     private String content;
-    private String createAt;
     private String hashTag;
     private List<MultipartFile> files;
 

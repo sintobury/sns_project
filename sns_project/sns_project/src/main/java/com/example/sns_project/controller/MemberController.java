@@ -57,7 +57,7 @@ public class MemberController {
         return fileService.saveProfile(customDetails.getUsername(), file);
     }
     @GetMapping("/member/profile")
-    public UrlResource memberProfile(@AuthenticationPrincipal CustomDetails customDetails) throws MalformedURLException {
+    public ResponseDto memberProfile(@AuthenticationPrincipal CustomDetails customDetails) {
         return fileService.getProfile(customDetails.getUsername());
     }
 }

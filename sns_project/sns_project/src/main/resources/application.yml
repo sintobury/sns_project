@@ -45,3 +45,16 @@ logging.level:
   org.hibernate.SQL: debug
   org.hibernate.orm.jdbc.bind: trace
 #  org.hibernate.type: trace
+
+cloud:
+  aws:
+    s3:
+      bucket: testsnsproject
+    credentials:
+      access-key: AKIATR4ZHEN62QOA3KQQ
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false

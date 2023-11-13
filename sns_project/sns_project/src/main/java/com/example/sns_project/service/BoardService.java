@@ -33,9 +33,7 @@ public class BoardService {
     public Board saveBoard(String username, BoardDto boardDto){
         log.info("title : {}", boardDto.getTitle());
         Member member = memberRepository.findByUsername(username).get(0);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-        LocalDateTime dateTime = LocalDateTime.parse(boardDto.getCreateAt(), formatter);
-        Board board = new Board(member, boardDto.getTitle(), boardDto.getContent(), dateTime, boardDto.getHashTag());
+        Board board = new Board(member, boardDto.getTitle(), boardDto.getContent(), LocalDateTime.now(), boardDto.getHashTag());
         log.info("보드 정보 : {}",board);
         boardRepository.save(board);
         return board;
