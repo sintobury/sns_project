@@ -2,6 +2,7 @@ package com.example.sns_project.entity;
 
 import com.example.sns_project.dto.BoardDataDto;
 import com.example.sns_project.dto.BoardDto;
+import com.example.sns_project.dto.FileDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -54,11 +55,11 @@ public class Board {
     private List<Files> files = new ArrayList<>();
 
     public BoardDataDto convertDto() throws MalformedURLException {
-        List<UrlResource> urlResources = new ArrayList<>();
+        List<FileDto> fileDtos = new ArrayList<>();
         for (Files file : files) {
-            UrlResource urlResource = new UrlResource("file:" + file.getPath());
-            urlResources.add(urlResource);
+            FileDto fileDto = new FileDto(file.getId(), file.getPath(), file.getName(), file.getType(), file.getSize());
+            fileDtos.add(fileDto);
         }
-        return new BoardDataDto(this.id, this.title, this.content, this.createAt, this.hashTag, urlResources);
+        return new BoardDataDto(this.id, this.title, this.content, this.createAt, this.hashTag, fileDtos);
     }
 }

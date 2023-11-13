@@ -60,4 +60,8 @@ public class MemberController {
     public ResponseDto memberProfile(@AuthenticationPrincipal CustomDetails customDetails) {
         return fileService.getProfile(customDetails.getUsername());
     }
+    @DeleteMapping("/member/profile")
+    public ResponseDto deleteProfile(@AuthenticationPrincipal CustomDetails customDetails){
+        return fileService.deleteProfile(customDetails.getUsername());
+    }
 }

@@ -1,8 +1,10 @@
 package com.example.sns_project.service;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.example.sns_project.dto.*;
 import com.example.sns_project.entity.Board;
 import com.example.sns_project.entity.Comment;
+import com.example.sns_project.entity.Files;
 import com.example.sns_project.entity.Member;
 import com.example.sns_project.repository.BoardRepository;
 import com.example.sns_project.repository.CommentRepository;
@@ -10,6 +12,7 @@ import com.example.sns_project.repository.FileRepository;
 import com.example.sns_project.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +31,9 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
     private final CommentRepository commentRepository;
+    private final AmazonS3 amazonS3;
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     @Transactional
     public Board saveBoard(String username, BoardDto boardDto){
@@ -66,6 +72,10 @@ public class BoardService {
     }
     public ResponseDto deleteBoard(BoardDataDto boardDto){
         Board board = boardRepository.findById(boardDto.getId());
+        List<Files> files = board.getFiles();
+        for (Files file : files) {
+            amazonS3.deleteObject(bucket, file.getPath());
+        }
         boardRepository.deleteBoard(board);
         return new ResponseDto(HttpStatus.OK.value(), "게시글 삭제 완료", null);
     }

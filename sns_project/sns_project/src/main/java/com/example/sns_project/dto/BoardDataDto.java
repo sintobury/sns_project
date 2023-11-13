@@ -1,5 +1,6 @@
 package com.example.sns_project.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.core.io.UrlResource;
@@ -9,20 +10,14 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class BoardDataDto {
     private Long id;
     private String title;
     private String content;
     private LocalDateTime createAt;
     private String hashTag;
-    private List<UrlResource> urlResources;
+    private List<FileDto>  boardFiles;
 
-    public BoardDataDto(Long id, String title, String content, LocalDateTime createAt, String hashTag, List<UrlResource> urlResources) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.createAt = createAt;
-        this.hashTag = hashTag;
-        this.urlResources = urlResources;
-    }
+
 }

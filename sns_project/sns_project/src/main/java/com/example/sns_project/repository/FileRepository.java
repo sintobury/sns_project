@@ -35,4 +35,12 @@ public class FileRepository {
                 .setParameter("username", username).getResultList();
         return resultList;
     }
+
+    public Profile findProfile(Long id){
+        return em.find(Profile.class, id);
+    }
+
+    public void deleteProfile(Profile profile){
+        em.remove(profile);
+    }
 }

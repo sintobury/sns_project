@@ -32,7 +32,9 @@ public class BoardRepository {
 
     }
     public Board findById(Long id){
-       return em.find(Board.class, id);
+        return em.createQuery("select b from Board b " +
+                "join fetch b.files f " +
+                "where b.id = :id ", Board.class).setParameter("id", id).getSingleResult();
     }
     public Board findByIdFetchComment(Long id){
         return em.createQuery("select b from Board b " +

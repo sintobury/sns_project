@@ -50,7 +50,7 @@ public class FileService {
         Member member = memberRepository.findByUsername(username).get(0);
         String originalFilename = file.getOriginalFilename();
         String type = extractExt(originalFilename);
-        String uuid = UUID.randomUUID().toString() + "." + type;
+        String uuid = UUID.randomUUID().toString();
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(file.getSize());
         metadata.setContentType(file.getContentType());
@@ -68,7 +68,7 @@ public class FileService {
             log.info("게시글 파일 저장 : {}", file.getName());
             String originalFilename = file.getOriginalFilename();
             String type = extractExt(originalFilename);
-            String uuid = UUID.randomUUID().toString() + "." + type;
+            String uuid = UUID.randomUUID().toString();
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.getSize());
             metadata.setContentType(file.getContentType());
@@ -90,6 +90,13 @@ public class FileService {
         Profile profile = fileRepository.findProfileByUsername(username).get(0);
         FileDto fileDto = new FileDto(profile.getId(), profile.getPath(), profile.getName(), profile.getType(), profile.getSize());
         return new ResponseDto(HttpStatus.OK.value(), "프로필 저장 경로 반환", fileDto);
+
+    }
+    public ResponseDto deleteProfile(String username){
+        Profile profile = fileRepository.findProfileByUsername(username).get(0);
+        fileRepository.deleteProfile(profile);
+        amazonS3.deleteObject(bucket, profile.getPath());
+        return new ResponseDto(HttpStatus.OK.value(), "프로필 사진 삭제 완료", null);
 
     }
 }
