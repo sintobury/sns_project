@@ -83,14 +83,14 @@ public class FileService {
         int pos = originalFilename.lastIndexOf(".");
         return originalFilename.substring(pos + 1);
     }
-    public ResponseDto getProfile(String username) throws MalformedURLException {
+    public UrlResource getProfile(String username) throws MalformedURLException {
         Profile profile = fileRepository.findProfileByUsername(username).get(0);
         if(profile.getPath() == null){
             log.info("빈 프로필 반환");
-            return new ResponseDto(HttpStatus.OK.value(), "프로필이 비어있습니다.", null);
+            return null;
         }else{
             log.info("프로필 반환");
-            return new ResponseDto(HttpStatus.OK.value(), "프로필 반환.", new UrlResource("file:" + profile.getPath()));
+            new UrlResource("file:" + profile.getPath());
         }
     }
 }

@@ -10,6 +10,7 @@ import com.example.sns_project.service.FileService;
 import com.example.sns_project.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.UrlResource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -56,7 +57,7 @@ public class MemberController {
         return fileService.saveProfile(customDetails.getUsername(), file);
     }
     @GetMapping("/member/profile")
-    public ResponseDto memberProfile(@AuthenticationPrincipal CustomDetails customDetails) throws MalformedURLException {
+    public UrlResource memberProfile(@AuthenticationPrincipal CustomDetails customDetails) throws MalformedURLException {
         return fileService.getProfile(customDetails.getUsername());
     }
 }
