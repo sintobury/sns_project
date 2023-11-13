@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.net.MalformedURLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,7 +33,9 @@ public class BoardService {
     public Board saveBoard(String username, BoardDto boardDto){
         log.info("title : {}", boardDto.getTitle());
         Member member = memberRepository.findByUsername(username).get(0);
-        Board board = new Board(member, boardDto.getTitle(), boardDto.getContent(), boardDto.getCreateAt(), boardDto.getHashTag());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        LocalDateTime dateTime = LocalDateTime.parse(boardDto.getCreateAt(), formatter);
+        Board board = new Board(member, boardDto.getTitle(), boardDto.getContent(), dateTime, boardDto.getHashTag());
         log.info("보드 정보 : {}",board);
         boardRepository.save(board);
         return board;

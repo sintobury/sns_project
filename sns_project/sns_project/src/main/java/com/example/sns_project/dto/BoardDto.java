@@ -16,8 +16,7 @@ import java.util.List;
 public class BoardDto {
     private String title;
     private String content;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime createAt;
+    private String createAt;
     private String hashTag;
     private List<MultipartFile> files;
 
