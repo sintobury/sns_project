@@ -74,7 +74,12 @@ public class Member {
         this.role = role;
     }
     public MemberDto convertDto(){
-        return new MemberDto(this.getId(),this.getUsername(), this.getName(), this.getEmail(), this.getCreateAt(), this.getProvider(), this.getGender(), this.getBirth(), this.profile.convertDto()  );
+        if(this.profile == null){
+            return new MemberDto(this.getId(),this.getUsername(), this.getName(), this.getEmail(), this.getCreateAt(), this.getProvider(), this.getGender(), this.getBirth(), null  );
+
+        }else{
+            return new MemberDto(this.getId(),this.getUsername(), this.getName(), this.getEmail(), this.getCreateAt(), this.getProvider(), this.getGender(), this.getBirth(), this.profile.convertDto()  );
+        }
 
     }
 
