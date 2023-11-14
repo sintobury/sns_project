@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import { authInstance } from "../../interceptors/interceptors";
 import Loading from "../Common/Loading/Loading";
+import { useLocation } from "react-router-dom";
 
 interface BoardListResponse {
   message: string;
@@ -24,15 +25,31 @@ interface Board {
 const PostList = () => {
   const loginusername = useSelector((state: RootState) => state.loginSlice.username);
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchOption = searchParams.get("searchoption");
+  const keyword = searchParams.get("searchword");
 
-  const getFriendPostList = async () => {
-    const res = await authInstance.get(`/board/friend`);
-    return res.data;
+  const getPostList = async () => {
+    if (searchOption === "author") {
+      const res = await authInstance.get(`/board/${keyword}`);
+      return res.data;
+    } else if (searchOption === "content") {
+      const res = await authInstance.get(`/board/content/${keyword}`);
+      return res.data;
+    } else {
+      const res = await authInstance.get(`/board/friend`);
+      return res.data;
+    }
   };
 
-  const postList = useQuery<BoardListResponse>(["postList", loginusername], getFriendPostList, {
-    staleTime: Infinity,
-  });
+  const postList = useQuery<BoardListResponse>(
+    ["postList", loginusername, searchOption, keyword],
+    getPostList,
+    {
+      staleTime: Infinity,
+    },
+  );
   return (
     <div className="postlist_container">
       {postList.isLoading ? (

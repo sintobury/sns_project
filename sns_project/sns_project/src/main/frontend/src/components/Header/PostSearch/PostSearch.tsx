@@ -9,10 +9,10 @@ import { RootState } from "../../../redux";
 
 const PostSearch = () => {
   const [searchword, setSearchword] = useState("");
-  const [option, setOption] = useState("글제목");
+  const [option, setOption] = useState("내용");
   const [openDropdown, setOpenDropdown] = useState(false);
   const PostSearchOptions = [
-    { name: "글제목", value: "title" },
+    { name: "내용", value: "content" },
     { name: "작성자", value: "author" },
     { name: "태그", value: "tag" },
   ];

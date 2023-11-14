@@ -17,7 +17,7 @@ interface FriendDTO {
   member: MemberDTO;
   request: boolean;
   state: string;
-  list: MemberDTO[];
+  // list: MemberDTO[];
 }
 
 interface MemberDTO {

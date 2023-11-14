@@ -33,7 +33,7 @@ const Postmaker = () => {
     const formdata = new FormData();
     formdata.append("title", postInfo.title);
     formdata.append("content", postInfo.content);
-    formdata.append("createAt", new Date().toLocaleString());
+    // formdata.append("createAt", new Date().toString());
     formdata.append("hashTag", "you");
     // const board = {
     //   title: postInfo.title,

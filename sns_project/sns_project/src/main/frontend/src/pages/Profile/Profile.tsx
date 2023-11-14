@@ -2,7 +2,7 @@ import "./Profile.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { authInstance } from "../../interceptors/interceptors";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -49,6 +49,7 @@ const Profile = () => {
     { name: "사진 및 동영상", value: "media" },
   ];
   const tabMenu = searchParams.get("tabmenu");
+  const queryClient = useQueryClient();
   const submitImg = async (e: FormEvent) => {
     e.preventDefault();
     const target = e.target as HTMLFormElement;
@@ -61,6 +62,7 @@ const Profile = () => {
       // },
     });
     console.log(res.data);
+    queryClient.refetchQueries(["profile_img", loginusername]);
   };
 
   const displayUploadFile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -70,9 +72,11 @@ const Profile = () => {
       setFileImg(URL.createObjectURL(file));
     }
   };
+
   const getuserProfileImg = async () => {
     try {
       const res = await authInstance.get(`/member/profile`);
+      console.log(res.data);
       return res.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -84,7 +88,7 @@ const Profile = () => {
   const userProfileImg = useQuery(["profile_img", loginusername], getuserProfileImg, {
     staleTime: Infinity,
   });
-  console.log(userProfileImg.data);
+
   const getUserInfo = async () => {
     try {
       if (username !== loginusername) {
@@ -118,7 +122,6 @@ const Profile = () => {
       staleTime: Infinity,
     },
   );
-  console.log(profileData);
   return (
     <div className={`profile_page ${isDarkmode && "darkmode"}`}>
       <Header />

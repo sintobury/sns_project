@@ -96,6 +96,7 @@ const Login = () => {
                 placeholder="비밀번호를 입력해주세요"
                 className="input"
                 id="input_password"
+                autoComplete="off"
                 {...register("password", {
                   required: "비밀번호를 입력해주세요.",
                 })}

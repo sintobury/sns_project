@@ -2,12 +2,29 @@ import { useSelector } from "react-redux";
 import "./ProfilePostList.css";
 import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import PostList from "../../PostList/PostList";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { RootState } from "../../../redux";
+import { authInstance } from "../../../interceptors/interceptors";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../Common/Loading/Loading";
+import Post from "../../Post/Post";
 
 interface childProps {
   username: string | null;
+}
+interface BoardListResponse {
+  message: string;
+  statusCode: number;
+  result: Board[];
+}
+
+interface Board {
+  id: number;
+  title: string;
+  content: string;
+  createAt: string;
+  hashTag?: string;
+  boardFiles?: string[];
 }
 
 const ProfilePostList = ({ username }: childProps) => {
@@ -16,6 +33,8 @@ const ProfilePostList = ({ username }: childProps) => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const navigate = useNavigate();
   const location = useLocation();
+  const filterOption = [{ name: "최신순", value: "latest" }];
+
   const openFilterOption = () => {
     setOpen(!open);
   };
@@ -25,7 +44,24 @@ const ProfilePostList = ({ username }: childProps) => {
     setOpen(false);
     navigate(`${location.pathname}?username=${username}&option=${option}`);
   };
-  const filterOption = [{ name: "최신순", value: "latest" }];
+
+  const getPostList = async () => {
+    // if (option === "latest") {
+    //   const res = await authInstance.get(`/board/${keyword}`);
+    //   return res.data;
+    // } else {
+    const res = await authInstance.get(`/board/${username}`);
+    return res.data;
+    // }
+  };
+
+  const proflieUserPostList = useQuery<BoardListResponse>(
+    ["profilePostList", username, option],
+    getPostList,
+    {
+      staleTime: Infinity,
+    },
+  );
 
   const postlistOptionRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -60,7 +96,17 @@ const ProfilePostList = ({ username }: childProps) => {
           </div>
         </div>
       </div>
-      <PostList />
+      <div className="postlist_container">
+        {proflieUserPostList.isLoading ? (
+          <Loading />
+        ) : proflieUserPostList.data?.result.length === 0 ? (
+          <div className={`notification_container ${isDarkmode && "darkmode"}`}>
+            <p className={`notification ${isDarkmode && "darkmode"}`}>작성한 글이 없습니다.</p>
+          </div>
+        ) : (
+          proflieUserPostList.data?.result.map((el) => <Post info={el} key={el.id} />)
+        )}
+      </div>
     </div>
   );
 };
