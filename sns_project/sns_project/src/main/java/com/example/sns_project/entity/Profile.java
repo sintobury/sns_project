@@ -1,5 +1,6 @@
 package com.example.sns_project.entity;
 
+import com.example.sns_project.dto.FileDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -18,7 +19,7 @@ public class Profile {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -36,5 +37,8 @@ public class Profile {
         this.name = name;
         this.type = type;
         this.size = size;
+    }
+    public FileDto convertDto(){
+        return new FileDto(this.id, this.path, this.name, this.type, this.size);
     }
 }

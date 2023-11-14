@@ -50,7 +50,7 @@ public class FileService {
         Member member = memberRepository.findByUsername(username).get(0);
         String originalFilename = file.getOriginalFilename();
         String type = extractExt(originalFilename);
-        String uuid = UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString() + "." + type;
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentLength(file.getSize());
         metadata.setContentType(file.getContentType());
@@ -68,7 +68,7 @@ public class FileService {
             log.info("게시글 파일 저장 : {}", file.getName());
             String originalFilename = file.getOriginalFilename();
             String type = extractExt(originalFilename);
-            String uuid = UUID.randomUUID().toString();
+            String uuid = UUID.randomUUID().toString() + "." + type;;
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentLength(file.getSize());
             metadata.setContentType(file.getContentType());

@@ -57,6 +57,10 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Board> boardList = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "member")
+    private Profile profile;
+
     @Builder
     public Member(String username, String password, String name, String email, LocalDateTime createAt, String provider, String gender, LocalDateTime birth, MemberRole role) {
         this.username = username;
@@ -70,6 +74,8 @@ public class Member {
         this.role = role;
     }
     public MemberDto convertDto(){
-        return new MemberDto(this.getId(),this.getUsername(), this.getName(), this.getEmail(), this.getCreateAt(), this.getProvider(), this.getGender(), this.getBirth());
+        return new MemberDto(this.getId(),this.getUsername(), this.getName(), this.getEmail(), this.getCreateAt(), this.getProvider(), this.getGender(), this.getBirth(), this.profile.convertDto()  );
+
     }
+
 }
