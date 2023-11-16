@@ -49,7 +49,7 @@ const CommentInput = ({ boardId }: childProps) => {
     commentMutation.mutate(comment);
   };
   return (
-    <form onSubmit={handleSubmit(submitComment)}>
+    <form onSubmit={handleSubmit(submitComment)} className="comment_form">
       <input
         type="text"
         placeholder="내용을 입력해주세요"

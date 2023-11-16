@@ -47,20 +47,41 @@ export const useGetFriendList = (userId: number) => {
   const getFriendList = async () => {
     if (userId === loginuserId) {
       const res = await authInstance.get("/friend");
+      res.data.result.map((el: FriendDTO) => {
+        if (el.member.profile === null) {
+          el.member.profile = {
+            id: 3,
+            name: "file",
+            path: "https://s3.ap-northeast-2.amazonaws.com/testsnsproject/42c40320-2fbd-4ca3-a8d3-6422c92b697b.jpg",
+            size: 8690,
+            type: "jpg",
+          };
+        } else {
+          el.member.profile.path = getUrl(el.member.profile.path, el.member.profile.type);
+        }
+      });
       return res.data;
     } else {
       const res = await authInstance.get(`/friend/${userId}`);
+      res.data.result.map((el: FriendDTO) => {
+        if (el.member.profile === null) {
+          el.member.profile = {
+            id: 3,
+            name: "file",
+            path: "https://s3.ap-northeast-2.amazonaws.com/testsnsproject/42c40320-2fbd-4ca3-a8d3-6422c92b697b.jpg",
+            size: 8690,
+            type: "jpg",
+          };
+        } else {
+          el.member.profile.path = getUrl(el.member.profile.path, el.member.profile.type);
+        }
+      });
       return res.data;
     }
   };
 
   const friendlistData = useQuery<ResponseDTO>(["friendList", userId, username], getFriendList, {
     staleTime: Infinity,
-    onSuccess: (data) => {
-      data.result.map(
-        (el) => (el.member.profile.path = getUrl(el.member.profile.path, el.member.profile.type)),
-      );
-    },
   });
 
   return { friendlistData };

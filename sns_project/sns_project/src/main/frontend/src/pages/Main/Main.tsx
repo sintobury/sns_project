@@ -23,7 +23,9 @@ const Main = () => {
         <Sidebar />
         <div className="main_content">
           <Postmaker />
-          <PostList />
+          <div className={`friend_postList ${isDarkmode && "darkmode"}`}>
+            <PostList />
+          </div>
         </div>
         <Chatroom />
       </div>

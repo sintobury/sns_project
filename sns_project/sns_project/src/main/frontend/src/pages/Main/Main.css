@@ -29,3 +29,13 @@
     border-radius: 6px;
     overflow: hidden;
 }
+
+.friend_postList {
+    padding: 1rem;
+    border-radius: 6px;
+    background-color: white;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+    }
+}

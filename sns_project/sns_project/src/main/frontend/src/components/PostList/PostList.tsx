@@ -19,7 +19,15 @@ interface Board {
   content: string;
   createAt: string;
   hashTag?: string;
-  boardFiles?: string[];
+  boardFiles?: FileDTO[];
+}
+
+interface FileDTO {
+  id: number;
+  name: string;
+  size: number;
+  path: string;
+  type: string;
 }
 
 const PostList = () => {
