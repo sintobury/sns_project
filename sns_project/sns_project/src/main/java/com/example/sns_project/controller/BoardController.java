@@ -59,8 +59,8 @@ public class BoardController {
         return boardService.deleteComment(commentDto);
     }
     @GetMapping("/comment/{boardId}")
-    public ResponseDto findComment(@RequestBody BoardDataDto boardDto){
-        return boardService.getComment(boardDto);
+    public ResponseDto findComment(@PathVariable String boardId){
+        return boardService.getComment(boardId);
     }
     @GetMapping("/board/content/{content}")
     public ResponseDto getBoardByContent(@PathVariable String content) throws MalformedURLException {

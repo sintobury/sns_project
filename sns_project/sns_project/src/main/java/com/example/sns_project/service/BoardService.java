@@ -13,6 +13,7 @@ import com.example.sns_project.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,7 +84,7 @@ public class BoardService {
     public ResponseDto saveComment(String username, CommentDto commentDto){
         Member member = memberRepository.findByUsername(username).get(0);
         Board board = boardRepository.findById(commentDto.getBoardId());
-        Comment comment = new Comment(member, board, commentDto.getContent(), commentDto.getCreateAt(), commentDto.getState());
+        Comment comment = new Comment(member, board, commentDto.getContent(), LocalDateTime.now(), commentDto.getState());
         commentRepository.save(comment);
         commentDto.setCommentId(comment.getId());
         return new ResponseDto(HttpStatus.OK.value(), "댓글 작성 작성", commentDto);
@@ -93,8 +94,8 @@ public class BoardService {
         commentRepository.delete(comment);
         return new ResponseDto(HttpStatus.OK.value(), "댓글 삭제 완료", null);
     }
-    public ResponseDto getComment(BoardDataDto boardDto){
-        Board board = boardRepository.findByIdFetchComment(boardDto.getId());
+    public ResponseDto getComment(String boardId){
+        Board board = boardRepository.findByIdFetchComment(Long.parseLong(boardId));
         List<Comment> comments = board.getComments();
         ArrayList<CommentDto> result = new ArrayList<>();
         for (Comment comment : comments) {
