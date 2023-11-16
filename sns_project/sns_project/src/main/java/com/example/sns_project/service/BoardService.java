@@ -86,13 +86,18 @@ public class BoardService {
         Board board = boardRepository.findById(commentDto.getBoardId());
         Comment comment = new Comment(member, board, commentDto.getContent(), LocalDateTime.now(), commentDto.getState());
         commentRepository.save(comment);
-        commentDto.setCommentId(comment.getId());
         return new ResponseDto(HttpStatus.OK.value(), "댓글 작성 작성", commentDto);
     }
+    @Transactional
     public ResponseDto deleteComment(CommentDto commentDto){
         Comment comment = commentRepository.findById(commentDto.getCommentId());
         commentRepository.delete(comment);
         return new ResponseDto(HttpStatus.OK.value(), "댓글 삭제 완료", null);
+    }
+    public ResponseDto updateComment(CommentDto commentDto){
+        Comment comment = commentRepository.findById(commentDto.getCommentId());
+        commentRepository.save(comment);
+        return new ResponseDto(HttpStatus.OK.value(), "댓글 수정 완료", null);
     }
     public ResponseDto getComment(String boardId){
         Board board = boardRepository.findByIdFetchComment(Long.parseLong(boardId));
