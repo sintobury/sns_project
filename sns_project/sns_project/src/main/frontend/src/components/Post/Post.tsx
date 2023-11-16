@@ -21,8 +21,8 @@ const Post = ({ info }: childProps) => {
   const [open, setOpen] = useState(false);
   const isdarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   return (
-    <div className="post_container">
-      <h3>{info.title}</h3>
+    <div className={`post_container ${isdarkmode && "darkmode"}`}>
+      <p className="post_title">{info.title}</p>
       <div className="post_content">{info.content}</div>
       <div
         className={`display_comment_button ${isdarkmode && "darkmode"}`}

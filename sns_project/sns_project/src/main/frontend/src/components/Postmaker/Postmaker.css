@@ -9,6 +9,12 @@
     background-color: #81cc76;
     padding: 10px;
     transition: 0.7s;
+    .profile_img {
+        width: 2.5rem;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        overflow: hidden;
+    }
     &.darkmode {
         background-color: #212121;
         color: white;

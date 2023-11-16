@@ -25,8 +25,8 @@ const ProfileFriend = ({ userId }: childProps) => {
         {friendlistData.isLoading ? (
           <Loading />
         ) : friendlistData.data?.result.length === 0 ? (
-          <div className="notification_container">
-            <p className="notification">등록된 친구가 없습니다.</p>
+          <div className={`notification_container ${isdarkmode && "darkmode"}`}>
+            <p className={`notification ${isdarkmode && "darkmode"}`}>등록된 친구가 없습니다.</p>
           </div>
         ) : (
           friendlistData.data?.result.map((el) => (
@@ -37,7 +37,7 @@ const ProfileFriend = ({ userId }: childProps) => {
             >
               <img
                 alt={`${el.member.name} profile`}
-                src={el.member.imgurl}
+                src={el.member.profile.path}
                 className="profile_img"
               />
               <p className="friend_name">{el.member.name}</p>

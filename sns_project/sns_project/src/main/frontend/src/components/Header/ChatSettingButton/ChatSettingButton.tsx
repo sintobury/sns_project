@@ -25,7 +25,14 @@ interface MemberDTO {
   birth: string;
   createdAt: string;
   provider: string;
-  imgurl: string;
+  profile: FileDTO;
+}
+interface FileDTO {
+  id: number;
+  path: string;
+  name: string;
+  type: string;
+  size: number;
 }
 
 const ChatSettingButton = () => {
@@ -128,7 +135,7 @@ const ChatSettingButton = () => {
                 onClick={() => handleCheck(idx, el.member.username)}
               >
                 <div className="user_info_container">
-                  <img className="profile_img" src={el.member.imgurl} alt="user_img" />
+                  <img className="profile_img" src={el.member.profile.path} alt="user_img" />
                   <p className="user_name">{el.member.name}</p>
                   <div className="checkbox_container">
                     <input

@@ -5,6 +5,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { RootState } from "../../../../redux";
 import Button from "../../../Common/Button/Button";
 import Loading from "../../../Common/Loading/Loading";
+import { useS3 } from "../../../../hook/useS3";
 
 interface ResponseDTO {
   statusCode: string;
@@ -29,13 +30,22 @@ interface MemberDTO {
   birth: string;
   createdAt: string;
   provider: string;
-  imgurl: string;
+  profile: FileDTO;
+}
+
+interface FileDTO {
+  id: number;
+  path: string;
+  name: string;
+  type: string;
+  size: number;
 }
 
 const RequestedFriend = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginUserId = useSelector((state: RootState) => state.loginSlice.id);
   const queryClient = useQueryClient();
+  const { getUrl } = useS3();
   const getRequestedFriend = async () => {
     const res = await authInstance.get(`/friend/requested`);
     return res.data;
@@ -65,6 +75,11 @@ const RequestedFriend = () => {
     getRequestedFriend,
     {
       staleTime: Infinity,
+      onSuccess: (data) => {
+        data.result.map(
+          (el) => (el.member.profile.path = getUrl(el.member.profile.path, el.member.profile.type)),
+        );
+      },
     },
   );
 
@@ -84,7 +99,7 @@ const RequestedFriend = () => {
             requestedFriendData.data.result.map((el: FriendDTO) => (
               <div className={`user ${isDarkmode && "darkmode"}`} key={el.member.username}>
                 <div className="user_info_container">
-                  <img className="profile_img" src={el.member.imgurl} alt="user_img" />
+                  <img className="profile_img" src={el.member.profile.path} alt="user_img" />
                   <p className="user_name">{el.member.name}</p>
                 </div>
                 <Button

@@ -3,6 +3,7 @@ import { authInstance } from "../interceptors/interceptors";
 import { useQuery } from "@tanstack/react-query";
 import { RootState } from "../redux";
 import { useLocation } from "react-router-dom";
+import { useS3 } from "./useS3";
 
 interface ResponseDTO {
   statusCode: string;
@@ -27,7 +28,14 @@ interface MemberDTO {
   birth: string;
   createdAt: string;
   provider: string;
-  imgurl: string;
+  profile: FileDTO;
+}
+interface FileDTO {
+  id: number;
+  path: string;
+  name: string;
+  type: string;
+  size: number;
 }
 
 export const useGetFriendList = (userId: number) => {
@@ -35,6 +43,7 @@ export const useGetFriendList = (userId: number) => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const username = searchParams.get("username");
+  const { getUrl } = useS3();
   const getFriendList = async () => {
     if (userId === loginuserId) {
       const res = await authInstance.get("/friend");
@@ -45,13 +54,14 @@ export const useGetFriendList = (userId: number) => {
     }
   };
 
-  const friendlistData = useQuery<ResponseDTO>(
-    ["friendList", loginuserId, username],
-    getFriendList,
-    {
-      staleTime: Infinity,
+  const friendlistData = useQuery<ResponseDTO>(["friendList", userId, username], getFriendList, {
+    staleTime: Infinity,
+    onSuccess: (data) => {
+      data.result.map(
+        (el) => (el.member.profile.path = getUrl(el.member.profile.path, el.member.profile.type)),
+      );
     },
-  );
+  });
 
   return { friendlistData };
 };

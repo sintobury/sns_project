@@ -1,0 +1,31 @@
+.post_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 5px;
+    border-radius: 6px;
+    padding: 1rem;
+    background-color: #5f9a56;
+}
+
+.post_title {
+    padding: .5rem .75rem;
+    background-color: #81cc76;
+    border-radius: 6px;
+}
+
+.post_content {
+    padding:  .5rem .75rem;
+    background-color: #81cc76;
+    border-radius: 6px;
+}
+
+.display_comment_button {
+    background-color: #81cc76;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}

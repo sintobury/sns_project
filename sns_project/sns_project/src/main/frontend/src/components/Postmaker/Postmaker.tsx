@@ -5,6 +5,7 @@ import Button from "../Common/Button/Button";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import { useEffect, useState } from "react";
+import { useGetLoginUserinfo } from "../../hook/useGetLoginUserinfo";
 
 interface PostInput {
   title: string;
@@ -14,13 +15,13 @@ interface PostInput {
 
 const Postmaker = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
-  // const [image, setImage] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
+  const { profile } = useGetLoginUserinfo();
   const {
     register,
+    resetField,
     formState: { errors, isSubmitting },
     handleSubmit,
-    // getValues,
     watch,
   } = useForm<PostInput>();
   const fileImg = watch("media_files");
@@ -35,31 +36,24 @@ const Postmaker = () => {
     formdata.append("content", postInfo.content);
     // formdata.append("createAt", new Date().toString());
     formdata.append("hashTag", "you");
-    // const board = {
-    //   title: postInfo.title,
-    //   content: postInfo.content,
-    //   createdAt: new Date().toLocaleString(),
-    //   hashTag: "",
-    // };
-    // const params = new URLSearchParams();
-    // params.append("title", postInfo.title);
-    // params.append("content", postInfo.content);
-    // params.append("createdAt", new Date().toLocaleString());
-    // params.append("hashTag", "");
     const fileArray = Array.from(postInfo.media_files);
     console.log(fileArray);
     fileArray.forEach((el) => {
       formdata.append("files", el);
     });
-    // console.log(files);
 
     const res = await authInstance.post(`/board`, formdata, {
-      // params: params,
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
     console.log(res.data);
+    if (res.data.statusCode === 200) {
+      resetField("content");
+      resetField("media_files");
+      resetField("title");
+      setFiles([]);
+    }
   };
 
   useEffect(() => {
@@ -80,7 +74,7 @@ const Postmaker = () => {
   return (
     <div className="postmaker_container">
       <div className={`postmaker_propile_container ${isDarkmode && "darkmode"}`}>
-        <img src="" alt="profileimg"></img>
+        <img src={profile.path} alt="profileimg" className="profile_img"></img>
       </div>
       <form
         className={`postmaker_input_container ${isDarkmode && "darkmode"}`}

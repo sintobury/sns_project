@@ -28,7 +28,14 @@ interface MemberDTO {
   birth: string;
   createdAt: string;
   provider: string;
-  imgurl: string;
+  profile: FileDTO;
+}
+interface FileDTO {
+  id: number;
+  path: string;
+  name: string;
+  type: string;
+  size: number;
 }
 
 const FriendList = () => {
@@ -100,7 +107,7 @@ const FriendList = () => {
           {friendlistData.data?.result.map((el: FriendDTO, idx) => (
             <div className={`user ${isDarkmode && "darkmode"}`} key={el.member.username}>
               <div className="user_info_container">
-                <img className="profile_img" src={el.member.imgurl} alt="user_img" />
+                <img className="profile_img" src={el.member.profile.path} alt="user_img" />
                 <p className="user_name">{el.member.name}</p>
               </div>
               <div className="user_button_container" onClick={() => openMenu(idx)}>

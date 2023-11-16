@@ -11,6 +11,7 @@ import Post from "../../Post/Post";
 
 interface childProps {
   username: string | null;
+  name: string;
 }
 interface BoardListResponse {
   message: string;
@@ -27,7 +28,7 @@ interface Board {
   boardFiles?: string[];
 }
 
-const ProfilePostList = ({ username }: childProps) => {
+const ProfilePostList = ({ username, name }: childProps) => {
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState("latest");
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
@@ -46,13 +47,9 @@ const ProfilePostList = ({ username }: childProps) => {
   };
 
   const getPostList = async () => {
-    // if (option === "latest") {
-    //   const res = await authInstance.get(`/board/${keyword}`);
-    //   return res.data;
-    // } else {
-    const res = await authInstance.get(`/board/${username}`);
+    const res = await authInstance.get(`/board/${name}`);
+    console.log(res.data);
     return res.data;
-    // }
   };
 
   const proflieUserPostList = useQuery<BoardListResponse>(
@@ -96,7 +93,7 @@ const ProfilePostList = ({ username }: childProps) => {
           </div>
         </div>
       </div>
-      <div className="postlist_container">
+      <div className="postList_container">
         {proflieUserPostList.isLoading ? (
           <Loading />
         ) : proflieUserPostList.data?.result.length === 0 ? (

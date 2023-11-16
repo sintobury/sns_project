@@ -20,8 +20,8 @@ const Friend = ({ userId, username }: childProps) => {
   };
 
   const navigateProfile = (username: string) => {
-    friendlistData.refetch();
     navigate(`/profile?username=${username}`);
+    // friendlistData.refetch();
   };
 
   return (
@@ -39,7 +39,7 @@ const Friend = ({ userId, username }: childProps) => {
             >
               <img
                 alt={`${el.member.name} profile`}
-                src={el.member.imgurl}
+                src={el.member.profile.path}
                 className="profile_img"
               />
               <p className="friend_name">{el.member.name}</p>
@@ -56,7 +56,7 @@ const Friend = ({ userId, username }: childProps) => {
               >
                 <img
                   alt={`${el.member.name} profile`}
-                  src={el.member.imgurl}
+                  src={el.member.profile.path}
                   className="profile_img"
                 />
                 <p className="friend_name">{el.member.name}</p>

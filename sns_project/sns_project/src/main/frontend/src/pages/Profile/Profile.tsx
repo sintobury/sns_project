@@ -14,9 +14,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import Chatroom from "../../components/Chat/Chatroom";
 import Button from "../../components/Common/Button/Button";
-import { ChangeEvent, FormEvent, useState } from "react";
 import Loading from "../../components/Common/Loading/Loading";
 import ProfileFriend from "../../components/ProfileFriend/ProfileFriend";
+import { useS3 } from "../../hook/useS3";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 
 interface ResponseDTO {
   statusCode: string;
@@ -33,12 +35,26 @@ interface MemberDTO {
   birth: string;
   createAt: string;
   provider: string;
+  profile: FileDTO;
+}
+
+interface FileDTO {
+  id: number;
+  path: string;
+  name: string;
+  type: string;
+  size: number;
+}
+
+interface profileInput {
+  profile_img: FileList;
 }
 
 const Profile = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginusername = useSelector((state: RootState) => state.loginSlice.username);
-  const [fileImg, setFileImg] = useState("");
+  const [previewImage, setPreviewImage] = useState("");
+  const { getUrl } = useS3();
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -50,44 +66,27 @@ const Profile = () => {
   ];
   const tabMenu = searchParams.get("tabmenu");
   const queryClient = useQueryClient();
-  const submitImg = async (e: FormEvent) => {
-    e.preventDefault();
-    const target = e.target as HTMLFormElement;
-    const file = target.profile_img.files[0];
+  const {
+    register,
+    resetField,
+    formState: { isSubmitting },
+    handleSubmit,
+    watch,
+  } = useForm<profileInput>();
+
+  const previewImg = watch("profile_img");
+
+  const submitImg = async (imgInput: profileInput) => {
+    const file = imgInput.profile_img[0];
     const form = new FormData();
     form.append("file", file);
-    const res = await authInstance.post(`/member/profile`, form, {
-      // headers: {
-      //   "Content-Type": "multipart/form-data",
-      // },
-    });
+    const res = await authInstance.post(`/member/profile`, form);
     console.log(res.data);
-    queryClient.refetchQueries(["profile_img", loginusername]);
-  };
-
-  const displayUploadFile = (e: ChangeEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLInputElement;
-    if (target.files) {
-      const file = target.files[0];
-      setFileImg(URL.createObjectURL(file));
+    if (res.data.statusCode === 200) {
+      queryClient.refetchQueries(["profile_img", loginusername]);
+      resetField("profile_img");
     }
   };
-
-  const getuserProfileImg = async () => {
-    try {
-      const res = await authInstance.get(`/member/profile`);
-      console.log(res.data);
-      return res.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log(error);
-      }
-    }
-  };
-
-  const userProfileImg = useQuery(["profile_img", loginusername], getuserProfileImg, {
-    staleTime: Infinity,
-  });
 
   const getUserInfo = async () => {
     try {
@@ -110,8 +109,10 @@ const Profile = () => {
     const menu = tabmenulist.find((el) => el.name === target.innerText)?.value;
     if (menu === "") {
       navigate(`/profile?username=${username}`);
+      window.scrollTo(0, 0);
     } else {
       navigate(`/profile?username=${username}&tabmenu=${menu}`);
+      window.scrollTo(0, 0);
     }
   };
 
@@ -120,8 +121,27 @@ const Profile = () => {
     getUserInfo,
     {
       staleTime: Infinity,
+      onSuccess: (data) => {
+        if (data.result.profile !== null) {
+          data.result.profile.path = getUrl(data.result.profile.path, data.result.profile.type);
+          console.log(data.result);
+        } else {
+          data.result.profile = {
+            id: 3,
+            name: "file",
+            path: "https://s3.ap-northeast-2.amazonaws.com/testsnsproject/42c40320-2fbd-4ca3-a8d3-6422c92b697b.jpg",
+            size: 8690,
+            type: "jpg",
+          };
+        }
+      },
     },
   );
+  useEffect(() => {
+    if (previewImg && previewImg.length > 0) {
+      setPreviewImage(URL.createObjectURL(previewImg[0]));
+    }
+  }, [previewImage]);
   return (
     <div className={`profile_page ${isDarkmode && "darkmode"}`}>
       <Header />
@@ -138,31 +158,36 @@ const Profile = () => {
                     className="profile_img"
                     id="user_profile_img"
                     alt="user_img"
-                    src={userProfileImg.data?.result}
+                    src={profileData?.result.profile.path}
                   ></img>
                   <label htmlFor="user_profile_img" className={`label ${isDarkmode && "darkmode"}`}>
                     {profileData?.result.name}
                   </label>
                 </div>
                 {username === loginusername && (
-                  <form
-                    onSubmit={(e) => submitImg(e)}
-                    encType="multipart/form-data"
-                    className="profile_img_form"
-                  >
+                  <form onSubmit={handleSubmit(submitImg)} className="profile_img_form">
                     <div className="file_upload_container">
-                      {fileImg !== "" && (
-                        <img src={fileImg} alt="file_img" className="uploadfile" />
+                      {previewImage !== "" && (
+                        <div className="file_img">
+                          <img src={previewImage} alt="file_img" className="uploadfile" />
+                          <p className="file_name">{previewImg[0].name}</p>
+                        </div>
                       )}
                       <input
                         id="profile_img"
+                        className={`file_input ${isDarkmode && "darkmode"}`}
+                        {...register("profile_img")}
                         type="file"
                         accept="image/*"
                         name="profile_img"
-                        onChange={displayUploadFile}
                       />
+                      <label htmlFor="profile_img">
+                        <div className={`file_upload_button ${isDarkmode && "darkmode"}`}>
+                          프로필 이미지 변경
+                        </div>
+                      </label>
                     </div>
-                    <Button type="submit" text="저장" design="black" />
+                    <Button type="submit" text="저장" design="black" disabled={isSubmitting} />
                   </form>
                 )}
                 <div className="profile_tab_container">
@@ -185,7 +210,7 @@ const Profile = () => {
                     <Friend userId={profileData?.result.id} username={username} />
                   </div>
                   <div className="right_container">
-                    <ProfilePostList username={username} />
+                    <ProfilePostList username={username} name={profileData.result.name} />
                   </div>
                 </div>
               )}

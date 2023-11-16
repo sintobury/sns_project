@@ -51,14 +51,21 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-end;
     gap: 10px;
     border-bottom: 1px solid #212121;
-    padding-top: 4rem;
+    padding: 2rem 1rem 1rem 1rem;
     transition: 0.7s;
     &.darkmode {
         border-bottom: 1px solid #e0e0e0;
     }
+}
+
+.profile_img {
+    width: 100px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .profile_img_form {
@@ -77,6 +84,7 @@
 }
 
 .label {
+    font-size: 1.5rem;
     color: #212121;
     transition: 0.7s;
     &.darkmode {

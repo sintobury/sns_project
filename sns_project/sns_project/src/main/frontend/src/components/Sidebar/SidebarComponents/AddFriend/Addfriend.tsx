@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { authInstance } from "../../../../interceptors/interceptors";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../../Common/Loading/Loading";
+import { useS3 } from "../../../../hook/useS3";
 
 interface ResponseDTO {
   statusCode: string;
@@ -25,7 +26,15 @@ interface MemberDTO {
   birth: string;
   createdAt: string;
   provider: string;
-  imgurl: string;
+  profile: profileDTO;
+}
+
+interface profileDTO {
+  id: number;
+  path: string;
+  name: string;
+  type: string;
+  size: number;
 }
 
 const Addfriend = () => {
@@ -34,6 +43,7 @@ const Addfriend = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [openidx, setOpenidx] = useState([false]);
   const navigate = useNavigate();
+  const { getUrl } = useS3();
 
   const getSearchFriendList = async () => {
     if (searchKeyword === "") {
@@ -56,6 +66,9 @@ const Addfriend = () => {
     getSearchFriendList,
     {
       staleTime: Infinity,
+      onSuccess: (data) => {
+        data.result.map((el) => (el.profile.path = getUrl(el.profile.path, el.profile.type)));
+      },
     },
   );
 
@@ -130,7 +143,7 @@ const Addfriend = () => {
           {friendSearchData.data?.result.map((el: MemberDTO, idx) => (
             <div className={`user ${isDarkmode && "darkmode"}`} key={el.username}>
               <div className="user_info_container">
-                <img className="profile_img" src={el.imgurl} alt="user_img" />
+                <img className="profile_img" src={el.profile.path} alt="user_img" />
                 <p className="user_name">{el.name}</p>
               </div>
               <div className="user_button_container" onClick={() => openMenu(idx)}>

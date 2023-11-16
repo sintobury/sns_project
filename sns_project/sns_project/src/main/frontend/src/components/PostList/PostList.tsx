@@ -51,7 +51,7 @@ const PostList = () => {
     },
   );
   return (
-    <div className="postlist_container">
+    <div className="postList_container">
       {postList.isLoading ? (
         <Loading />
       ) : postList.data?.result.length === 0 ? (
