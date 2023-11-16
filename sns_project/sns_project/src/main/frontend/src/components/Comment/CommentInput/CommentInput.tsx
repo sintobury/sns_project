@@ -18,7 +18,7 @@ interface comment {
   commentId?: number;
   boardId: number;
   content: string;
-  createAt: string;
+  createAt?: string;
   state: string;
 }
 
@@ -43,7 +43,7 @@ const CommentInput = ({ boardId }: childProps) => {
     const comment = {
       boardId: boardId,
       content: formdata.content,
-      createAt: new Date().toLocaleString(),
+      // createAt: new Date().toLocaleString(),
       state: "NORMAL",
     };
     commentMutation.mutate(comment);

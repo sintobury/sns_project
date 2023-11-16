@@ -62,7 +62,7 @@ const RequestedFriend = () => {
 
   const refuseFriendRequest = async (friendData: FriendDTO) => {
     const res = await authInstance.delete(`/friend`, {
-      data: friendData,
+      data: { id: friendData.id },
     });
     if (res.data.statusCode === 200) {
       alert(res.data.message);
@@ -76,9 +76,19 @@ const RequestedFriend = () => {
     {
       staleTime: Infinity,
       onSuccess: (data) => {
-        data.result.map(
-          (el) => (el.member.profile.path = getUrl(el.member.profile.path, el.member.profile.type)),
-        );
+        data.result.map((el) => {
+          if (el.member.profile === null) {
+            el.member.profile = {
+              id: 3,
+              name: "file",
+              path: "https://s3.ap-northeast-2.amazonaws.com/testsnsproject/42c40320-2fbd-4ca3-a8d3-6422c92b697b.jpg",
+              size: 8690,
+              type: "jpg",
+            };
+          } else {
+            el.member.profile.path = getUrl(el.member.profile.path, el.member.profile.type);
+          }
+        });
       },
     },
   );

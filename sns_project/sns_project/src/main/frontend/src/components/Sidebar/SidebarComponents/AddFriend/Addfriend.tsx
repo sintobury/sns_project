@@ -67,7 +67,19 @@ const Addfriend = () => {
     {
       staleTime: Infinity,
       onSuccess: (data) => {
-        data.result.map((el) => (el.profile.path = getUrl(el.profile.path, el.profile.type)));
+        data.result.map((el) => {
+          if (el.profile === null) {
+            el.profile = {
+              id: 3,
+              name: "file",
+              path: "https://s3.ap-northeast-2.amazonaws.com/testsnsproject/42c40320-2fbd-4ca3-a8d3-6422c92b697b.jpg",
+              size: 8690,
+              type: "jpg",
+            };
+          } else {
+            el.profile.path = getUrl(el.profile.path, el.profile.type);
+          }
+        });
       },
     },
   );

@@ -54,6 +54,7 @@ const Profile = () => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginusername = useSelector((state: RootState) => state.loginSlice.username);
   const [previewImage, setPreviewImage] = useState("");
+  const [hasImg, setHasImg] = useState(false);
   const { getUrl } = useS3();
   const navigate = useNavigate();
   const location = useLocation();
@@ -80,8 +81,10 @@ const Profile = () => {
     const file = imgInput.profile_img[0];
     const form = new FormData();
     form.append("file", file);
+    if (hasImg) {
+      await authInstance.delete(`/member/profile`);
+    }
     const res = await authInstance.post(`/member/profile`, form);
-    console.log(res.data);
     if (res.data.statusCode === 200) {
       queryClient.refetchQueries(["profile_img", loginusername]);
       resetField("profile_img");
@@ -123,6 +126,7 @@ const Profile = () => {
       staleTime: Infinity,
       onSuccess: (data) => {
         if (data.result.profile !== null) {
+          setHasImg(true);
           data.result.profile.path = getUrl(data.result.profile.path, data.result.profile.type);
           console.log(data.result);
         } else {
@@ -141,7 +145,7 @@ const Profile = () => {
     if (previewImg && previewImg.length > 0) {
       setPreviewImage(URL.createObjectURL(previewImg[0]));
     }
-  }, [previewImage]);
+  }, [previewImg]);
   return (
     <div className={`profile_page ${isDarkmode && "darkmode"}`}>
       <Header />
