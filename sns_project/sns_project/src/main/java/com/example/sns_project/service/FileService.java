@@ -92,7 +92,9 @@ public class FileService {
         return new ResponseDto(HttpStatus.OK.value(), "프로필 저장 경로 반환", fileDto);
 
     }
+    @Transactional
     public ResponseDto deleteProfile(String username){
+        log.info("프로필 이미지 삭제하기");
         Profile profile = fileRepository.findProfileByUsername(username).get(0);
         fileRepository.deleteProfile(profile);
         amazonS3.deleteObject(bucket, profile.getPath());

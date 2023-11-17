@@ -104,7 +104,9 @@ public class BoardService {
         List<Comment> comments = board.getComments();
         ArrayList<CommentDto> result = new ArrayList<>();
         for (Comment comment : comments) {
-            result.add(comment.convertDto());
+            CommentDto commentDto = comment.convertDto();
+            commentDto.setBoardId(Long.parseLong(boardId));
+            result.add(commentDto);
         }
         return new ResponseDto(HttpStatus.OK.value(), "댓글 가져오기 완료", result);
     }

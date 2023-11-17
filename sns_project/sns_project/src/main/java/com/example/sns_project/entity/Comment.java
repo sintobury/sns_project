@@ -43,6 +43,6 @@ public class Comment {
         this.state = state;
     }
     public CommentDto convertDto(){
-        return new CommentDto(this.id, this.content, this.createAt, this.state);
+        return new CommentDto(this.id, this.content, this.state);
     }
 }

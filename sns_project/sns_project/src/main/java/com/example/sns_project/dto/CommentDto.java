@@ -16,9 +16,11 @@ public class CommentDto {
     private Long commentId;
     private Long boardId;
     private String content;
-
     private CommentEnum state;
 
-
-
+    public CommentDto(Long commentId, String content, CommentEnum state) {
+        this.commentId = commentId;
+        this.content = content;
+        this.state = state;
+    }
 }
