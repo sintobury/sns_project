@@ -1,0 +1,23 @@
+.commentList_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 10px;
+}
+
+.comment {
+    background-color: #81cc76;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    &.darkmode {
+        background-color: #414141;
+    }
+}
+
+.comment_content {
+    padding: .5rem .75rem;
+}

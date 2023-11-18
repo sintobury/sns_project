@@ -46,7 +46,6 @@
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    transition: 0.7s;
     &.darkmode {
         background-color: #717171;
         &:hover {

@@ -209,7 +209,7 @@ const Profile = () => {
               {!tabMenu && (
                 <div className="info_container">
                   <div className="left_container">
-                    <Summary userinfo={profileData.result} />
+                    <Summary userinfo={profileData.result} username={username} />
                     <MediaList />
                     <Friend userId={profileData?.result.id} username={username} />
                   </div>

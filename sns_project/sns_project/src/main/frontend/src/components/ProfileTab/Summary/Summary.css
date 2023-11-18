@@ -12,6 +12,13 @@
     }
 }
 
+.profile_summary_title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .component_title {
     padding: .5rem .75rem;
     font-size: 20px;

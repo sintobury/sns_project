@@ -7,7 +7,6 @@
     border-radius: 6px;
     padding: 1rem;
     background-color: #5f9a56;
-    transition: 0.7s;
     &.darkmode {
         background-color: #616161;
     }
@@ -18,7 +17,6 @@
     padding: .5rem .75rem;
     background-color: #81cc76;
     border-radius: 6px;
-    transition: 0.7s;
     &.darkmode {
         background-color: #414141;
     }
@@ -28,7 +26,6 @@
     padding:  .5rem .75rem;
     background-color: #81cc76;
     border-radius: 6px;
-    transition: 0.7s;
     &.darkmode {
         background-color: #414141;
     }
@@ -41,7 +38,6 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: 0.7s;
     &.darkmode {
         background-color: #414141;
     }

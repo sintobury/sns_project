@@ -28,6 +28,7 @@ const Comment = ({ boardId }: childProps) => {
   const isdarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const getComment = async () => {
     const res = await authInstance.get(`/comment/${boardId}`);
+    console.log(res.data);
     return res.data;
   };
 
@@ -36,6 +37,10 @@ const Comment = ({ boardId }: childProps) => {
     <div className={`commentList_container ${isdarkmode && "darkmode"}`}>
       {commentData.isLoading ? (
         <Loading />
+      ) : commentData.data?.result.length === 0 ? (
+        <div className={`notification_container ${isdarkmode && "darkmode"}`}>
+          <p className={`notification ${isdarkmode && "darkmode"}`}>작성된 댓글이 없습니다.</p>
+        </div>
       ) : (
         commentData.data?.result.map((el) => (
           <div className={`comment ${isdarkmode && "darkmode"}`} key={el.commentId}>
