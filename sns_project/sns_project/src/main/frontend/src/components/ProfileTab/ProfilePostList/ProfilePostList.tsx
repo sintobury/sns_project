@@ -8,6 +8,7 @@ import { authInstance } from "../../../interceptors/interceptors";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Common/Loading/Loading";
 import Post from "../../Post/Post";
+import { useS3 } from "../../../hook/useS3";
 
 interface childProps {
   username: string | null;
@@ -43,6 +44,7 @@ const ProfilePostList = ({ username, name }: childProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const filterOption = [{ name: "최신순", value: "latest" }];
+  const { getUrl } = useS3();
 
   const openFilterOption = () => {
     setOpen(!open);
@@ -65,6 +67,13 @@ const ProfilePostList = ({ username, name }: childProps) => {
     getPostList,
     {
       staleTime: Infinity,
+      onSuccess: (data) => {
+        data.result.map((el) => {
+          if (el.boardFiles?.length !== 0) {
+            el.boardFiles?.map((el) => (el.path = getUrl(el.path, el.type)));
+          }
+        });
+      },
     },
   );
 

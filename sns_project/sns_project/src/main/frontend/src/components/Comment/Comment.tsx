@@ -28,7 +28,6 @@ const Comment = ({ boardId }: childProps) => {
   const isdarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const getComment = async () => {
     const res = await authInstance.get(`/comment/${boardId}`);
-    console.log(res.data);
     return res.data;
   };
 

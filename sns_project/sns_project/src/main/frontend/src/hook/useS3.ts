@@ -26,7 +26,11 @@ export const useS3 = () => {
     // const url = await download(path);
     // return url;
     console.log(type);
-
+    if (path === null) {
+      return "";
+    } else if (path.includes("https://s3.ap-northeast-2.amazonaws.com/testsnsproject/")) {
+      return path;
+    }
     return `https://s3.ap-northeast-2.amazonaws.com/testsnsproject/${path}`;
   };
 

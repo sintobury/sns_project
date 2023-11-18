@@ -6,6 +6,7 @@ import { RootState } from "../../redux";
 import { authInstance } from "../../interceptors/interceptors";
 import Loading from "../Common/Loading/Loading";
 import { useLocation } from "react-router-dom";
+import { useS3 } from "../../hook/useS3";
 
 interface BoardListResponse {
   message: string;
@@ -37,6 +38,7 @@ const PostList = () => {
   const searchParams = new URLSearchParams(location.search);
   const searchOption = searchParams.get("searchoption");
   const keyword = searchParams.get("searchword");
+  const { getUrl } = useS3();
 
   const getPostList = async () => {
     if (searchOption === "author") {
@@ -56,6 +58,13 @@ const PostList = () => {
     getPostList,
     {
       staleTime: Infinity,
+      onSuccess: (data) => {
+        data.result.map((el) => {
+          if (el.boardFiles?.length !== 0) {
+            el.boardFiles?.map((el) => (el.path = getUrl(el.path, el.type)));
+          }
+        });
+      },
     },
   );
   return (
