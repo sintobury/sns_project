@@ -54,7 +54,7 @@ public class Board {
     @OneToMany(mappedBy = "board")
     private List<Files> files = new ArrayList<>();
 
-    public BoardDataDto convertDto() throws MalformedURLException {
+    public BoardDataDto convertDto() {
         List<FileDto> fileDtos = new ArrayList<>();
         for (Files file : files) {
             FileDto fileDto = new FileDto(file.getId(), file.getPath(), file.getName(), file.getType(), file.getSize());

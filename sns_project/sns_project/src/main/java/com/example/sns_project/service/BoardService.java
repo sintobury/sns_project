@@ -45,7 +45,7 @@ public class BoardService {
         boardRepository.save(board);
         return board;
     }
-    public ResponseDto getBoard(String name) throws MalformedURLException {
+    public ResponseDto getBoard(String name)  {
         List<Board> result = boardRepository.findBoardByName(name);
         List<BoardDataDto> boardList = new ArrayList<>();
         for (Board board : result) {
@@ -109,5 +109,13 @@ public class BoardService {
             result.add(commentDto);
         }
         return new ResponseDto(HttpStatus.OK.value(), "댓글 가져오기 완료", result);
+    }
+    public ResponseDto getBoardById(String id){
+        List<Board> boardList = boardRepository.findBoardById(id);
+        ArrayList<BoardDataDto> result = new ArrayList<>();
+        for (Board board : boardList) {
+            result.add(board.convertDto());
+        }
+        return new ResponseDto(HttpStatus.OK.value(), "id로 게시글 가져오기 완료", result);
     }
 }

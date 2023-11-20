@@ -40,6 +40,10 @@ public class BoardController {
     public ResponseDto getBoardByName(@PathVariable String name) throws MalformedURLException {
         return boardService.getBoard(name);
     }
+    @GetMapping("/board/user/{id}")
+    public ResponseDto getBoardById(@PathVariable String id){
+        return boardService.getBoardById(id);
+    }
     @GetMapping("/board/friend")
     public ResponseDto getBoardFriend(@AuthenticationPrincipal CustomDetails customDetails) throws MalformedURLException {
         Member member = memberService.findByUsername(customDetails.getUsername());

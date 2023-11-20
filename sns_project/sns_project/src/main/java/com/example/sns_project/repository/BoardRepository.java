@@ -44,4 +44,9 @@ public class BoardRepository {
     public void deleteBoard(Board board){
         em.remove(board);
     }
+    public List<Board> findBoardById(String id){
+        return em.createQuery("select b from Board b " +
+                "join fetch b.files f " +
+                "where b.member.id = :id ", Board.class).setParameter("id", id).getResultList();
+    }
 }
