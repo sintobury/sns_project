@@ -97,7 +97,6 @@ public class FileService {
         log.info("프로필 이미지 삭제하기");
         Profile profile = fileRepository.findProfileByUsername(username).get(0);
         fileRepository.deleteProfile(profile);
-        amazonS3.deleteObject(bucket, profile.getPath());
         return new ResponseDto(HttpStatus.OK.value(), "프로필 사진 삭제 완료", null);
 
     }
