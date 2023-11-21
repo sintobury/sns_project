@@ -7,7 +7,7 @@ import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Summary from "../../components/ProfileTab/Summary/Summary";
-import MediaList from "../../components/ProfileTab/MediaList/MediaList";
+// import MediaList from "../../components/ProfileTab/MediaList/MediaList";
 import Friend from "../../components/ProfileTab/Friend/Friend";
 import ProfilePostList from "../../components/ProfileTab/ProfilePostList/ProfilePostList";
 import { useSelector } from "react-redux";
@@ -63,7 +63,7 @@ const Profile = () => {
   const tabmenulist = [
     { name: "프로필", value: "" },
     { name: "친구", value: "friend" },
-    { name: "사진 및 동영상", value: "media" },
+    { name: "작성 글", value: "postList" },
   ];
   const tabMenu = searchParams.get("tabmenu");
   const queryClient = useQueryClient();
@@ -86,8 +86,9 @@ const Profile = () => {
     }
     const res = await authInstance.post(`/member/profile`, form);
     if (res.data.statusCode === 200) {
-      queryClient.refetchQueries(["profile_img", loginusername]);
+      queryClient.refetchQueries(["profileData", loginusername]);
       resetField("profile_img");
+      setPreviewImage("");
     }
   };
 
@@ -210,11 +211,11 @@ const Profile = () => {
                 <div className="info_container">
                   <div className="left_container">
                     <Summary userinfo={profileData.result} username={username} />
-                    <MediaList />
+                    {/* <MediaList /> */}
                     <Friend userId={profileData?.result.id} username={username} />
                   </div>
                   <div className="right_container">
-                    <ProfilePostList username={username} name={profileData.result.name} />
+                    <ProfilePostList username={username} id={profileData.result.id} />
                   </div>
                 </div>
               )}

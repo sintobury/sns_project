@@ -12,7 +12,7 @@ import { useS3 } from "../../../hook/useS3";
 
 interface childProps {
   username: string | null;
-  name: string;
+  id: number;
 }
 interface BoardListResponse {
   message: string;
@@ -37,7 +37,7 @@ interface FileDTO {
   type: string;
 }
 
-const ProfilePostList = ({ username, name }: childProps) => {
+const ProfilePostList = ({ username, id }: childProps) => {
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState("latest");
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
@@ -56,15 +56,15 @@ const ProfilePostList = ({ username, name }: childProps) => {
     navigate(`${location.pathname}?username=${username}&option=${option}`);
   };
 
-  const getPostList = async () => {
-    const res = await authInstance.get(`/board/${name}`);
+  const getProfilePostList = async () => {
+    const res = await authInstance.get(`/board/user/${id}`);
     console.log(res.data);
     return res.data;
   };
 
   const proflieUserPostList = useQuery<BoardListResponse>(
     ["profilePostList", username, option],
-    getPostList,
+    getProfilePostList,
     {
       staleTime: Infinity,
       onSuccess: (data) => {

@@ -1,12 +1,14 @@
 .requested_friend_container {
     padding: 5px;
-    flex: 1 0 auto;
     transition: 0.7s;
     background-color: #81cc76;
     margin: 0 5px;
     border-radius: 6px;
+    flex: 1 0 auto;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
     &.darkmode {
         background-color: #212121;
         color: white;

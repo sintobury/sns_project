@@ -24,6 +24,7 @@ const Sidebar = () => {
       setMode("addFriend");
     }
   };
+  //120px이하에서 사이드바 가로에서 세로로 변경
 
   return (
     <div className="sidebar_container">

@@ -57,10 +57,12 @@ const ProfileUpdateForm = ({ userinfo, username }: childProps) => {
   });
 
   const updateProfile = async (formData: updateForm) => {
+    console.log(userinfo);
     const newProfile = userinfo;
     newProfile.name = formData.name;
-    newProfile.password = formData.new_password;
+    // newProfile.password = formData.new_password;
     newProfile.birth = `${formData.birth} 00:00:00`;
+    console.log(newProfile);
     await authInstance.post(`/member/update`, newProfile);
   };
 
@@ -114,16 +116,11 @@ const ProfileUpdateForm = ({ userinfo, username }: childProps) => {
       <label htmlFor="birth">생일</label>
       <input
         id="birth"
-        className={`${errors.birth ? "errorInput" : "input"} ${isDarkmode && "darkmode"}`}
+        type="date"
+        className={errors.birth ? "errorInput" : "input"}
         {...register("birth", {
-          required: "생일을 입력해주세요.",
-          pattern: {
-            value: /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/,
-            message: "생일은 yyyy-mm-dd 형식으로 입력해주세요.",
-          },
+          required: "생년월일을 지정해주세요.",
         })}
-        placeholder="생일을 yyyy-mm-dd 형식으로 입력해주세요."
-        type="text"
       />
       {errors.birth && <p className="error_message">{errors.birth.message}</p>}
       <label htmlFor="new_password">새 비밀번호</label>

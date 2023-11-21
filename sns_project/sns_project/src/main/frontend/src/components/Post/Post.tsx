@@ -39,7 +39,7 @@ const Post = ({ info }: childProps) => {
       <div className={`post_content ${isdarkmode && "darkmode"}`}>{info.content}</div>
       <div className={`post_media_container ${isdarkmode && "darkmode"}`}>
         {info.boardFiles?.map((el) => (
-          <img className="post_media" src={el.path} alt={`${el.name} img`} />
+          <img className="post_media" src={el.path} alt={`${el.name} img`} key={el.id} />
         ))}
       </div>
       <div

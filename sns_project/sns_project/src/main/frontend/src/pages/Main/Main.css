@@ -35,6 +35,7 @@
     border-radius: 6px;
     background-color: white;
     transition: 0.7s;
+    background-color: #81cc76;
     &.darkmode {
         background-color: #212121;
     }

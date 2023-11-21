@@ -101,9 +101,7 @@ const RequestedFriend = () => {
       ) : (
         <div className="user_container">
           {requestedFriendData.data && requestedFriendData.data.result.length === 0 && (
-            <div>
-              <p className="empty_message">받은 친구 요청이 없습니다.</p>
-            </div>
+            <p className="empty_message">받은 친구 요청이 없습니다.</p>
           )}
           {requestedFriendData.data &&
             requestedFriendData.data.result.map((el: FriendDTO) => (
