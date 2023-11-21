@@ -38,12 +38,18 @@
     justify-content: flex-start;
     align-items: center;
     gap: 4%;
+    padding: 2%;
+    border-radius: 6px;
+    background-color: #81cc76;
+    &.darkmode {
+        background-color: #414141;
+    }
 }
 
 .post_media {
     width: 48%;
     aspect-ratio: 1/1;
-    max-width: 12.5rem;
+    max-width: 10rem;
 }
 
 .display_comment_button {

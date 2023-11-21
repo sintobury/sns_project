@@ -19,6 +19,7 @@ import ProfileFriend from "../../components/ProfileFriend/ProfileFriend";
 import { useS3 } from "../../hook/useS3";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import ProfileuserPostList from "../../components/ProfileUserPostList/ProfileuserPostList";
 
 interface ResponseDTO {
   statusCode: string;
@@ -220,6 +221,9 @@ const Profile = () => {
                 </div>
               )}
               {tabMenu === "friend" && <ProfileFriend userId={profileData.result.id} />}
+              {tabMenu === "postList" && (
+                <ProfileuserPostList username={username} id={profileData.result.id} />
+              )}
             </div>
           )
         )}

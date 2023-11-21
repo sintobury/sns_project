@@ -1,0 +1,25 @@
+.profile_user_postList_container {
+    margin-top: 1rem;
+    padding: .5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 10px;
+    background-color: #81cc76;
+    border-radius: 6px;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+        color: white;
+    }
+}
+
+.profile_user_postList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 1rem;
+}
