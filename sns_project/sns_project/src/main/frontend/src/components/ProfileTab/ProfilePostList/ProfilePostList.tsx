@@ -118,7 +118,9 @@ const ProfilePostList = ({ username, id }: childProps) => {
             <p className={`notification ${isDarkmode && "darkmode"}`}>작성한 글이 없습니다.</p>
           </div>
         ) : (
-          proflieUserPostList.data?.result.map((el) => <Post info={el} key={el.id} />)
+          proflieUserPostList.data?.result.map((el) => (
+            <Post info={el} isProfilePost={false} key={el.id} />
+          ))
         )}
       </div>
     </div>

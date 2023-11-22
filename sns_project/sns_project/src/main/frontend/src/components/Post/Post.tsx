@@ -7,6 +7,7 @@ import { useS3 } from "../../hook/useS3";
 
 interface childProps {
   info: board;
+  isProfilePost: boolean;
 }
 
 interface board {
@@ -26,7 +27,7 @@ interface FileDTO {
   type: string;
 }
 
-const Post = ({ info }: childProps) => {
+const Post = ({ info, isProfilePost }: childProps) => {
   const [open, setOpen] = useState(false);
   const isdarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const { getUrl } = useS3();
@@ -34,7 +35,11 @@ const Post = ({ info }: childProps) => {
     info.boardFiles?.map((el) => (el.path = getUrl(el.path, el.type)));
   }
   return (
-    <div className={`post_container ${isdarkmode && "darkmode"}`}>
+    <div
+      className={`post_container ${isdarkmode && "darkmode"} ${
+        isProfilePost && "profile_user_post"
+      }`}
+    >
       <p className={`post_title ${isdarkmode && "darkmode"}`}>{info.title}</p>
       <div className={`post_content ${isdarkmode && "darkmode"}`}>{info.content}</div>
       <div className={`post_media_container ${isdarkmode && "darkmode"}`}>

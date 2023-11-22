@@ -76,7 +76,7 @@ const PostList = () => {
           <p className={`notification ${isDarkmode && "darkmode"}`}>작성된 글이 없습니다.</p>
         </div>
       ) : (
-        postList.data?.result.map((el) => <Post info={el} key={el.id} />)
+        postList.data?.result.map((el) => <Post info={el} isProfilePost={false} key={el.id} />)
       )}
     </div>
   );
