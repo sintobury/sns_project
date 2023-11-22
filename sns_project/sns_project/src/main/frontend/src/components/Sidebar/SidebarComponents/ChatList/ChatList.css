@@ -10,7 +10,7 @@
     align-items: stretch;
     gap: 5px;
     border-radius: 6px;
-    border: 1px solid #414141;
+    border: 1px solid #5f9a56;
     max-height: 30rem;
     margin: 0 5px;
     overflow-y: scroll;
@@ -19,6 +19,7 @@
     &.darkmode {
         color: white;
         background-color: #212121;
+        border: 1px solid #414141;
     }
 }
 

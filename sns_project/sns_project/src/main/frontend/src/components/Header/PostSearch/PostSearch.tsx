@@ -14,7 +14,7 @@ const PostSearch = () => {
   const PostSearchOptions = [
     { name: "내용", value: "content" },
     { name: "작성자", value: "author" },
-    { name: "태그", value: "tag" },
+    // { name: "태그", value: "tag" },
   ];
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const navigate = useNavigate();
