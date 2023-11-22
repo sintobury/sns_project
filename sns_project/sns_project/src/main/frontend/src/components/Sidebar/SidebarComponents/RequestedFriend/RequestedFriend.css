@@ -1,9 +1,13 @@
 .requested_friend_container {
+    position: fixed;
+    left: 10rem;
+    width: 15.625rem;
     padding: 5px;
     transition: 0.7s;
     background-color: #81cc76;
     margin: 0 5px;
     border-radius: 6px;
+    border: 1px solid #414141;
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;

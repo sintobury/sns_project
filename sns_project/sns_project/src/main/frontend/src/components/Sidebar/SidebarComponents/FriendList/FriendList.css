@@ -1,10 +1,14 @@
 .friendlist_container {
+    position: fixed;
+    left: 10rem;
+    width: 15.625rem;
     padding: 5px;
     transition: 0.7s;
     background-color: #81cc76;
     flex: 1 0 auto;
     margin: 0 5px;
     border-radius: 6px;
+    border: 1px solid #414141;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

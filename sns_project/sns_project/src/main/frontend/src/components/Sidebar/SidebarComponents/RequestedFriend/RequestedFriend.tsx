@@ -6,7 +6,11 @@ import { RootState } from "../../../../redux";
 import Button from "../../../Common/Button/Button";
 import Loading from "../../../Common/Loading/Loading";
 import { useS3 } from "../../../../hook/useS3";
+import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 
+interface childProps {
+  setMode: Dispatch<SetStateAction<string>>;
+}
 interface ResponseDTO {
   statusCode: string;
   message: string;
@@ -41,7 +45,7 @@ interface FileDTO {
   size: number;
 }
 
-const RequestedFriend = () => {
+const RequestedFriend = ({ setMode }: childProps) => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginUserId = useSelector((state: RootState) => state.loginSlice.id);
   const queryClient = useQueryClient();
@@ -93,8 +97,21 @@ const RequestedFriend = () => {
     },
   );
 
+  const ContainerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent): void => {
+      if (ContainerRef.current && !ContainerRef.current.contains(e.target as Node)) {
+        setMode("");
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ContainerRef]);
+
   return (
-    <div className={`requested_friend_container ${isDarkmode && "darkmode"}`}>
+    <div className={`requested_friend_container ${isDarkmode && "darkmode"}`} ref={ContainerRef}>
       <p className="component_title">친구 요청 목록</p>
       {requestedFriendData.isLoading ? (
         <Loading />

@@ -3,13 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import MenuIcon from "@mui/icons-material/Menu";
 import { grey } from "@mui/material/colors";
 import { RootState } from "../../../../redux";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import { authInstance } from "../../../../interceptors/interceptors";
 import { useNavigate } from "react-router-dom";
 import { setRoom } from "../../../../redux/reducers/chatRoomSlice";
 import Loading from "../../../Common/Loading/Loading";
 import { useGetFriendList } from "../../../../hook/useGetFriendList";
 import { useGetRoomList } from "../../../../hook/useGetRoomList";
+
+interface childProps {
+  setMode: Dispatch<SetStateAction<string>>;
+}
 
 interface FriendDTO {
   id: string;
@@ -38,7 +42,7 @@ interface FileDTO {
   size: number;
 }
 
-const FriendList = () => {
+const FriendList = ({ setMode }: childProps) => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginUserName = useSelector((state: RootState) => state.loginSlice.username);
   const loginuserId = useSelector((state: RootState) => state.loginSlice.id);
@@ -97,8 +101,21 @@ const FriendList = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [MenuRef, friendlistData]);
+
+  const ContainerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent): void => {
+      if (ContainerRef.current && !ContainerRef.current.contains(e.target as Node)) {
+        setMode("");
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ContainerRef]);
   return (
-    <div className={`friendlist_container ${isDarkmode && "darkmode"}`}>
+    <div className={`friendlist_container ${isDarkmode && "darkmode"}`} ref={ContainerRef}>
       <p className="component_title">친구 목록</p>
       {friendlistData.isLoading ? (
         <Loading />

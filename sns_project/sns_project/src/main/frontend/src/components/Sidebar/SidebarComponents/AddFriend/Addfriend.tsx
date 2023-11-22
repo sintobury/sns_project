@@ -4,12 +4,16 @@ import Button from "../../../Common/Button/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import { grey } from "@mui/material/colors";
 import { RootState } from "../../../../redux";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { authInstance } from "../../../../interceptors/interceptors";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../../Common/Loading/Loading";
 import { useS3 } from "../../../../hook/useS3";
+
+interface childProps {
+  setMode: Dispatch<SetStateAction<string>>;
+}
 
 interface ResponseDTO {
   statusCode: string;
@@ -37,7 +41,7 @@ interface profileDTO {
   size: number;
 }
 
-const Addfriend = () => {
+const Addfriend = ({ setMode }: childProps) => {
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const loginuserId = useSelector((state: RootState) => state.loginSlice.id);
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -125,8 +129,22 @@ const Addfriend = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [MenuRef, friendSearchData]);
+
+  const ContainerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent): void => {
+      if (ContainerRef.current && !ContainerRef.current.contains(e.target as Node)) {
+        setMode("");
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ContainerRef]);
+
   return (
-    <div className={`add_friend_container ${isDarkmode && "darkmode"}`}>
+    <div className={`add_friend_container ${isDarkmode && "darkmode"}`} ref={ContainerRef}>
       <p className="component_title">전체 유저</p>
       <div className="add_friend_search_container">
         <input
