@@ -11,8 +11,10 @@
     background-color: #81cc76;
     color: #212121;
     border-radius: 6px;
+    border: 1px solid #66ac5c;
     &.darkmode {
         background-color: #313131;
+        border: 1px solid #414141;
         color: white;
     };
 }
@@ -46,6 +48,7 @@
     padding: .5rem .75rem;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     gap: 5px;
     background-color: #66ac5c;

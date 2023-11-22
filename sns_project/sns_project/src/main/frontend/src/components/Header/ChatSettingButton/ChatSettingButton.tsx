@@ -9,7 +9,7 @@ import { useGetRoomList } from "../../../hook/useGetRoomList";
 import { useGetFriendList } from "../../../hook/useGetFriendList";
 
 interface FriendDTO {
-  id: string;
+  id: number;
   member: MemberDTO;
   request: boolean;
   state: string;

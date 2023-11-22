@@ -12,7 +12,7 @@ interface ResponseDTO {
 }
 
 interface FriendDTO {
-  id: string;
+  id: number;
   member: MemberDTO;
   request: boolean;
   state: string;
@@ -83,6 +83,5 @@ export const useGetFriendList = (userId: number) => {
   const friendlistData = useQuery<ResponseDTO>(["friendList", userId, username], getFriendList, {
     staleTime: Infinity,
   });
-
   return { friendlistData };
 };

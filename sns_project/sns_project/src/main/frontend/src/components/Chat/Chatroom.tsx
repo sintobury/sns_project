@@ -18,7 +18,6 @@ const Chatroom = () => {
   return (
     <div className={`chatroom_container ${isDarkmode && "darkmode"}`}>
       <div className={`chatroom_settings ${isDarkmode && "darkmode"}`}>
-        <img alt="chatroom_img"></img>
         <p className="chatroom_title">{roomName}</p>
         <div className="close_button_container">
           <button className={`close_button ${isDarkmode && "darkmode"}`} onClick={closeChatroom}>

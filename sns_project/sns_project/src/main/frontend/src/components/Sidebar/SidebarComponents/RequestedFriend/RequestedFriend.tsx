@@ -18,7 +18,7 @@ interface ResponseDTO {
 }
 
 interface FriendDTO {
-  id: string;
+  id: number;
   member: MemberDTO;
   request: boolean;
   state: string;

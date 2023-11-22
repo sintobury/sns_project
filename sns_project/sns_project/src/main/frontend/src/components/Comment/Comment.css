@@ -15,6 +15,7 @@
     align-items: flex-end;
     &.darkmode {
         background-color: #414141;
+        color: white;
     }
 }
 

@@ -13,13 +13,20 @@
         background-color: #212121;
         color: white;
     }
+    @media (max-width:55rem) {
+        width: 22rem;
+    }
 }
 
 .profile_user_postList {
+    width: 45rem;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: flex-start;
     gap: 1rem;
+    @media (max-width:55rem) {
+        width: 22rem;
+    }
 }

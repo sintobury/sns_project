@@ -19,6 +19,7 @@
     border-radius: 6px;
     &.darkmode {
         background-color: #414141;
+        color: white;
     }
 }
 
@@ -28,16 +29,19 @@
     border-radius: 6px;
     &.darkmode {
         background-color: #414141;
+        color: white;
     }
 }
 
 .post_media_container {
+    box-sizing: border-box;
+    width: 20rem;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
-    align-items: center;
-    gap: 4%;
+    align-items: flex-start;
+    gap: 2%;
     padding: 2%;
     border-radius: 6px;
     background-color: #81cc76;
@@ -47,7 +51,8 @@
 }
 
 .post_media {
-    width: 48%;
+    width: 45%;
+    margin: 2%;
     aspect-ratio: 1/1;
     max-width: 10rem;
 }
@@ -61,5 +66,6 @@
     cursor: pointer;
     &.darkmode {
         background-color: #414141;
+        color: white;
     }
 }

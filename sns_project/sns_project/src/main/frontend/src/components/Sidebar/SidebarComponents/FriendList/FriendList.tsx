@@ -10,13 +10,14 @@ import { setRoom } from "../../../../redux/reducers/chatRoomSlice";
 import Loading from "../../../Common/Loading/Loading";
 import { useGetFriendList } from "../../../../hook/useGetFriendList";
 import { useGetRoomList } from "../../../../hook/useGetRoomList";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface childProps {
   setMode: Dispatch<SetStateAction<string>>;
 }
 
 interface FriendDTO {
-  id: string;
+  id: number;
   member: MemberDTO;
   request: boolean;
   state: string;
@@ -51,6 +52,7 @@ const FriendList = ({ setMode }: childProps) => {
   const dispatch = useDispatch();
   const { friendlistData } = useGetFriendList(loginuserId);
   const { roomList } = useGetRoomList();
+  const queryClient = useQueryClient();
 
   const navigateProfile = (username: string) => {
     const newArr = new Array(friendlistData.data?.result.length).fill(false);
@@ -79,6 +81,16 @@ const FriendList = ({ setMode }: childProps) => {
         const newArr = new Array(friendlistData.data?.result.length).fill(false);
         setOpenidx(newArr);
       }
+    }
+  };
+
+  const cancleFriend = async (id: number) => {
+    const res = await authInstance.delete(`/friend`, {
+      data: { id: id },
+    });
+    if (res.data.statusCode === 200) {
+      alert(res.data.message);
+      queryClient.refetchQueries(["friendList", loginuserId, loginUserName]);
     }
   };
 
@@ -121,30 +133,39 @@ const FriendList = ({ setMode }: childProps) => {
         <Loading />
       ) : (
         <div className="user_container" ref={MenuRef}>
-          {friendlistData.data?.result.map((el: FriendDTO, idx) => (
-            <div className={`user ${isDarkmode && "darkmode"}`} key={el.member.username}>
-              <div className="user_info_container">
-                <img className="profile_img" src={el.member.profile.path} alt="user_img" />
-                <p className="user_name">{el.member.name}</p>
-              </div>
-              <div className="user_button_container" onClick={() => openMenu(idx)}>
-                {isDarkmode ? <MenuIcon sx={{ color: grey[800] }} /> : <MenuIcon />}
-                {openidx[idx] && (
-                  <div className={`user_interaction_button_container ${isDarkmode && "darkmode"}`}>
+          {friendlistData.data?.result.length === 0 ? (
+            <p className="empty_message">등록된 친구가 없습니다.</p>
+          ) : (
+            friendlistData.data?.result.map((el: FriendDTO, idx) => (
+              <div className={`user ${isDarkmode && "darkmode"}`} key={el.member.username}>
+                <div className="user_info_container">
+                  <img className="profile_img" src={el.member.profile.path} alt="user_img" />
+                  <p className="user_name">{el.member.name}</p>
+                </div>
+                <div className="user_button_container" onClick={() => openMenu(idx)}>
+                  {isDarkmode ? <MenuIcon sx={{ color: grey[800] }} /> : <MenuIcon />}
+                  {openidx[idx] && (
                     <div
-                      className="user_interaction_button"
-                      onClick={() => navigateProfile(el.member.username)}
+                      className={`user_interaction_button_container ${isDarkmode && "darkmode"}`}
                     >
-                      프로필
+                      <div
+                        className="user_interaction_button"
+                        onClick={() => navigateProfile(el.member.username)}
+                      >
+                        프로필
+                      </div>
+                      <div className="user_interaction_button" onClick={() => makeChatroom(el)}>
+                        채팅하기
+                      </div>
+                      <div className="user_interaction_button" onClick={() => cancleFriend(el.id)}>
+                        친구삭제
+                      </div>
                     </div>
-                    <div className="user_interaction_button" onClick={() => makeChatroom(el)}>
-                      채팅하기
-                    </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       )}
     </div>

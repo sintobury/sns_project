@@ -45,6 +45,9 @@
         background-color: #212121;
         color: white;
     }
+    @media (max-width:55rem) {
+        width: 21rem;
+    }
 }
 
 .profile_img_container {

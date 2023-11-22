@@ -52,7 +52,6 @@ const ChatList = ({ setMode }: childProps) => {
           onClick={() => openChatroom(el)}
           key={el.roomId}
         >
-          <img alt="chatroom_img" src={el.img}></img>
           <p className="room_title">{el.roomName}</p>
         </div>
       ))}
