@@ -48,7 +48,7 @@ const Post = ({ info, isProfilePost }: childProps) => {
         ))}
       </div>
       <div
-        className={`display_comment_button ${isdarkmode && "darkmode"}`}
+        className={`display_comment_button ${isdarkmode && "darkmode"} ${open ? "open" : "close"}`}
         onClick={() => setOpen(!open)}
       >
         {open ? <p>댓글 접기</p> : <p>댓글 펼치기</p>}

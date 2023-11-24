@@ -12,7 +12,7 @@
     overflow: hidden;
     transition: 0.7s;
     &.darkmode {
-        background-color: #212121;
+        background-color: #414141;
     }
 }
 

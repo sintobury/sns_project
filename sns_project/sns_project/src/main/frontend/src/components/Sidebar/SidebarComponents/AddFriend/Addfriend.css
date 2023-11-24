@@ -1,7 +1,7 @@
 
 .add_friend_container {
     position: fixed;
-    left: 10rem;
+    left: 9.8125rem;
     width: 15.625rem;
     padding: 5px;
     flex: 1 0 auto;
@@ -92,7 +92,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: center;
+    align-items: stretch;
     top: 24px;
     width: 5rem;
     background-color: #e0e0e0;
@@ -107,6 +107,7 @@
 .user_interaction_button {
     padding: .5rem .75rem;
     border-bottom: 1px solid #bdbdbd;
+    text-align: center;
     cursor: pointer;
     &:last-child {
         border-bottom: none;

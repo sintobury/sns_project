@@ -4,6 +4,15 @@
     justify-content: flex-start;
     align-items: stretch;
     gap: 10px;
+    border-radius: 6px;
+    padding: .5rem;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    margin: 0 .5rem .5rem .5rem;
+    background-color: #4e7d47;
+    &.darkmode {
+        background-color: #313131;
+    }
 }
 
 .comment {

@@ -48,8 +48,7 @@
     &.darkmode {
         background-color: #515151;
         color: white;
-        border: 1px solid #515151;
-        border-bottom: 1px solid #121212;
+        border: 1px solid #212121;
     }
     &:last-child {
         border-bottom-left-radius: 6px;
@@ -80,11 +79,12 @@
     &.darkmode {
         background-color: #515151;
         color: white;
-        border: 1px solid #515151;
-        border-bottom: 1px solid #121212;
+        border: 1px solid #212121;
+        border-top: none;
     }
     &:last-child {
-        border-bottom: none;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;  
     }
 }
 

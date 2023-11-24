@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import "./ProfilePostList.css";
-import { useState, useEffect, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
+// import { useState, useEffect, useRef } from "react";
+// import { useLocation, useNavigate } from "react-router-dom";
+// import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { RootState } from "../../../redux";
 import { authInstance } from "../../../interceptors/interceptors";
 import { useQuery } from "@tanstack/react-query";
@@ -38,23 +38,23 @@ interface FileDTO {
 }
 
 const ProfilePostList = ({ username, id }: childProps) => {
-  const [open, setOpen] = useState(false);
-  const [option, setOption] = useState("latest");
+  // const [open, setOpen] = useState(false);
+  // const [option, setOption] = useState("latest");
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const filterOption = [{ name: "최신순", value: "latest" }];
   const { getUrl } = useS3();
+  // const navigate = useNavigate();
+  // const location = useLocation();
+  // const filterOption = [{ name: "최신순", value: "latest" }];
 
-  const openFilterOption = () => {
-    setOpen(!open);
-  };
-  const changeOption = (e: React.MouseEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLDivElement;
-    setOption(target.innerText);
-    setOpen(false);
-    navigate(`${location.pathname}?username=${username}&option=${option}`);
-  };
+  // const openFilterOption = () => {
+  //   setOpen(!open);
+  // };
+  // const changeOption = (e: React.MouseEvent<HTMLDivElement>) => {
+  //   const target = e.target as HTMLDivElement;
+  //   setOption(target.innerText);
+  //   setOpen(false);
+  //   navigate(`${location.pathname}?username=${username}&option=${option}`);
+  // };
 
   const getProfilePostList = async () => {
     const res = await authInstance.get(`/board/user/${id}`);
@@ -63,7 +63,7 @@ const ProfilePostList = ({ username, id }: childProps) => {
   };
 
   const proflieUserPostList = useQuery<BoardListResponse>(
-    ["profilePostList", username, option],
+    ["profilePostList", username],
     getProfilePostList,
     {
       staleTime: Infinity,
@@ -77,24 +77,24 @@ const ProfilePostList = ({ username, id }: childProps) => {
     },
   );
 
-  const postlistOptionRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent): void => {
-      if (postlistOptionRef.current && !postlistOptionRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [postlistOptionRef]);
+  // const postlistOptionRef = useRef<HTMLDivElement>(null);
+  // useEffect(() => {
+  //   const handleClickOutside = (e: MouseEvent): void => {
+  //     if (postlistOptionRef.current && !postlistOptionRef.current.contains(e.target as Node)) {
+  //       setOpen(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [postlistOptionRef]);
 
   return (
     <div className={`Post_container ${isDarkmode && "darkmode"}`}>
       <div className="title_container">
         <p className="component_title">게시글</p>
-        <div className="filter_button" onClick={openFilterOption} ref={postlistOptionRef}>
+        {/* <div className="filter_button" onClick={openFilterOption} ref={postlistOptionRef}>
           <FilterAltIcon />
           <div className="filter_option_container">
             {open &&
@@ -108,7 +108,7 @@ const ProfilePostList = ({ username, id }: childProps) => {
                 </div>
               ))}
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="postList_container">
         {proflieUserPostList.isLoading ? (

@@ -1,12 +1,10 @@
 .post_container {
-    width: calc(100% - 2rem);
+    /* width: calc(100% - 2rem); */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    gap: 5px;
     border-radius: 6px;
-    padding: 1rem;
     background-color: #5f9a56;
     &.darkmode {
         background-color: #616161;
@@ -20,6 +18,7 @@
 .post_title {
     font-weight: bold;
     padding: .5rem .75rem;
+    margin: .5rem .5rem 0 .5rem;
     background-color: #81cc76;
     border-radius: 6px;
     &.darkmode {
@@ -30,6 +29,7 @@
 
 .post_content {
     padding:  .5rem .75rem;
+    margin: .5rem .5rem 0 .5rem;
     background-color: #81cc76;
     border-radius: 6px;
     &.darkmode {
@@ -47,6 +47,7 @@
     align-items: flex-start;
     gap: 2%;
     padding: 2%;
+    margin: .5rem .5rem 0 .5rem;
     border-radius: 6px;
     background-color: #81cc76;
     &.darkmode {
@@ -62,6 +63,7 @@
 }
 
 .display_comment_button {
+    margin: .5rem;
     background-color: #81cc76;
     border-radius: 6px;
     display: flex;
@@ -71,5 +73,10 @@
     &.darkmode {
         background-color: #414141;
         color: white;
+    }
+    &.open {
+        margin-bottom: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
     }
 }

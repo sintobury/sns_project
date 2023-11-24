@@ -1,7 +1,7 @@
 import Homeicon from "./Home_Icon/Home_icon";
 import PostSearch from "./PostSearch/PostSearch";
 import ChatSettingButton from "./ChatSettingButton/ChatSettingButton";
-import Alert from "./alert/alert";
+// import Alert from "./alert/alert";
 import "./Header.css";
 import MainAdditionalButton from "./MainAddtionalButton/MainAdditionalButton";
 import { useSelector } from "react-redux";
@@ -17,7 +17,7 @@ const Header = () => {
           <PostSearch />
           <div className="optional_button_container">
             <ChatSettingButton />
-            <Alert />
+            {/* <Alert /> */}
             <MainAdditionalButton />
           </div>
         </div>
