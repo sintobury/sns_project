@@ -45,8 +45,8 @@ public class BoardService {
         boardRepository.save(board);
         return board;
     }
-    public ResponseDto getBoard(String name)  {
-        List<Board> result = boardRepository.findBoardByName(name);
+    public ResponseDto getBoard(String name, Integer pageStart, Integer pageCount)  {
+        List<Board> result = boardRepository.findBoardByNamePaging(name, pageStart, pageCount);
         List<BoardDataDto> boardList = new ArrayList<>();
         for (Board board : result) {
             boardList.add(board.convertDto());
@@ -61,15 +61,16 @@ public class BoardService {
         }
         return new ResponseDto(HttpStatus.OK.value(), "성공적으로 반환완료", boardList);
     }
-    public ResponseDto getFriendBoard(List<FriendDto> friends) throws MalformedURLException {
-        List<BoardDataDto> boardList = new ArrayList<>();
+    public ResponseDto getFriendBoard(List<FriendDto> friends, Integer pageStart, Integer pageCount) throws MalformedURLException {
+        ArrayList<BoardDataDto> boardList = new ArrayList<>();
         for (FriendDto friend : friends) {
             List<Board> result = boardRepository.findBoardByName(friend.getMember().getName());
             for (Board board : result) {
                 boardList.add(board.convertDto());
             }
         }
-        return new ResponseDto(HttpStatus.OK.value(), "성공적으로 반환완료", boardList);
+        List<BoardDataDto> subBoardList = boardList.subList(pageStart, pageStart + pageCount);
+        return new ResponseDto(HttpStatus.OK.value(), "성공적으로 반환완료", subBoardList);
     }
     public ResponseDto deleteBoard(BoardDataDto boardDto){
         Board board = boardRepository.findById(boardDto.getId());
@@ -94,12 +95,17 @@ public class BoardService {
         commentRepository.delete(comment);
         return new ResponseDto(HttpStatus.OK.value(), "댓글 삭제 완료", null);
     }
-    public ResponseDto updateComment(CommentDto commentDto){
-        Comment comment = commentRepository.findById(commentDto.getCommentId());
-        commentRepository.save(comment);
-        return new ResponseDto(HttpStatus.OK.value(), "댓글 수정 완료", null);
+    public ResponseDto updateComment(String username, CommentDto commentDto){
+        if(commentDto.getMember().getUsername() != username){
+            return new ResponseDto(HttpStatus.BAD_REQUEST.value(), "댓글 권한 없음", null);
+        }else{
+            Comment comment = commentRepository.findById(commentDto.getCommentId());
+            comment.update(commentDto.getContent());
+            commentRepository.save(comment);
+            return new ResponseDto(HttpStatus.OK.value(), "댓글 수정 완료", null);
+        }
     }
-    public ResponseDto getComment(String boardId){
+    public ResponseDto getComment(String boardId , Integer pageStart, Integer pageCount){
         Board board = boardRepository.findByIdFetchComment(Long.parseLong(boardId));
         List<Comment> comments = board.getComments();
         ArrayList<CommentDto> result = new ArrayList<>();
@@ -108,10 +114,11 @@ public class BoardService {
             commentDto.setBoardId(Long.parseLong(boardId));
             result.add(commentDto);
         }
-        return new ResponseDto(HttpStatus.OK.value(), "댓글 가져오기 완료", result);
+        List<CommentDto> subResult = result.subList(pageStart, pageStart + pageCount);
+        return new ResponseDto(HttpStatus.OK.value(), "댓글 가져오기 완료", subResult);
     }
-    public ResponseDto getBoardById(String id){
-        List<Board> boardList = boardRepository.findBoardById(id);
+    public ResponseDto getBoardById(String id, Integer pageStart, Integer pageCount){
+        List<Board> boardList = boardRepository.findBoardById(id, pageStart, pageCount);
         ArrayList<BoardDataDto> result = new ArrayList<>();
         for (Board board : boardList) {
             result.add(board.convertDto());

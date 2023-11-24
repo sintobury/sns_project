@@ -37,18 +37,18 @@ public class BoardController {
         return fileService.saveBoardFile(board, boardDto.getFiles());
     }
     @GetMapping("/board/{name}")
-    public ResponseDto getBoardByName(@PathVariable String name) throws MalformedURLException {
-        return boardService.getBoard(name);
+    public ResponseDto getBoardByName(@PathVariable String name, @RequestParam String pageStart, @RequestParam String pageCount) throws MalformedURLException {
+        return boardService.getBoard(name, Integer.parseInt(pageStart), Integer.parseInt(pageCount));
     }
     @GetMapping("/board/user/{id}")
-    public ResponseDto getBoardById(@PathVariable String id){
-        return boardService.getBoardById(id);
+    public ResponseDto getBoardById(@PathVariable String id, @RequestParam String pageStart, @RequestParam String pageCount){
+        return boardService.getBoardById(id, Integer.parseInt(pageStart), Integer.parseInt(pageCount));
     }
     @GetMapping("/board/friend")
-    public ResponseDto getBoardFriend(@AuthenticationPrincipal CustomDetails customDetails) throws MalformedURLException {
+    public ResponseDto getBoardFriend(@AuthenticationPrincipal CustomDetails customDetails, @RequestParam String pageStart, @RequestParam String pageCount) throws MalformedURLException {
         Member member = memberService.findByUsername(customDetails.getUsername());
         List<FriendDto> result = (List<FriendDto>)friendService.findFriendList(member.getId()).getResult();
-        return boardService.getFriendBoard(result);
+        return boardService.getFriendBoard(result, Integer.parseInt(pageStart), Integer.parseInt(pageCount));
     }
     @DeleteMapping("/board")
     public ResponseDto deleteBoardByName(@RequestBody BoardDataDto boardDto){
@@ -58,13 +58,17 @@ public class BoardController {
     public ResponseDto saveComment(@AuthenticationPrincipal CustomDetails customDetails, @RequestBody CommentDto commentDto){
         return boardService.saveComment(customDetails.getUsername(), commentDto);
     }
+    @PostMapping("/comment/update")
+    public ResponseDto updateComment(@AuthenticationPrincipal CustomDetails customDetails, @RequestBody CommentDto commentDto){
+        return boardService.updateComment(customDetails.getUsername(),commentDto);
+    }
     @DeleteMapping("/comment")
     public ResponseDto deleteComment(@RequestBody CommentDto commentDto){
         return boardService.deleteComment(commentDto);
     }
     @GetMapping("/comment/{boardId}")
-    public ResponseDto findComment(@PathVariable String boardId){
-        return boardService.getComment(boardId);
+    public ResponseDto findComment(@PathVariable String boardId, @RequestParam String pageStart, @RequestParam String pageCount){
+        return boardService.getComment(boardId, Integer.parseInt(pageStart), Integer.parseInt(pageCount));
     }
     @GetMapping("/board/content/{content}")
     public ResponseDto getBoardByContent(@PathVariable String content) throws MalformedURLException {

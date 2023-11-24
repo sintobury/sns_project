@@ -42,7 +42,10 @@ public class Comment {
         this.createAt = createAt;
         this.state = state;
     }
+    public void update(String content){
+        this.content = content;
+    }
     public CommentDto convertDto(){
-        return new CommentDto(this.id, this.content, this.state);
+        return new CommentDto(this.id, this.content, this.state, this.member.convertDto());
     }
 }

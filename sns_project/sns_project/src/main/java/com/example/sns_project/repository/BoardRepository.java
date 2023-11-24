@@ -20,10 +20,19 @@ public class BoardRepository {
             em.merge(board);
         }
     }
-    public List<Board> findBoardByName(String name){
+    public List<Board> findBoardByNamePaging(String name, Integer pageStart, Integer pageCount){
         return em.createQuery("select b from Board b " +
                 "join fetch b.files f " +
-                "where b.member.name like concat('%',:name,'%') ", Board.class).setParameter("name", name).getResultList();
+                "where b.member.name like concat('%',:name,'%') ", Board.class)
+                .setMaxResults(pageCount)
+                .setFirstResult(pageStart)
+                .setParameter("name", name).getResultList();
+    }
+    public List<Board> findBoardByName(String name){
+        return em.createQuery("select b from Board b " +
+                        "join fetch b.files f " +
+                        "where b.member.name like concat('%',:name,'%') ", Board.class)
+                .setParameter("name", name).getResultList();
     }
     public List<Board> findBoardByContent(String content){
         return em.createQuery("select b from Board b " +
@@ -34,19 +43,24 @@ public class BoardRepository {
     public Board findById(Long id){
         return em.createQuery("select b from Board b " +
                 "join fetch b.files f " +
-                "where b.id = :id ", Board.class).setParameter("id", id).getSingleResult();
+                "where b.id = :id ", Board.class).setParameter("id", id)
+                .getSingleResult();
     }
     public Board findByIdFetchComment(Long id){
         return em.createQuery("select b from Board b " +
                 "left join fetch b.comments c " +
+                "join fetch c.member m " +
                 "where b.id = :id", Board.class).setParameter("id", id).getSingleResult();
     }
     public void deleteBoard(Board board){
         em.remove(board);
     }
-    public List<Board> findBoardById(String id){
+    public List<Board> findBoardById(String id, Integer pageStart, Integer pageCount){
         return em.createQuery("select b from Board b " +
                 "join fetch b.files f " +
-                "where b.member.id = :id ", Board.class).setParameter("id", id).getResultList();
+                "where b.member.id = :id ", Board.class).setParameter("id", id)
+                .setMaxResults(pageCount)
+                .setFirstResult(pageStart)
+                .getResultList();
     }
 }
