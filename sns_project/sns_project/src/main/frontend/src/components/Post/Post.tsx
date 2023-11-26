@@ -32,7 +32,7 @@ const Post = ({ info, isProfilePost }: childProps) => {
   const isdarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const { getUrl } = useS3();
   if (info.boardFiles?.length !== 0) {
-    info.boardFiles?.map((el) => (el.path = getUrl(el.path, el.type)));
+    info.boardFiles?.map((el) => (el.path = getUrl(el.path)));
   }
   return (
     <div

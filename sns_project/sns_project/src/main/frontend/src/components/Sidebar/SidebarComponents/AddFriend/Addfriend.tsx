@@ -81,7 +81,7 @@ const Addfriend = ({ setMode }: childProps) => {
               type: "jpg",
             };
           } else {
-            el.profile.path = getUrl(el.profile.path, el.profile.type);
+            el.profile.path = getUrl(el.profile.path);
           }
         });
       },
@@ -98,7 +98,7 @@ const Addfriend = ({ setMode }: childProps) => {
       alert("친구요청 되었습니다.");
       setOpenidx(newArr);
     } else if (res.data.statusCode === 400) {
-      alert("이미 요청한 사람입니다.");
+      alert("이미 요청했거나 친구인 사람입니다.");
       setOpenidx(newArr);
     }
     console.log(res.data);

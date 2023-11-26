@@ -129,7 +129,7 @@ const Profile = () => {
       onSuccess: (data) => {
         if (data.result.profile !== null) {
           setHasImg(true);
-          data.result.profile.path = getUrl(data.result.profile.path, data.result.profile.type);
+          data.result.profile.path = getUrl(data.result.profile.path);
           console.log(data.result);
         } else {
           data.result.profile = {

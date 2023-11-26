@@ -57,7 +57,7 @@ export const useGetFriendList = (userId: number) => {
             type: "jpg",
           };
         } else {
-          el.member.profile.path = getUrl(el.member.profile.path, el.member.profile.type);
+          el.member.profile.path = getUrl(el.member.profile.path);
         }
       });
       return res.data;
@@ -73,7 +73,7 @@ export const useGetFriendList = (userId: number) => {
             type: "jpg",
           };
         } else {
-          el.member.profile.path = getUrl(el.member.profile.path, el.member.profile.type);
+          el.member.profile.path = getUrl(el.member.profile.path);
         }
       });
       return res.data;

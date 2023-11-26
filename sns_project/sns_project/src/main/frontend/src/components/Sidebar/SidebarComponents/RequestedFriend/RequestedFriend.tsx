@@ -90,7 +90,7 @@ const RequestedFriend = ({ setMode }: childProps) => {
               type: "jpg",
             };
           } else {
-            el.member.profile.path = getUrl(el.member.profile.path, el.member.profile.type);
+            el.member.profile.path = getUrl(el.member.profile.path);
           }
         });
       },

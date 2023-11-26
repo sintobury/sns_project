@@ -123,7 +123,7 @@ const ProfileUpdateForm = ({ userinfo, username }: childProps) => {
         })}
       />
       {errors.birth && <p className="error_message">{errors.birth.message}</p>}
-      <label htmlFor="new_password">새 비밀번호</label>
+      {/* <label htmlFor="new_password">새 비밀번호</label>
       <input
         id="new_password"
         className={`${errors.new_password ? "errorInput" : "input"} ${isDarkmode && "darkmode"}`}
@@ -152,7 +152,7 @@ const ProfileUpdateForm = ({ userinfo, username }: childProps) => {
         placeholder="같은 비밀번호를 입력해주세요."
         type="password"
       />
-      {errors.check_password && <p className="error_message">{errors.check_password.message}</p>}
+      {errors.check_password && <p className="error_message">{errors.check_password.message}</p>} */}
       <Button text="수정" type="submit" design="black" disabled={isSubmitting} />
     </form>
   );

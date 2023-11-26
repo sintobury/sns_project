@@ -9,7 +9,7 @@ AWS.config.update({
 // const S3 = new AWS.S3();
 
 export const useS3 = () => {
-  const getUrl = (path: string, type: string) => {
+  const getUrl = (path: string) => {
     // const download = async (filename: string) => {
     //   const data = await S3.getObject({
     //     Key: filename,
@@ -25,7 +25,6 @@ export const useS3 = () => {
     // };
     // const url = await download(path);
     // return url;
-    console.log(type);
     if (path === null) {
       return "";
     } else if (path.includes("https://s3.ap-northeast-2.amazonaws.com/testsnsproject/")) {

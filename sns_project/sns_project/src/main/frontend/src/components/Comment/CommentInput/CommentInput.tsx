@@ -26,8 +26,9 @@ const CommentInput = ({ boardId }: childProps) => {
   const isdarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const {
     register,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     handleSubmit,
+    resetField,
   } = useForm<commentForm>();
   const queryClient = useQueryClient();
   const postingComment = async (comment: comment) => {
@@ -36,6 +37,7 @@ const CommentInput = ({ boardId }: childProps) => {
   const commentMutation = useMutation(postingComment, {
     onSuccess: () => {
       queryClient.invalidateQueries(["comment", boardId]);
+      resetField("content");
     },
   });
 
@@ -55,11 +57,9 @@ const CommentInput = ({ boardId }: childProps) => {
         placeholder="내용을 입력해주세요"
         className="input"
         id="input_content"
-        {...register("content", {
-          required: "내용을 입력해주세요.",
-        })}
+        {...register("content")}
       />
-      {errors.content && <div className="errormessage">{errors.content.message}</div>}
+      {/* {errors.content && <div className="errormessage">{errors.content.message}</div>} */}
       <div className={`input_button_container ${isdarkmode && "darkmode"}`}>
         <Button text="등록" type="submit" design="black" disabled={isSubmitting} />
       </div>

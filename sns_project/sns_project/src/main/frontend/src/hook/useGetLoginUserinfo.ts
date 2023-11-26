@@ -30,7 +30,7 @@ export const useGetLoginUserinfo = () => {
       setName(res.data.result.name);
       if (res.data.result.profile !== null) {
         const loginUserProfile = res.data.result.profile;
-        loginUserProfile.path = getUrl(loginUserProfile.path, loginUserProfile.type);
+        loginUserProfile.path = getUrl(loginUserProfile.path);
         setProfile(loginUserProfile);
       }
       return res.data;
