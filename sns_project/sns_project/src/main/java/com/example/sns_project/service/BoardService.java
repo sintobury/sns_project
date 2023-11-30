@@ -69,8 +69,20 @@ public class BoardService {
                 boardList.add(board.convertDto());
             }
         }
-        List<BoardDataDto> subBoardList = boardList.subList(pageStart, pageStart + pageCount);
-        return new ResponseDto(HttpStatus.OK.value(), "성공적으로 반환완료", subBoardList);
+        if(boardList.size() > pageStart){
+            List<BoardDataDto> subBoardList = new ArrayList<>();
+            if(pageStart + pageCount < boardList.size()){
+                subBoardList = boardList.subList(pageStart, boardList.size());
+            }else{
+                subBoardList = boardList.subList(pageStart, pageStart + pageCount);
+            }
+            return new ResponseDto(HttpStatus.OK.value(), "성공적으로 반환완료", subBoardList);
+        }else{
+            return new ResponseDto(HttpStatus.OK.value(), "page 탐색 범위를 맞추지 못헀습니다", null);
+
+        }
+
+
     }
     public ResponseDto deleteBoard(BoardDataDto boardDto){
         Board board = boardRepository.findById(boardDto.getId());
@@ -114,8 +126,18 @@ public class BoardService {
             commentDto.setBoardId(Long.parseLong(boardId));
             result.add(commentDto);
         }
-        List<CommentDto> subResult = result.subList(pageStart, pageStart + pageCount);
-        return new ResponseDto(HttpStatus.OK.value(), "댓글 가져오기 완료", subResult);
+        if(result.size() > pageStart){
+            List<CommentDto> subResult = new ArrayList<>();
+            if(pageStart + pageCount < result.size()){
+                subResult = result.subList(pageStart, result.size());
+            }else{
+                subResult = result.subList(pageStart, pageStart + pageCount);
+            }
+            return new ResponseDto(HttpStatus.OK.value(), "성공적으로 반환완료", subResult);
+        }else{
+            return new ResponseDto(HttpStatus.OK.value(), "page 탐색 범위를 맞추지 못헀습니다", null);
+        }
+
     }
     public ResponseDto getBoardById(String id, Integer pageStart, Integer pageCount){
         List<Board> boardList = boardRepository.findBoardById(id, pageStart, pageCount);

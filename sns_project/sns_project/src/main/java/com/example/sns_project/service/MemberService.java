@@ -56,6 +56,7 @@ public class MemberService {
         return new ResponseDto(HttpStatus.OK.value(), "유저정보를 성공적으로 반환하였습니다.", memberDto);
     }
 
+    @Transactional
     public ResponseDto memberUpdate(MemberDto memberDto){
         List<Member> findMember = memberRepository.findByUsername(memberDto.getUsername());
         if(findMember.size() == 0){
