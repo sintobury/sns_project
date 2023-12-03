@@ -83,7 +83,9 @@ const ProfilePostList = ({ username, id }: childProps) => {
           </div>
         ) : (
           proflieUserPostList.data?.pages.map((el: BoardListResponse) =>
-            el.result.map((el) => <Post info={el} isProfilePost={false} key={el.id} />),
+            el.result.map((el) => (
+              <Post info={el} isProfilePost={false} profileId={id} key={el.id} />
+            )),
           )
         )}
       </div>

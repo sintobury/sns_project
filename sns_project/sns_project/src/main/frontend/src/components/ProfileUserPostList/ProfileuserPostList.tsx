@@ -102,7 +102,9 @@ const ProfileuserPostList = ({ username, id }: childProps) => {
           </div>
         ) : (
           profileUserPostList.data?.pages.map((el) =>
-            el.result.map((el: Board) => <Post info={el} isProfilePost={true} key={el.id} />),
+            el.result.map((el: Board) => (
+              <Post info={el} isProfilePost={true} profileId={id} key={el.id} />
+            )),
           )
         )}
         <div ref={observer}>

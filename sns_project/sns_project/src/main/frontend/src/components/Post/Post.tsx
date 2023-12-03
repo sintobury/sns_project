@@ -4,10 +4,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import Comment from "../Comment/Comment";
 import { useS3 } from "../../hook/useS3";
+import Button from "../Common/Button/Button";
+import { authInstance } from "../../interceptors/interceptors";
 
 interface childProps {
   info: board;
   isProfilePost: boolean;
+  profileId: number;
 }
 
 interface board {
@@ -27,10 +30,15 @@ interface FileDTO {
   type: string;
 }
 
-const Post = ({ info, isProfilePost }: childProps) => {
+const Post = ({ info, isProfilePost, profileId }: childProps) => {
   const [open, setOpen] = useState(false);
   const isdarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
+  const loginUserId = useSelector((state: RootState) => state.loginSlice.id);
   const { getUrl } = useS3();
+
+  const deletePost = async (post: board) => {
+    await authInstance.delete(`/board`, { data: post });
+  };
   if (info.boardFiles?.length !== 0) {
     info.boardFiles?.map((el) => (el.path = getUrl(el.path)));
   }
@@ -40,7 +48,12 @@ const Post = ({ info, isProfilePost }: childProps) => {
         isProfilePost && "profile_user_post"
       }`}
     >
-      <p className={`post_title ${isdarkmode && "darkmode"}`}>{info.title}</p>
+      <div className="title_container">
+        <p className={`post_title ${isdarkmode && "darkmode"}`}>{info.title}</p>
+        {profileId === loginUserId && (
+          <Button text="삭제" design="black" type="button" onClick={() => deletePost(info)} />
+        )}
+      </div>
       <div className={`post_content ${isdarkmode && "darkmode"}`}>{info.content}</div>
       <div className={`post_media_container ${isdarkmode && "darkmode"}`}>
         {info.boardFiles?.map((el) => (

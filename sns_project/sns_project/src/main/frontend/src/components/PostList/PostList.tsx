@@ -34,6 +34,7 @@ interface FileDTO {
 
 const PostList = () => {
   const loginusername = useSelector((state: RootState) => state.loginSlice.username);
+  const loginUserId = useSelector((state: RootState) => state.loginSlice.id);
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -109,7 +110,9 @@ const PostList = () => {
         </div>
       ) : (
         postList.data?.pages.map((el: BoardListResponse) =>
-          el.result.map((el: Board) => <Post info={el} isProfilePost={false} key={el.id} />),
+          el.result.map((el: Board) => (
+            <Post info={el} isProfilePost={false} profileId={loginUserId} key={el.id} />
+          )),
         )
       )}
       <div ref={observer}>
