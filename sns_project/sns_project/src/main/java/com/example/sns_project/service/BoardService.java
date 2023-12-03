@@ -71,7 +71,7 @@ public class BoardService {
         }
         if(boardList.size() > pageStart){
             List<BoardDataDto> subBoardList = new ArrayList<>();
-            if(pageStart + pageCount < boardList.size()){
+            if(pageStart + pageCount > boardList.size()){
                 subBoardList = boardList.subList(pageStart, boardList.size());
             }else{
                 subBoardList = boardList.subList(pageStart, pageStart + pageCount);
@@ -128,7 +128,7 @@ public class BoardService {
         }
         if(result.size() > pageStart){
             List<CommentDto> subResult = new ArrayList<>();
-            if(pageStart + pageCount < result.size()){
+            if(pageStart + pageCount > result.size()){
                 subResult = result.subList(pageStart, result.size());
             }else{
                 subResult = result.subList(pageStart, pageStart + pageCount);
