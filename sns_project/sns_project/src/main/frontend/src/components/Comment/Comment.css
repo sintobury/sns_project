@@ -20,12 +20,28 @@
     border-radius: 6px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    padding: .5rem;
     &.darkmode {
         background-color: #414141;
         color: white;
     }
+}
+
+.comment_author_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: .5rem;
+}
+
+.comment_author {
+    width: 2rem;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
 }
 
 .comment_content {
