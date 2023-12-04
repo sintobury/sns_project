@@ -50,7 +50,7 @@ const Post = ({ info, isProfilePost, profileId }: childProps) => {
     >
       <div className="title_container">
         <p className={`post_title ${isdarkmode && "darkmode"}`}>{info.title}</p>
-        {profileId === loginUserId && (
+        {profileId === loginUserId && isProfilePost === true && (
           <Button text="삭제" design="black" type="button" onClick={() => deletePost(info)} />
         )}
       </div>

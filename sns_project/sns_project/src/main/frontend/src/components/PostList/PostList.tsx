@@ -66,11 +66,11 @@ const PostList = () => {
     {
       getNextPageParam: (lastPage, allPages) => {
         const nextPage = allPages.length + pageCount;
-        return lastPage.result.length !== 0 ? nextPage : undefined;
+        return lastPage.result?.length !== 0 ? nextPage : undefined;
       },
       onSuccess: (data) => {
         data.pages.map((el: BoardListResponse) => {
-          el.result.map((el: Board) => {
+          el.result?.map((el: Board) => {
             if (el.boardFiles?.length !== 0) {
               el.boardFiles?.map((el) => (el.path = getUrl(el.path)));
             }
@@ -109,10 +109,11 @@ const PostList = () => {
           <p className={`notification ${isDarkmode && "darkmode"}`}>작성된 글이 없습니다.</p>
         </div>
       ) : (
-        postList.data?.pages.map((el: BoardListResponse) =>
-          el.result.map((el: Board) => (
-            <Post info={el} isProfilePost={false} profileId={loginUserId} key={el.id} />
-          )),
+        postList.data?.pages.map(
+          (el: BoardListResponse) =>
+            el.result?.map((el: Board) => (
+              <Post info={el} isProfilePost={false} profileId={loginUserId} key={el.id} />
+            )),
         )
       )}
       <div ref={observer}>
