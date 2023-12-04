@@ -9,6 +9,7 @@ import { defaultInstance } from "../../interceptors/interceptors";
 import { useEffect } from "react";
 import Button from "../../components/Common/Button/Button";
 import GoogleLoginButton from "../../components/GoogleLoginButton/GoogleLoginButton";
+import { toggleDarkmode } from "../../redux/reducers/darkmode";
 
 interface loginForm {
   username: string;
@@ -16,20 +17,10 @@ interface loginForm {
 }
 
 const Login = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
   const isLogin = useSelector((state: RootState) => state.loginSlice.isLogin);
-  // const connectLoginSocket = () => {
-  //   useWebsocket();
-  // const socket = new WebSocket(`${process.env.REACT_APP_WEB_SOCKET_URL}/ws/chat`);
-  // const stompClient = webstomp.over(socket);
-  // const headers = stompClient.connect(headers, () => {
-  //   stompClient.subscribe(`${process.env.REACT_APP_WEB_SOCKET_URL}/user/topic/data`, () => {
-  //     console.log("websocket connected");
-  //   });
-  // });
-  // };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async (data: loginForm) => {
     try {
@@ -68,12 +59,30 @@ const Login = () => {
       dispatch(logout());
     }
   }, [isLogin]);
+
+  const setDarkmode = () => {
+    dispatch(toggleDarkmode());
+  };
+
   return (
     <div className={`background_login ${isDarkmode && "darkmode"}`}>
       <div className="login_container">
-        <p className={`logo ${isDarkmode && "darkmode"}`}>SNS_Project</p>
+        <div className="logo_container">
+          <p className={`logo ${isDarkmode && "darkmode"}`}>SNS_Project</p>
+          <div className={`darkmode_menu ${isDarkmode && "darkmode"}`} onClick={setDarkmode}>
+            <p className={`menu_title ${isDarkmode && "darkmode"}`}>다크모드</p>
+            <div className={`toggle_container ${isDarkmode && "darkmode"}`}>
+              <div className={`toggle_circle ${isDarkmode && "darkmode"}`}></div>
+            </div>
+          </div>
+        </div>
         <div className="login_body_container">
-          <div className={`login_explain_container ${isDarkmode && "darkmode"}`}>web설명</div>
+          <div className={`login_explain_container ${isDarkmode && "darkmode"}`}>
+            <p className="web_explain">
+              SNS의 기본적인 기능들이 탑재되어 있는 웹입니다.현재 나에게 일어난 일이나 쓰고싶은
+              내용을 게시글로 등록하거나 친구와 채팅을 나눠보세요!
+            </p>
+          </div>
           <form
             className={`login_function_container ${isDarkmode && "darkmode"}`}
             onSubmit={handleSubmit(handleLogin)}
