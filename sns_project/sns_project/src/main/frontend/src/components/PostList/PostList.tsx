@@ -7,7 +7,7 @@ import { authInstance } from "../../interceptors/interceptors";
 import Loading from "../Common/Loading/Loading";
 import { useLocation } from "react-router-dom";
 import { useS3 } from "../../hook/useS3";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface BoardListResponse {
   message: string;
@@ -36,6 +36,7 @@ const PostList = () => {
   const loginusername = useSelector((state: RootState) => state.loginSlice.username);
   const loginUserId = useSelector((state: RootState) => state.loginSlice.id);
   const isDarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
+  const [hasPage, setHasPage] = useState(true);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchOption = searchParams.get("searchoption");
@@ -48,14 +49,23 @@ const PostList = () => {
       const res = await authInstance.get(
         `/board/${keyword}?pageStart=${page}&pageCount=${pageCount}`,
       );
+      if (res.data.result === null) {
+        setHasPage(false);
+      }
       return res.data;
     } else if (searchOption === "content") {
       const res = await authInstance.get(
         `/board/content/${keyword}?pageStart=${page}&pageCount=${pageCount}`,
       );
+      if (res.data.result === null) {
+        setHasPage(false);
+      }
       return res.data;
     } else {
       const res = await authInstance.get(`/board/friend?pageStart=${page}&pageCount=${pageCount}`);
+      if (res.data.result === null) {
+        setHasPage(false);
+      }
       return res.data;
     }
   };
@@ -83,11 +93,11 @@ const PostList = () => {
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const [target] = entries;
-      if (target.isIntersecting && postList.hasNextPage) {
+      if (target.isIntersecting && postList.hasNextPage && hasPage) {
         postList.fetchNextPage();
       }
     },
-    [postList.fetchNextPage, postList.hasNextPage],
+    [postList.fetchNextPage, postList.hasNextPage, hasPage],
   );
 
   useEffect(() => {
@@ -98,7 +108,7 @@ const PostList = () => {
       newObserver.observe(now);
       return () => newObserver.unobserve(now);
     }
-  }, [postList.fetchNextPage, postList.hasNextPage, handleObserver]);
+  }, [postList.fetchNextPage, postList.hasNextPage, hasPage, handleObserver]);
 
   return (
     <div className="postList_container">
@@ -117,7 +127,7 @@ const PostList = () => {
         )
       )}
       <div ref={observer}>
-        {postList.isFetching && postList.isFetchingNextPage && postList.hasNextPage ? (
+        {postList.isFetching && postList.isFetchingNextPage && postList.hasNextPage && hasPage ? (
           <Loading />
         ) : null}
       </div>

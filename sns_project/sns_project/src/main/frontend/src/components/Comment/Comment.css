@@ -31,6 +31,7 @@
 }
 
 .comment_author_container {
+    flex: 1 0 3.125rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
