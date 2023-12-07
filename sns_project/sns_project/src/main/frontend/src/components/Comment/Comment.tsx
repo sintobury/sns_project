@@ -65,16 +65,17 @@ const Comment = ({ boardId }: childProps) => {
         const nextPage = allPages.length + pageCount;
         return lastPage.result.length !== 0 ? nextPage : undefined;
       },
+      onSuccess: (data) => {
+        data.pages.map(
+          (page) =>
+            page.result?.map(
+              (comment: comment) =>
+                (comment.member.profile.path = getUrl(comment.member.profile.path)),
+            ),
+        );
+      },
     },
   );
-  if (commentData.data) {
-    commentData.data.pages.map(
-      (page) =>
-        page.result?.map(
-          (comment: comment) => (comment.member.profile.path = getUrl(comment.member.profile.path)),
-        ),
-    );
-  }
 
   return (
     <div className={`commentList_container ${isdarkmode && "darkmode"}`}>

@@ -153,79 +153,90 @@ const Profile = () => {
       <Header />
       <div className="main_content_container">
         <Sidebar />
-        {isLoading ? (
-          <Loading />
-        ) : (
-          profileData && (
-            <div className="profile_container">
-              <div className={`profile_summary_container ${isDarkmode && "darkmode"}`}>
-                <div className={`profile_img_container ${isDarkmode && "darkmode"}`}>
+        {profileData && (
+          <div className="profile_container">
+            <div className={`profile_summary_container ${isDarkmode && "darkmode"}`}>
+              <div className={`profile_img_container ${isDarkmode && "darkmode"}`}>
+                {isLoading ? (
+                  <Loading />
+                ) : (
                   <img
                     className="profile_img"
                     id="user_profile_img"
                     alt="user_img"
                     src={profileData?.result.profile.path}
-                  ></img>
-                  <label htmlFor="user_profile_img" className={`label ${isDarkmode && "darkmode"}`}>
-                    {profileData?.result.name}
-                  </label>
-                </div>
-                {username === loginusername && (
-                  <form onSubmit={handleSubmit(submitImg)} className="profile_img_form">
-                    <div className="file_upload_container">
-                      {previewImage !== "" && (
-                        <div className="file_img">
-                          <img src={previewImage} alt="file_img" className="uploadfile" />
-                          <p className="file_name">{previewImg[0].name}</p>
-                        </div>
-                      )}
-                      <input
-                        id="profile_img"
-                        className={`file_input ${isDarkmode && "darkmode"}`}
-                        {...register("profile_img")}
-                        type="file"
-                        accept="image/*"
-                        name="profile_img"
-                      />
-                      <label htmlFor="profile_img">
-                        <div className={`file_upload_button ${isDarkmode && "darkmode"}`}>
-                          프로필 이미지 변경
-                        </div>
-                      </label>
-                    </div>
-                    <Button type="submit" text="저장" design="black" disabled={isSubmitting} />
-                  </form>
+                  />
                 )}
-                <div className="profile_tab_container">
-                  {tabmenulist.map((el) => (
-                    <div
-                      className={`tab_menu ${isDarkmode && "darkmode"}`}
-                      key={el.value}
-                      onClick={handleProfileTab}
-                    >
-                      {el.name}
-                    </div>
-                  ))}
-                </div>
+                <label htmlFor="user_profile_img" className={`label ${isDarkmode && "darkmode"}`}>
+                  {isLoading ? "" : profileData?.result.name}
+                </label>
               </div>
-              {!tabMenu && (
+              {username === loginusername && (
+                <form onSubmit={handleSubmit(submitImg)} className="profile_img_form">
+                  <div className="file_upload_container">
+                    {previewImage !== "" && (
+                      <div className="file_img">
+                        <img src={previewImage} alt="file_img" className="uploadfile" />
+                        <p className="file_name">{previewImg[0].name}</p>
+                      </div>
+                    )}
+                    <input
+                      id="profile_img"
+                      className={`file_input ${isDarkmode && "darkmode"}`}
+                      {...register("profile_img")}
+                      type="file"
+                      accept="image/*"
+                      name="profile_img"
+                    />
+                    <label htmlFor="profile_img">
+                      <div className={`file_upload_button ${isDarkmode && "darkmode"}`}>
+                        프로필 이미지 변경
+                      </div>
+                    </label>
+                  </div>
+                  <Button type="submit" text="저장" design="black" disabled={isSubmitting} />
+                </form>
+              )}
+              <div className="profile_tab_container">
+                {tabmenulist.map((el) => (
+                  <div
+                    className={`tab_menu ${isDarkmode && "darkmode"}`}
+                    key={el.value}
+                    onClick={handleProfileTab}
+                  >
+                    {el.name}
+                  </div>
+                ))}
+              </div>
+            </div>
+            {isLoading ? (
+              <Loading />
+            ) : (
+              !tabMenu && (
                 <div className="info_container">
                   <div className="left_container">
                     <Summary userinfo={profileData.result} username={username} />
-                    {/* <MediaList /> */}
                     <Friend userId={profileData?.result.id} username={username} />
                   </div>
                   <div className="right_container">
                     <ProfilePostList username={username} id={profileData.result.id} />
                   </div>
                 </div>
-              )}
-              {tabMenu === "friend" && <ProfileFriend userId={profileData.result.id} />}
-              {tabMenu === "postList" && (
+              )
+            )}
+            {isLoading ? (
+              <Loading />
+            ) : (
+              tabMenu === "friend" && <ProfileFriend userId={profileData.result.id} />
+            )}
+            {isLoading ? (
+              <Loading />
+            ) : (
+              tabMenu === "postList" && (
                 <ProfileuserPostList username={username} id={profileData.result.id} />
-              )}
-            </div>
-          )
+              )
+            )}
+          </div>
         )}
         <Chatroom />
       </div>
