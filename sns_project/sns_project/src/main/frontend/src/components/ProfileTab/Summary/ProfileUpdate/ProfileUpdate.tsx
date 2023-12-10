@@ -57,13 +57,13 @@ const ProfileUpdateForm = ({ userinfo, username }: childProps) => {
   });
 
   const updateProfile = async (formData: updateForm) => {
-    console.log(userinfo);
     const newProfile = userinfo;
     newProfile.name = formData.name;
-    // newProfile.password = formData.new_password;
     newProfile.birth = `${formData.birth} 00:00:00`;
-    console.log(newProfile);
-    await authInstance.post(`/member/update`, newProfile);
+    const res = await authInstance.post(`/member/update`, newProfile);
+    if (res.data.statusCode === 200) {
+      closeModal();
+    }
   };
 
   const profileMutation = useMutation(updateProfile, {
@@ -153,7 +153,10 @@ const ProfileUpdateForm = ({ userinfo, username }: childProps) => {
         type="password"
       />
       {errors.check_password && <p className="error_message">{errors.check_password.message}</p>} */}
-      <Button text="수정" type="submit" design="black" disabled={isSubmitting} />
+      <div className="update_form_button_container">
+        <Button text="취소" type="button" design="black" onClick={closeModal} />
+        <Button text="수정" type="submit" design="black" disabled={isSubmitting} />
+      </div>
     </form>
   );
 };
