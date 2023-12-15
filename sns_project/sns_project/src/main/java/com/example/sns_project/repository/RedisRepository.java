@@ -14,4 +14,6 @@ public interface RedisRepository extends CrudRepository<LoginInfo, String > {
     boolean existsByUsername(String s);
     LoginInfo findByRefreshToken(String s);
 
+    void deleteByUsername(String s);
+
 }

@@ -84,6 +84,7 @@ public class BoardService {
 
 
     }
+    @Transactional
     public ResponseDto deleteBoard(BoardDataDto boardDto){
         Board board = boardRepository.findById(boardDto.getId());
         List<Files> files = board.getFiles();
@@ -121,23 +122,27 @@ public class BoardService {
         Board board = boardRepository.findByIdFetchComment(Long.parseLong(boardId));
         List<Comment> comments = board.getComments();
         ArrayList<CommentDto> result = new ArrayList<>();
-        for (Comment comment : comments) {
-            CommentDto commentDto = comment.convertDto();
-            commentDto.setBoardId(Long.parseLong(boardId));
-            result.add(commentDto);
-        }
-        if(result.size() > pageStart){
-            List<CommentDto> subResult = new ArrayList<>();
-            if(pageStart + pageCount > result.size()){
-                subResult = result.subList(pageStart, result.size());
-            }else{
-                subResult = result.subList(pageStart, pageStart + pageCount);
-            }
-            return new ResponseDto(HttpStatus.OK.value(), "성공적으로 반환완료", subResult);
-        }else{
-            return new ResponseDto(HttpStatus.OK.value(), "page 탐색 범위를 맞추지 못헀습니다", null);
-        }
+        if(comments == null){
+            return new ResponseDto(HttpStatus.OK.value(), "성공적으로 반환완료", result);
 
+        }else{
+            for (Comment comment : comments) {
+                CommentDto commentDto = comment.convertDto();
+                commentDto.setBoardId(Long.parseLong(boardId));
+                result.add(commentDto);
+            }
+            if(result.size() > pageStart){
+                List<CommentDto> subResult = new ArrayList<>();
+                if(pageStart + pageCount > result.size()){
+                    subResult = result.subList(pageStart, result.size());
+                }else{
+                    subResult = result.subList(pageStart, pageStart + pageCount);
+                }
+                return new ResponseDto(HttpStatus.OK.value(), "성공적으로 반환완료", subResult);
+            }else{
+                return new ResponseDto(HttpStatus.OK.value(), "page 탐색 범위를 맞추지 못헀습니다", null);
+            }
+        }
     }
     public ResponseDto getBoardById(String id, Integer pageStart, Integer pageCount){
         List<Board> boardList = boardRepository.findBoardById(id, pageStart, pageCount);

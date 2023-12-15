@@ -34,7 +34,7 @@ public class RefreshTokenService {
                 return new ResponseDto(HttpStatus.OK.value(), "토큰이 리프레시되었습니다.", new TokenDto(accessToken, refreshDto.getRefreshToken(),result.get(0).getId()));
             }catch (JwtException e){
                 LoginInfo loginInfo = redisRepository.findByRefreshToken(refreshDto.getRefreshToken());
-                redisRepository.deleteById(loginInfo.getUsername());
+                redisRepository.deleteByUsername(loginInfo.getUsername());
                 return new ResponseDto(HttpStatus.BAD_REQUEST.value(), e.getMessage(), null);
             }
         }else{
