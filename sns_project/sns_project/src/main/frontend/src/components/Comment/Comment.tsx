@@ -54,6 +54,9 @@ const Comment = ({ boardId }: childProps) => {
     const res = await authInstance.get(
       `/comment/${boardId}?pageStart=${page}&pageCount=${pageCount}`,
     );
+    if (res.status === 500) {
+      return null;
+    }
     return res.data;
   };
   // 없는거 불러올때 500뜨는중

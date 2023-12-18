@@ -66,7 +66,6 @@ const ProfileuserPostList = ({ username, id }: childProps) => {
       },
     },
   );
-  console.log(profileUserPostList.data?.pages);
   const observer = useRef<HTMLDivElement>(null);
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {

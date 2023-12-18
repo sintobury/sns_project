@@ -1,5 +1,4 @@
 .post_container {
-    /* width: calc(100% - 2rem); */
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -10,7 +9,7 @@
         background-color: #616161;
     }
     &.profile_user_post {
-        width: calc(48% - 2rem);
+        flex: 1 0 14.125rem;
         margin: 0 0 4% 0;
     }
 }
