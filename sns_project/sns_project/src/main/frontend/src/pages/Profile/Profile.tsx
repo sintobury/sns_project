@@ -194,7 +194,12 @@ const Profile = () => {
                       </div>
                     </label>
                   </div>
-                  <Button type="submit" text="저장" design="black" disabled={isSubmitting} />
+                  <Button
+                    type="submit"
+                    text="저장"
+                    design="black"
+                    disabled={isSubmitting || previewImage === ""}
+                  />
                 </form>
               )}
               <div className="profile_tab_container">
