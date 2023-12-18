@@ -30,7 +30,7 @@ const Chattings = () => {
     return res.data;
   };
   const chattingData = useQuery<ResponseDTO>(["chattings", roomId], getChattingLog, {
-    staleTime: Infinity,
+    refetchInterval: 6000,
   });
   useEffect(() => {
     chattingRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
