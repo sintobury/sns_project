@@ -1,22 +1,60 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
 spring:
   datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/snsdb?serverTimezone=Asia/Seoul
+      url: jdbc:mysql://snsdb.ci5lwgjvuphf.ap-northeast-2.rds.amazonaws.com:3306/snsdb?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
       username: root
       password: novanov2
 
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         #        show_sql: true
         format_sql: true
-        default_batch_fetch_size: 100
+  redis:
+    host: 13.124.212.3
+    port: 6379
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 11681411196-481oj0bto50aerlt7ar5j42log08eplh.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: http://ec2-13-124-212-3.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/google
+            scope:
+              - profile
+              - email
 
+jwt:
+  accessSecret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
+  refreshSecret: Vlw1k3n2bt9V7zq5F2XjMnWzblYcfP1njsa3Jas1HaSDXkHa
 
 logging.level:
   org.hibernate.SQL: debug
   org.hibernate.orm.jdbc.bind: trace
 #  org.hibernate.type: trace
+
+cloud:
+  aws:
+    s3:
+      bucket: testsnsproject
+    credentials:
+      access-key: AKIATR4ZHEN62QOA3KQQ
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
