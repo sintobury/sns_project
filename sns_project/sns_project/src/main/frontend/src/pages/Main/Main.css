@@ -1,0 +1,41 @@
+.main_page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    &.darkmode {
+        background-color: #121212;
+    }
+}
+.main_container {
+    max-width: 90rem;
+    min-height: calc(100vh - 9.375rem);
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    flex: 1 0 auto;
+    padding: 10px 0;
+}
+
+.main_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 10px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.friend_postList {
+    padding: 1rem;
+    border-radius: 6px;
+    background-color: white;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+    }
+}

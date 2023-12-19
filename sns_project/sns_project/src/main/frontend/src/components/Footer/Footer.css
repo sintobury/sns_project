@@ -1,0 +1,15 @@
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 20px 0;
+    width: 100vw;
+    text-align: center;
+    height: 50px;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+        color: white;
+    }
+}

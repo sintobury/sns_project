@@ -1,0 +1,13 @@
+.mediaList_container {
+    background-color: #81cc76;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 6px;
+    transition: 0.7s;
+    &.darkmode {
+        background-color: #212121;
+        color: white;
+    }
+}

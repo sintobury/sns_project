@@ -1,0 +1,28 @@
+.homeicon {
+    flex: 0 0 25rem; 
+    @media (max-width:62.5rem) {
+        flex: 1 0 auto;
+    }
+}
+a {
+    color: black;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.header_logo {
+    margin: 0;
+    font-size: 1.5rem;
+    padding: .5rem .75rem;
+    text-align: center;
+    transition: 0.7s;
+    &.darkmode {
+        color: #e0e0e0;
+    }
+}

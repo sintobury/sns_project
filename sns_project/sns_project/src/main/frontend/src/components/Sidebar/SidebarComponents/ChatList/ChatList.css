@@ -1,0 +1,53 @@
+.chatlist_container {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 5px;
+    border-radius: 6px;
+    max-height: 30rem;
+    margin: 0 5px;
+    overflow-y: scroll;
+    background-color: #81cc76;
+    transition: 0.7s;
+    &.darkmode {
+        color: white;
+        background-color: #212121;
+    }
+}
+
+.room_info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    background-color: #66ac5c;
+    padding: 1rem;
+    border-radius: 6px;
+    transition: 0.7s;
+    cursor: pointer;
+    &.darkmode {
+        background-color: #515151;
+        color: white;
+        &:hover {
+            background-color: #b7b7b7;
+            color: #212121;
+        }
+    }
+    &:hover {
+        background-color: #3f8536;
+        color: white;
+    }
+}
+
+.room_title {
+    display: block;
+    flex: 1 0 auto;
+    max-width: 5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}
