@@ -1,6 +1,7 @@
 package com.example.sns_project.repository;
 
 import com.example.sns_project.entity.Board;
+import com.example.sns_project.entity.Comment;
 import com.example.sns_project.entity.Profile;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -62,5 +63,8 @@ public class BoardRepository {
                 .setMaxResults(pageCount)
                 .setFirstResult(pageStart)
                 .getResultList();
+    }
+    public Board findByIdForDel(Long commentId){
+        return em.find(Board.class, commentId);
     }
 }

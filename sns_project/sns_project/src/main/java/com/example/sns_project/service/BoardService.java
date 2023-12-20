@@ -86,8 +86,7 @@ public class BoardService {
     }
     @Transactional
     public ResponseDto deleteBoard(BoardDataDto boardDto){
-        Board board = boardRepository.findById(boardDto.getId());
-        List<Files> files = board.getFiles();
+        Board board = boardRepository.findByIdForDel(boardDto.getId());
         boardRepository.deleteBoard(board);
         return new ResponseDto(HttpStatus.OK.value(), "게시글 삭제 완료", null);
     }

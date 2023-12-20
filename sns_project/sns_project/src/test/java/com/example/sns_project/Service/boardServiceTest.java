@@ -21,6 +21,6 @@ public class boardServiceTest {
     private FileService fileService;
     @Test
     void commentTest(){
-        ResponseDto comment = boardService.getComment("3", 0, 2);
+        boardService.deleteBoard(new BoardDataDto(12L, "123", "123", LocalDateTime.now(), "123", null));
     }
 }
