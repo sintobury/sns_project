@@ -88,9 +88,6 @@ public class BoardService {
     public ResponseDto deleteBoard(BoardDataDto boardDto){
         Board board = boardRepository.findById(boardDto.getId());
         List<Files> files = board.getFiles();
-        for (Files file : files) {
-            amazonS3.deleteObject(bucket, file.getPath());
-        }
         boardRepository.deleteBoard(board);
         return new ResponseDto(HttpStatus.OK.value(), "게시글 삭제 완료", null);
     }

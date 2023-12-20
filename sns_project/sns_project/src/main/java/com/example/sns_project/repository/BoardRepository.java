@@ -49,7 +49,7 @@ public class BoardRepository {
     public Board findByIdFetchComment(Long id){
         return em.createQuery("select b from Board b " +
                 "left join fetch b.comments c " +
-                "join fetch c.member m " +
+                "left join fetch c.member m " +
                 "where b.id = :id", Board.class).setParameter("id", id).getSingleResult();
     }
     public void deleteBoard(Board board){
