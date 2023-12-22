@@ -7,6 +7,7 @@ import Loading from "../Common/Loading/Loading";
 import CommentInput from "./CommentInput/CommentInput";
 import { useS3 } from "../../hook/useS3";
 import { useState } from "react";
+import Button from "../Common/Button/Button";
 
 interface childProps {
   boardId: number;
@@ -49,6 +50,7 @@ interface FileDTO {
 
 const Comment = ({ boardId }: childProps) => {
   const isdarkmode = useSelector((state: RootState) => state.darkmodeSlice.isDarkmode);
+  const loginUserId = useSelector((state: RootState) => state.loginSlice.id);
   const [hasPage, setHasPage] = useState(true);
   const pageCount = 50;
   const { getUrl } = useS3();
@@ -60,6 +62,12 @@ const Comment = ({ boardId }: childProps) => {
       setHasPage(false);
     }
     return res.data;
+  };
+
+  const deleteComment = async (commentId: number | undefined) => {
+    if (commentId) {
+      await authInstance.delete(`/comment`, { data: { id: commentId } });
+    }
   };
 
   const commentData = useInfiniteQuery(
@@ -92,6 +100,14 @@ const Comment = ({ boardId }: childProps) => {
                   <p className="comment_author_name">{el.member.name}</p>
                 </div>
                 <p className="comment_content">{el.content}</p>
+                {el.member.id === loginUserId && (
+                  <Button
+                    text="삭제"
+                    type="button"
+                    design="black"
+                    onClick={() => deleteComment(el.commentId)}
+                  />
+                )}
               </div>
             )),
         )

@@ -37,7 +37,8 @@ const Post = ({ info, isProfilePost, profileId }: childProps) => {
   const { getUrl } = useS3();
 
   const deletePost = async (post: board) => {
-    await authInstance.delete(`/board`, { data: post });
+    console.log(post);
+    await authInstance.delete(`/board`, { data: { id: post.id } });
   };
 
   return (
