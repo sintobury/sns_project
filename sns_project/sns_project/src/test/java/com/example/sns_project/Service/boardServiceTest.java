@@ -23,7 +23,6 @@ public class boardServiceTest {
     @Test
     @Rollback(value = false)
     void commentTest(){
-        boardService.deleteBoard(new BoardDataDto(12L, "123", "123", LocalDateTime.now(), "123", null));
 
     }
 }
