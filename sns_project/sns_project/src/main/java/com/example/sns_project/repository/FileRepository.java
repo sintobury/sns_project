@@ -35,6 +35,14 @@ public class FileRepository {
                 .setParameter("username", username).getResultList();
         return resultList;
     }
+    public List<Files> findByBoardId(String boardId){
+        List<Files> resultList = em.createQuery("select f from Files f where f.board.id = :boardId", Files.class)
+                .setParameter("boardId", boardId).getResultList();
+        return resultList;
+    }
+    public void deleteFiles(Files files){
+        em.remove(files);
+    }
 
     public Profile findProfile(Long id){
         return em.find(Profile.class, id);

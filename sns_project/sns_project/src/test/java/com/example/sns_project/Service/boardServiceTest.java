@@ -7,6 +7,7 @@ import com.example.sns_project.service.FileService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,9 @@ public class boardServiceTest {
     @Autowired
     private FileService fileService;
     @Test
+    @Rollback(value = false)
     void commentTest(){
         boardService.deleteBoard(new BoardDataDto(12L, "123", "123", LocalDateTime.now(), "123", null));
+
     }
 }

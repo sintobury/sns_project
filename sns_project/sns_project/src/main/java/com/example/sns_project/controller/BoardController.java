@@ -64,6 +64,7 @@ public class BoardController {
     }
     @DeleteMapping("/comment")
     public ResponseDto deleteComment(@RequestBody CommentDto commentDto){
+
         return boardService.deleteComment(commentDto);
     }
     @GetMapping("/comment/{boardId}")

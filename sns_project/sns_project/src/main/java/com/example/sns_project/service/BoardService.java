@@ -32,6 +32,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
     private final CommentRepository commentRepository;
+    private final FileRepository fileRepository;
     private final AmazonS3 amazonS3;
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -87,6 +88,10 @@ public class BoardService {
     @Transactional
     public ResponseDto deleteBoard(BoardDataDto boardDto){
         Board board = boardRepository.findByIdForDel(boardDto.getId());
+        List<Files> byBoardId = fileRepository.findByBoardId(String.valueOf(boardDto.getId()));
+        for (Files files : byBoardId) {
+            fileRepository.deleteFiles(files);
+        }
         boardRepository.deleteBoard(board);
         return new ResponseDto(HttpStatus.OK.value(), "게시글 삭제 완료", null);
     }
@@ -102,6 +107,7 @@ public class BoardService {
     public ResponseDto deleteComment(CommentDto commentDto){
         Comment comment = commentRepository.findById(commentDto.getCommentId());
         commentRepository.delete(comment);
+
         return new ResponseDto(HttpStatus.OK.value(), "댓글 삭제 완료", null);
     }
     public ResponseDto updateComment(String username, CommentDto commentDto){
