@@ -36,7 +36,8 @@ React-hook-form은 회원가입과 같은 form 형태의 데이터들의 관리�
 http://snsprojectbucket.s3-website.ap-northeast-2.amazonaws.com/
 
 ## 테스트용 계정 
-Id : test, password : abcd1234!
+Id : test
+Password : abcd1234!
 
 ## 참여 인원
 BE 담당 정지원 깃허브 : https://github.com/Urasion
