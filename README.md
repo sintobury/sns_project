@@ -1,5 +1,5 @@
 ## 프로젝트 명 
-# SNS Project
+### SNS Project
 
 ## 사용 기술 스택  
 ### React, Redux-toolkit, React-Query, TypeScript, React-hook-form,  Axios, webstomp-client
